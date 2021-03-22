@@ -15,6 +15,13 @@ class City extends CRUDResource
     public static $model = \App\Models\City::class;
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Items';
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request

@@ -14,6 +14,13 @@ class Nationality extends CRUDResource
     public static $model = \App\Models\Nationality::class;
 
     /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Items';
+
+    /**
      * Determine if the current user can delete the given resource.
      *
      * @param  \Illuminate\Http\Request  $request
