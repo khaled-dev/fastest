@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use App\Models\User AS UserModel;
 
 class User extends Resource
 {
@@ -15,7 +17,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = UserModel::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -55,6 +57,14 @@ class User extends Resource
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
+
+            Select::make('Type')
+                ->sortable()
+                ->options([
+                    UserModel::SUPER_ADMIN => 'Super Admin',
+                    UserModel::NORMAL_ADMIN => 'Normal Admin',
+                ])
+                ->rules('required', 'in:' . UserModel::SUPER_ADMIN . ',' . UserModel::NORMAL_ADMIN ),
 
             Password::make('Password')
                 ->onlyOnForms()
@@ -106,4 +116,42 @@ class User extends Resource
     {
         return [];
     }
+
+    /**
+     * Determine if the current user can create new resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public static function authorizedToCreate(Request $request): bool
+    {
+        return auth()->user()->isSuperAdmin();
+    }
+
+    /**
+     * Determine if the current user can delete the given resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public function authorizedToDelete(Request $request): bool
+    {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+        return $user->isSuperAdmin() && ! $this->resource->isSuperAdmin();
+    }
+
+    /**
+     * Determine if the current user can update the given resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public function authorizedToUpdate(Request $request): bool
+    {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+        return ($user->isSuperAdmin() && ! $this->resource->isSuperAdmin()) || $user->isTheSame($this->resource);
+    }
+
 }

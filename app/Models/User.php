@@ -40,4 +40,34 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Admin types
+     */
+    const NORMAL_ADMIN = 'admin';
+    const SUPER_ADMIN  = 'super-admin';
+
+
+    /**
+     * Check if this user is super-admin.
+     *
+     * @return bool
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->type === self::SUPER_ADMIN;
+    }
+
+    /**
+     * Check if this user is the same as the given user.
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function isTheSame(User $user): bool
+    {
+        return $this->id === $user->id;
+    }
+
+
 }
