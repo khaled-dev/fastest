@@ -36,9 +36,9 @@ abstract class CRUDResource extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
 
-            Text::make('Arabic Name', 'name_ar'),
+            Text::make('Arabic Name', 'name_ar')->sortable(),
 
-            Text::make('English Name', 'name_en'),
+            Text::make('English Name', 'name_en')->sortable(),
         ];
     }
 }
