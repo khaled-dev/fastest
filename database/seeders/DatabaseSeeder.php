@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             TerritorySeeder::class,
             TerritorySeeder::class,
             NationalitySeeder::class,
+            CourierSeeder::class,
+            CustomerSeeder::class,
         ]);
     }
 }
