@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// ->middleware('auth:api')
+Route::post('/customer-login', 'CustomerController@registerOrLogin');
+
+Route::middleware('auth:customers')->group(function () {
+    Route::get('/customer', 'CustomerController@show');
+    Route::PUT('/customer/update', 'CustomerController@update');
 });
