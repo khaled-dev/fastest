@@ -41,9 +41,15 @@ return [
             'provider' => 'users',
         ],
 
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
+        'customers' => [
+            'driver' => 'passport',
+            'provider' => 'customers',
+            'hash' => false,
+        ],
+
+        'couriers' => [
+            'driver' => 'passport',
+            'provider' => 'couriers',
             'hash' => false,
         ],
     ],
@@ -69,6 +75,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Customer::class,
+        ],
+
+        'couriers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Courier::class,
         ],
 
         // 'users' => [
