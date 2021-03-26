@@ -19,6 +19,8 @@ class FirebaseAuth
     }
 
     /**
+     * Generate new FB token
+     *
      * @param string $id
      * @return \Lcobucci\JWT\Token
      */
@@ -28,6 +30,8 @@ class FirebaseAuth
     }
 
     /**
+     * Verify FB token
+     *
      * @param string $idToken
      * @return \Lcobucci\JWT\Token
      */
