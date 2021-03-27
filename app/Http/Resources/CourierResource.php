@@ -28,7 +28,10 @@ class CourierResource extends JsonResource
             'city' => $this->city,
             'nationality' => $this->nationality,
             'bank' => $this->bank,
-            'car_type' => $this->car_type,
+            'profile_picture' => $this->getFirstMediaUrl('profile_picture'),
+            'national_card_picture' => $this->getFirstMediaUrl('national_card_picture'),
+            'car_license_picture' => $this->getFirstMediaUrl('car_license_picture'),
+            'driving_license_picture' => $this->getFirstMediaUrl('driving_license_picture'),
             'created_at' => $this->created_at->diffForHumans(),
         ];
     }
