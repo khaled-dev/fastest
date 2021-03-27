@@ -17,6 +17,7 @@ class City extends Model
     protected $fillable = ['name_ar', 'name_en'];
 
     /**
+     * Get the territory
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
