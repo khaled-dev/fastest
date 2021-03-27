@@ -49,8 +49,6 @@ class Courier extends Model implements HasMedia
      * @var array
      */
     protected $casts = [
-        'is_active' => 'bool',
-        'has_admin_approved' => 'bool',
         'created_at' => 'datetime',
     ];
 

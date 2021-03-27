@@ -2,12 +2,12 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\BelongsTo;
+use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 
 class Courier extends Resource
 {
@@ -54,7 +54,9 @@ class Courier extends Resource
 
             Text::make('Name', 'name')->sortable(),
 
-            Text::make('National ID', 'national_id')->sortable(),
+            Images::make( 'Profile Picture', 'profile_picture'),
+
+            Text::make('National ID', 'national_number')->sortable(),
 
             Text::make('Mobile Number', 'mobile')->sortable(),
 
@@ -63,20 +65,23 @@ class Courier extends Resource
                     'male' => 'Male',
                     'female' => 'Female',
                 ])
+                ->displayUsingLabels()
                 ->sortable(),
 
             Select::make('Is Active', 'is_active')
                 ->options([
-                    'false' => 'Not Active',
-                    'true' => 'Active',
+                    '0' => 'Not Active',
+                    '1' => 'Active',
                 ])
+                ->displayUsingLabels()
                 ->sortable(),
 
             Select::make('Has Admin Approved', 'has_admin_approved')
                 ->options([
-                    'false' => 'Not Approved',
-                    'true' => 'Approved',
+                    '0' => 'Not Approved',
+                    '1' => 'Approved',
                 ])
+                ->displayUsingLabels()
                 ->sortable(),
 
             Text::make('IBAN Nnumber', 'iban_number')->hideFromIndex(),
@@ -93,6 +98,14 @@ class Courier extends Resource
 
             BelongsTo::make('Car Type', 'car_type')->hideFromIndex(),
 
+            Images::make('National Card Picture', 'national_card_picture')
+                ->hideFromIndex(),
+
+            Images::make('Car License Picture', 'car_license_picture')
+                ->hideFromIndex(),
+
+            Images::make('Driving License Picture', 'driving_license_picture')
+                ->hideFromIndex(),
         ];
     }
 
