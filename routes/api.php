@@ -14,16 +14,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// ->middleware('auth:api')
-Route::post('/customer-login', 'CustomerController@registerOrLogin');
+// Auth
 Route::post('/courier', 'CourierController@store');
 Route::post('/courier-login', 'CourierController@login');
+Route::post('/customer-login', 'CustomerController@registerOrLogin');
 
+// Items
+Route::get('/banks', 'ItemsController@banks');
+Route::get('/car-types', 'ItemsController@carTypes');
+Route::get('/nationalities', 'ItemsController@nationalities');
+Route::get('/territories', 'ItemsController@territories');
+Route::get('/cities/{territory}', 'ItemsController@cities');
+
+// Customer
 Route::middleware('auth:customers')->group(function () {
     Route::get('/customer', 'CustomerController@show');
     Route::PUT('/customer/update', 'CustomerController@update');
 });
 
+// Courier
 Route::middleware('auth:couriers')->group(function () {
     Route::get('/courier', 'CourierController@show');
     Route::PUT('/courier/update', 'CourierController@update');

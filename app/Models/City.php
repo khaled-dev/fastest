@@ -17,6 +17,15 @@ class City extends Model
     protected $fillable = ['name_ar', 'name_en'];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
+
+    /**
      * Get the territory
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

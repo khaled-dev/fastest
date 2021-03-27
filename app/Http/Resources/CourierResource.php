@@ -16,10 +16,6 @@ class CourierResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'territory_id' => $this->territory_id,
-            'city_id' => $this->city_id,
-            'nationality_id' => $this->nationality_id,
-            'bank_id' => $this->bank_id,
             'name' => $this->name,
             'mobile' => $this->mobile,
             'national_number' => $this->national_number,
@@ -28,6 +24,11 @@ class CourierResource extends JsonResource
             'iban_number' => $this->iban_number,
             'is_active' => $this->is_active,
             'has_admin_approved' => $this->has_admin_approved,
+            'territory' => $this->territory,
+            'city' => $this->city,
+            'nationality' => $this->nationality,
+            'bank' => $this->bank,
+            'car_type' => $this->car_type,
             'created_at' => $this->created_at->diffForHumans(),
         ];
     }
