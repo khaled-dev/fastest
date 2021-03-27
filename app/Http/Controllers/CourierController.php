@@ -7,6 +7,7 @@ use App\Services\FirebaseAuth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\CourierResource;
 use App\Http\Requests\LoginCourierRequest;
+use App\Http\Requests\UpdateCourierRequest;
 use App\Http\Requests\RegisterCourierRequest;
 
 class CourierController extends Controller
@@ -29,7 +30,7 @@ class CourierController extends Controller
     }
 
     /**
-     * Register a new courier or login with an old one
+     * Register a new courier
      *
      * @param RegisterCourierRequest $request
      * @return \Illuminate\Http\Response
@@ -47,7 +48,7 @@ class CourierController extends Controller
     }
 
     /**
-     * Register a new courier or login with an old one
+     * Login courier
      *
      * @param LoginCourierRequest $request
      * @return \Illuminate\Http\Response
@@ -85,6 +86,21 @@ class CourierController extends Controller
         return [
             'courier' => new CourierResource(auth()->user())
         ];
+    }
+
+    /**
+     * Update courier
+     *
+     * @param UpdateCourierRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateCourierRequest $request): \Illuminate\Http\Response
+    {
+        auth()->user()->update($request->all());
+
+        return response([
+            'courier' => new CourierResource( auth()->user()),
+        ]);
     }
 
 }

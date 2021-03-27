@@ -26,4 +26,5 @@ Route::middleware('auth:customers')->group(function () {
 
 Route::middleware('auth:couriers')->group(function () {
     Route::get('/courier', 'CourierController@show');
+    Route::PUT('/courier/update', 'CourierController@update');
 });
