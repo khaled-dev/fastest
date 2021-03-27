@@ -16,8 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 // ->middleware('auth:api')
 Route::post('/customer-login', 'CustomerController@registerOrLogin');
+Route::post('/courier', 'CourierController@store');
+Route::post('/courier-login', 'CourierController@login');
 
 Route::middleware('auth:customers')->group(function () {
     Route::get('/customer', 'CustomerController@show');
     Route::PUT('/customer/update', 'CustomerController@update');
+});
+
+Route::middleware('auth:couriers')->group(function () {
+    Route::get('/courier', 'CourierController@show');
 });

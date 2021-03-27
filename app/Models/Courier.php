@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Courier extends Model
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens, Authenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -36,5 +38,16 @@ class Courier extends Model
      */
     protected $hidden = [
         'password',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_active' => 'bool',
+        'has_admin_approved' => 'bool',
+        'created_at' => 'datetime',
     ];
 }

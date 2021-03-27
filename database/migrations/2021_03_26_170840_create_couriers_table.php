@@ -21,13 +21,13 @@ class CreateCouriersTable extends Migration
             $table->unsignedBigInteger('nationality_id')->nullable();
             $table->unsignedBigInteger('bank_id')->nullable();
 
-            $table->string('name');
-            $table->string('password');
+            $table->string('name')->nullable();
+            $table->string('password')->nullable();
             $table->string('mobile')->unique();
-            $table->string('national_number')->unique();
-            $table->enum('gender', ['male', 'female']);
-            $table->string('car_number');
-            $table->string('iban_number');
+            $table->string('national_number')->unique()->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->string('car_number')->nullable();
+            $table->string('iban_number')->nullable();
             $table->boolean('is_active')->default(false);
             $table->boolean('has_admin_approved')->default(false);
 
