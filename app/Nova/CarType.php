@@ -30,4 +30,15 @@ class CarType extends CRUDResource
     {
         return false;
     }
+
+    /**
+     * Determine if the current user can create new resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
 }
