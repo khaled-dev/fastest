@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36b8e5fec887456f73935eb0fa557ccd",
+    "content-hash": "ff8ef2492944ca3a850bfbcdaee3ac95",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3206,6 +3206,47 @@
                 }
             ],
             "time": "2020-05-30T13:11:16+00:00"
+        },
+        {
+            "name": "manmohanjit/nova-belongs-to-dependency",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/manmohanjit/nova-belongs-to-dependency.git",
+                "reference": "a9a4c73d3fe14a1ee1f0530fce711cf297c61c34"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/manmohanjit/nova-belongs-to-dependency/zipball/a9a4c73d3fe14a1ee1f0530fce711cf297c61c34",
+                "reference": "a9a4c73d3fe14a1ee1f0530fce711cf297c61c34",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Manmohanjit\\BelongsToDependency\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Manmohanjit\\BelongsToDependency\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Extended Laravel Nova BelongsTo field that can depend on other fields",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "time": "2019-01-19T13:25:09+00:00"
         },
         {
             "name": "monolog/monolog",

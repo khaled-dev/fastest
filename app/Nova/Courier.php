@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Fields\BelongsToDependency;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 
 class Courier extends Resource
@@ -94,7 +95,9 @@ class Courier extends Resource
 
             BelongsTo::make('Territory', 'territory')->hideFromIndex(),
 
-            BelongsTo::make('City', 'city')->hideFromIndex(),
+            BelongsToDependency::make('City', 'city')
+                ->dependsOn('territory', 'territory_id')
+                ->hideFromIndex(),
 
             BelongsTo::make('Car Type', 'car_type')->hideFromIndex(),
 

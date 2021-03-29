@@ -25,6 +25,7 @@
         "laravel/nova": "~3.0",
         "laravel/passport": "^10.1",
         "laravel/tinker": "^2.5",
+        "manmohanjit/nova-belongs-to-dependency": "^1.1",
         "spatie/laravel-medialibrary": "^9.0.0"
     },
     "require-dev": {
