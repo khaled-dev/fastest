@@ -56,7 +56,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            new Help,
+            new \GijsG\SystemResources\SystemResources('ram'),
+            new \GijsG\SystemResources\SystemResources('cpu'),
         ];
     }
 

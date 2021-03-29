@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff8ef2492944ca3a850bfbcdaee3ac95",
+    "content-hash": "257bd707bbf4641cce09b350cd3acb28",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1252,6 +1252,47 @@
                 }
             ],
             "time": "2020-10-22T13:57:20+00:00"
+        },
+        {
+            "name": "gijsg/system-resources",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GijsGoudzwaard/nova-system-resources.git",
+                "reference": "4ef6c581ee65b32db0e344785f6937a0eeb05d8e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GijsGoudzwaard/nova-system-resources/zipball/4ef6c581ee65b32db0e344785f6937a0eeb05d8e",
+                "reference": "4ef6c581ee65b32db0e344785f6937a0eeb05d8e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "GijsG\\SystemResources\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GijsG\\SystemResources\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "time": "2020-05-18T16:23:41+00:00"
         },
         {
             "name": "google/auth",
