@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use GijsG\SystemResources\SystemResources;
 use Illuminate\Support\Facades\Gate;
+use Kristories\Inspire\Inspire;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -56,8 +58,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            new \GijsG\SystemResources\SystemResources('ram'),
-            new \GijsG\SystemResources\SystemResources('cpu'),
+            new SystemResources('ram'),
+            new SystemResources('cpu'),
+            (new Inspire())->options([
+                'topic'   => null,   // experience, peace, motivational, learning, peace, etc
+                'style'   => 'stacked', // default, stacked, horizontal,
+                'refresh' => true       // true, false
+            ]),
         ];
     }
 

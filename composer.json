@@ -22,6 +22,7 @@
         "gijsg/system-resources": "^1.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "kreait/laravel-firebase": "^3.1",
+        "kristories/nova-inspire": "^1.1",
         "laravel/framework": "^8.12",
         "laravel/nova": "~3.0",
         "laravel/passport": "^10.1",

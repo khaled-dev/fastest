@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "257bd707bbf4641cce09b350cd3acb28",
+    "content-hash": "f32efcca3e5bb25e4d943f652932e635",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2154,6 +2154,50 @@
                 }
             ],
             "time": "2021-02-02T23:32:34+00:00"
+        },
+        {
+            "name": "kristories/nova-inspire",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kristories/nova-inspire.git",
+                "reference": "da0d56758163ba40475e41f7c684923946820bb9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kristories/nova-inspire/zipball/da0d56758163ba40475e41f7c684923946820bb9",
+                "reference": "da0d56758163ba40475e41f7c684923946820bb9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kristories\\Inspire\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kristories\\Inspire\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The best way to connect with your customers is by reaching out and inspiring them",
+            "keywords": [
+                "card",
+                "inspire",
+                "inspiring",
+                "laravel",
+                "nova"
+            ],
+            "time": "2019-06-06T18:20:15+00:00"
         },
         {
             "name": "laravel/framework",
