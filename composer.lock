@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff08e2e96a3421eb8de1a4e709bbc10f",
+    "content-hash": "36b8e5fec887456f73935eb0fa557ccd",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -224,6 +224,56 @@
                 "time"
             ],
             "time": "2021-02-06T03:37:44+00:00"
+        },
+        {
+            "name": "daniel-de-wit/nova-single-record-resource",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/daniel-de-wit/nova-single-record-resource.git",
+                "reference": "76ffadc73ef3b7b82667a45cfc0071488059af5e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/daniel-de-wit/nova-single-record-resource/zipball/76ffadc73ef3b7b82667a45cfc0071488059af5e",
+                "reference": "76ffadc73ef3b7b82667a45cfc0071488059af5e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "DanielDeWit\\NovaSingleRecordResource\\Providers\\NovaSingleRecordResourceServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DanielDeWit\\NovaSingleRecordResource\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniël de Wit",
+                    "email": "daniel@danieldewit.nl",
+                    "homepage": "https://github.com/daniel-de-wit",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Laravel Nova Single Record Resource. Shows a link in the navigation bar directly to the only record of the resource",
+            "homepage": "https://github.com/daniel-de-wit/nova-single-record-resource",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "time": "2021-02-26T13:14:59+00:00"
         },
         {
             "name": "defuse/php-encryption",

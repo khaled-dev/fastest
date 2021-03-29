@@ -26,6 +26,7 @@ Route::get('/car-types', 'ItemsController@carTypes');
 Route::get('/nationalities', 'ItemsController@nationalities');
 Route::get('/territories', 'ItemsController@territories');
 Route::get('/cities/{territory}', 'ItemsController@cities');
+Route::get('/terms-and-conditions', 'SettingController@termsAndConditions');
 
 // Customer
 Route::middleware('auth:customers')->group(function () {

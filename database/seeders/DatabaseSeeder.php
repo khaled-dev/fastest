@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             SuperAdmin::class,
             BankSeeder::class,
             NormalAdmin::class,
-            CarTypeSeeder::class,
             TerritorySeeder::class,
             TerritorySeeder::class,
             NationalitySeeder::class,
