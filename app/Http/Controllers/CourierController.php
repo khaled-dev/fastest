@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CourierResetPassword;
 use App\Models\Courier;
 use App\Services\FirebaseAuth;
 use Illuminate\Support\Facades\Hash;
@@ -97,7 +98,14 @@ class CourierController extends Controller
      */
     public function update(UpdateCourierRequest $request): \Illuminate\Http\Response
     {
-        auth()->user()->update($request->all());
+        /** @var Courier $courier */
+        $courier = auth()->user();
+
+        if ($request->password) {
+            $courier->password = Hash::make($request->password);
+        }
+
+        $courier->fill($request->all());
 
         return response([
             'courier' => new CourierResource( auth()->user()),
@@ -139,6 +147,37 @@ class CourierController extends Controller
 
         return response([
             'courier' => new CourierResource( auth()->user()),
+        ]);
+    }
+
+    /**
+     * Reset password
+     *
+     * @param CourierResetPassword $request
+     * @return \Illuminate\Http\Response
+     */
+    public function resetPassword(CourierResetPassword $request): \Illuminate\Http\Response
+    {
+        // $this->firebaseAuth->verifyToken('fbToken')
+
+        $courier = Courier::where('mobile', $request->mobile)->first();
+
+        if (empty($courier)) {
+            return response([
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    "mobile" => [
+                        "Invalid mobile number."
+                    ]
+                ]
+            ]);
+        }
+
+        $courier->password = Hash::make($request->password);
+
+        return response([
+            'courier'     => new CourierResource($courier),
+            'accessToken' => $courier->createToken('authToken')->accessToken,
         ]);
     }
 

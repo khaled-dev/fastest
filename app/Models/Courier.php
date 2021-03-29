@@ -31,7 +31,6 @@ class Courier extends Model implements HasMedia
         'gender',
         'car_number',
         'iban_number',
-        'password',
     ];
 
     /**

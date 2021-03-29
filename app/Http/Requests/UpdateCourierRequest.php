@@ -32,6 +32,8 @@ class UpdateCourierRequest extends FormRequest
             'nationality_id' => 'required|exists:nationalities,id',
             'bank_id' => 'required|exists:banks,id',
             'name' => 'required|max:225',
+            'new_password' => 'sometimes|max:225|confirmed',
+            'new_password_confirmation' => 'sometimes|max:225',
             'mobile' => [
                 'required',
                 'max:225',

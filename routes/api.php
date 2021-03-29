@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 // Auth
 Route::post('/courier', 'CourierController@store');
 Route::post('/courier-login', 'CourierController@login');
+Route::put('/courier-reset-password', 'CourierController@resetPassword');
 Route::post('/customer-login', 'CustomerController@registerOrLogin');
 
 // Items
