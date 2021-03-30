@@ -105,6 +105,8 @@ class CourierController extends Controller
             $courier->password = Hash::make($request->password);
         }
 
+        $courier->is_active = 1;
+
         $courier->fill($request->all());
 
         return response([

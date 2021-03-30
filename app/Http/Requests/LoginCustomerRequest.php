@@ -24,7 +24,6 @@ class LoginCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'sometimes|max:225',
             'mobile' => 'required|max:225',
             'fbToken' => 'required|string',
         ];
