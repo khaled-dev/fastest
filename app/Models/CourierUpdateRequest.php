@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CourierUpdateRequest extends Model
 {
@@ -26,6 +26,16 @@ class CourierUpdateRequest extends Model
         'car_number',
         'iban_number',
     ];
+
+    /**
+     * Get the courier
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function courier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Courier::class);
+    }
 
     /**
      * Get the territory
