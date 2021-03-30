@@ -27,7 +27,7 @@ class CourierResetPassword extends FormRequest
             'mobile' => 'required|max:225',
             'new_password' => 'required|max:225|confirmed',
             'new_password_confirmation' => 'required|max:225',
-            'fbToken' => 'sometimes|max:225',
+            'fbToken' => 'sometimes|string',
         ];
     }
 }
