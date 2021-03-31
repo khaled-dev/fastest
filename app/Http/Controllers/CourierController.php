@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CourierResetPassword;
 use App\Models\Courier;
 use App\Services\FirebaseAuth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\CourierResource;
 use App\Http\Requests\LoginCourierRequest;
+use App\Http\Requests\CourierResetPassword;
 use App\Http\Requests\UpdateCourierRequest;
 use App\Http\Requests\RegisterCourierRequest;
 use App\Http\Requests\UpdateImagesCourierRequest;
