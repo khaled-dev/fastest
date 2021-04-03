@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Actions\ApproveCourierUpdate;
 
 class CourierUpdateRequest extends Resource
 {
@@ -41,7 +42,9 @@ class CourierUpdateRequest extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Courier', 'courier')->showOnIndex(),
+            BelongsTo::make('Courier', 'courier')
+                ->showOnIndex()
+                ->sortable(),
 
             Text::make('Name', 'name')->sortable(),
 
@@ -79,7 +82,11 @@ class CourierUpdateRequest extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new ApproveCourierUpdate())->canRun(function ($request, $model) {
+                return true;
+            }),
+        ];
     }
 
     /**
