@@ -7,6 +7,7 @@ use App\Services\FirebaseAuth;
 use App\Http\Resources\CustomerResource;
 use App\Http\Requests\LoginCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Http\Requests\UpdateImagesCustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -35,7 +36,18 @@ class CustomerController extends Controller
      */
     public function registerOrLogin(LoginCustomerRequest $request): \Illuminate\Http\Response
     {
-        // $this->firebaseAuth->verifyToken('fbToken')
+        try {
+            $this->firebaseAuth->verifyToken($request->fbToken ?? '');
+        } catch (\Exception $exception) {
+            return response([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'fbToken' => [
+                        $exception->getMessage()
+                    ],
+                ],
+            ], 422);
+        }
 
         $customer = Customer::where('mobile', $request->mobile)->first();
 
@@ -77,4 +89,28 @@ class CustomerController extends Controller
             'customer' => new CustomerResource(auth()->user())
         ];
     }
+
+    /**
+     * Update customer's images
+     *
+     * @param UpdateImagesCustomerRequest $request
+     * @return \Illuminate\Http\Response
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
+     */
+    public function updateImages(UpdateImagesCustomerRequest $request): \Illuminate\Http\Response
+    {
+        /** @var Customer $customer */
+        $customer = auth()->user();
+
+        if ($request->exists('profile_picture')) {
+            $customer->addMediaFromRequest('profile_picture')
+                ->toMediaCollection('profile_picture');
+        }
+
+        return response([
+            'customer' => new CustomerResource( auth()->user()),
+        ]);
+    }
+
 }

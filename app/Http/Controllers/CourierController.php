@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CourierResetPassword;
 use App\Models\Courier;
 use App\Services\FirebaseAuth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\CourierResource;
 use App\Http\Requests\LoginCourierRequest;
+use App\Http\Requests\CourierResetPassword;
 use App\Http\Requests\UpdateCourierRequest;
 use App\Http\Requests\RegisterCourierRequest;
 use App\Http\Requests\UpdateImagesCourierRequest;
@@ -39,7 +39,18 @@ class CourierController extends Controller
      */
     public function store(RegisterCourierRequest $request): \Illuminate\Http\Response
     {
-        // $this->firebaseAuth->verifyToken('fbToken')
+        try {
+            $this->firebaseAuth->verifyToken($request->fbToken ?? '');
+        } catch (\Exception $exception) {
+            return response([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'fbToken' => [
+                        $exception->getMessage()
+                    ],
+                ],
+            ], 422);
+        }
 
         $courier = Courier::create($request->all());
 
@@ -57,7 +68,6 @@ class CourierController extends Controller
      */
     public function login(LoginCourierRequest $request): \Illuminate\Http\Response
     {
-        // $this->firebaseAuth->verifyToken('fbToken')
 
         $courier = Courier::where('mobile', $request->mobile)->first();
 
@@ -69,7 +79,7 @@ class CourierController extends Controller
                         "Invalid mobile or password."
                     ]
                 ]
-            ]);
+            ], 401);
         }
 
         return response([
@@ -104,6 +114,8 @@ class CourierController extends Controller
         if ($request->password) {
             $courier->password = Hash::make($request->password);
         }
+
+        $courier->is_active = 1;
 
         $courier->fill($request->all());
 

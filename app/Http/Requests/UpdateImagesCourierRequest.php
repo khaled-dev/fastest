@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Courier;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateImagesCourierRequest extends FormRequest
@@ -13,7 +14,8 @@ class UpdateImagesCourierRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        // must be courier to use this request
+        return $this->user() instanceof Courier;
     }
 
     /**

@@ -39,4 +39,15 @@ class FirebaseAuth
     {
         return $this->auth->verifyIdToken($idToken);
     }
+
+    /**
+     *  Parse FB token
+     *
+     * @param string $idToken
+     * @return \Lcobucci\JWT\Token
+     */
+    public function parseToken(string $idToken): Token
+    {
+        return $this->auth->parseToken($idToken);
+    }
 }

@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use App\Models\Customer;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateCustomerRequest extends FormRequest
+class UpdateImagesCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,12 +26,7 @@ class UpdateCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:225',
-            'mobile' => [
-                'required|',
-                'max:225',
-                Rule::unique('customers')->ignore($this->user()->id)
-            ],
+            'profile_picture' => 'sometimes|image',
         ];
     }
 }
