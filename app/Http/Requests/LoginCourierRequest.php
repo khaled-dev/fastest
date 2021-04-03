@@ -26,7 +26,6 @@ class LoginCourierRequest extends FormRequest
         return [
             'mobile' => 'required|max:225',
             'password' => 'required|max:225',
-            'fbToken' => 'sometimes|string',
         ];
     }
 }

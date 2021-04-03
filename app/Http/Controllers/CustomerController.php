@@ -36,7 +36,18 @@ class CustomerController extends Controller
      */
     public function registerOrLogin(LoginCustomerRequest $request): \Illuminate\Http\Response
     {
-        // $this->firebaseAuth->verifyToken('fbToken')
+        try {
+            $this->firebaseAuth->verifyToken($request->fbToken ?? '');
+        } catch (\Exception $exception) {
+            return response([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'fbToken' => [
+                        $exception->getMessage()
+                    ],
+                ],
+            ], 422);
+        }
 
         $customer = Customer::where('mobile', $request->mobile)->first();
 

@@ -39,7 +39,18 @@ class CourierController extends Controller
      */
     public function store(RegisterCourierRequest $request): \Illuminate\Http\Response
     {
-        // $this->firebaseAuth->verifyToken('fbToken')
+        try {
+            $this->firebaseAuth->verifyToken($request->fbToken ?? '');
+        } catch (\Exception $exception) {
+            return response([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'fbToken' => [
+                        $exception->getMessage()
+                    ],
+                ],
+            ], 422);
+        }
 
         $courier = Courier::create($request->all());
 
@@ -57,7 +68,6 @@ class CourierController extends Controller
      */
     public function login(LoginCourierRequest $request): \Illuminate\Http\Response
     {
-        // $this->firebaseAuth->verifyToken('fbToken')
 
         $courier = Courier::where('mobile', $request->mobile)->first();
 
@@ -69,7 +79,7 @@ class CourierController extends Controller
                         "Invalid mobile or password."
                     ]
                 ]
-            ]);
+            ], 401);
         }
 
         return response([
