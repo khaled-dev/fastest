@@ -39,10 +39,18 @@ class UpdateCourierRequest extends FormRequest
                 'max:225',
                 Rule::unique('couriers')->ignore($this->user()->id)
             ],
-            'national_number' => 'required|max:225',
+            'national_number' => [
+                'required',
+                'max:225',
+                Rule::unique('couriers')->ignore($this->user()->id)
+            ],
             'gender' => 'required|in:male,female',
             'car_number' => 'required|max:225',
-            'iban_number' => 'required|max:225',
+            'iban_number' => [
+                'required',
+                'max:225',
+                Rule::unique('couriers')->ignore($this->user()->id)
+            ],
         ];
     }
 }

@@ -111,13 +111,13 @@ class CourierController extends Controller
         /** @var Courier $courier */
         $courier = auth()->user();
 
-        if ($request->password) {
-            $courier->password = Hash::make($request->password);
+        if ($request->new_password) {
+            $courier->password = Hash::make($request->new_password);
         }
 
         $courier->is_active = 1;
 
-        $courier->fill($request->all());
+        $courier->fill($request->all())->save();
 
         return response([
             'courier' => new CourierResource( auth()->user()),
