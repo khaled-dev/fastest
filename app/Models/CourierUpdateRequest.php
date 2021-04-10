@@ -24,7 +24,7 @@ class CourierUpdateRequest extends Model
         'national_number',
         'gender',
         'car_number',
-        'iban_number',
+        'iban',
     ];
 
     /**

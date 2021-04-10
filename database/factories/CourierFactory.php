@@ -38,10 +38,11 @@ class CourierFactory extends Factory
             'national_number'    => $this->faker->randomNumber(9),
             'gender'             => 'male',
             'car_number'         => $this->faker->randomNumber(4),
-            'iban_number'        => $this->faker->randomNumber(6),
+            'iban'               => $this->faker->randomNumber(6),
             'password'           => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'is_active'          => false,
-            'has_admin_approved' => false,
+            'is_banned'          => false,
+            'has_admin_approval' => false,
         ];
     }
 }

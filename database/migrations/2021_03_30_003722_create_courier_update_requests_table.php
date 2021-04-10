@@ -28,7 +28,7 @@ class CreateCourierUpdateRequestsTable extends Migration
             $table->string('national_number')->unique()->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->string('car_number')->nullable();
-            $table->string('iban_number')->nullable();
+            $table->string('iban')->nullable();
 
             $table->foreign('courier_id')
                 ->references('id')

@@ -85,7 +85,7 @@ class Courier extends Resource
                 ->displayUsingLabels()
                 ->sortable(),
 
-            Text::make('IBAN Nnumber', 'iban_number')->hideFromIndex(),
+            Text::make('IBAN', 'iban')->hideFromIndex(),
 
             Text::make('Car Number', 'car_number')->hideFromIndex(),
 

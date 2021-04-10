@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Courier;
+use Illuminate\Http\Response;
 use App\Services\FirebaseAuth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\CourierResource;
@@ -35,9 +36,9 @@ class CourierController extends Controller
      * Register a new courier
      *
      * @param RegisterCourierRequest $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function store(RegisterCourierRequest $request): \Illuminate\Http\Response
+    public function store(RegisterCourierRequest $request): Response
     {
         try {
             $this->firebaseAuth->verifyToken($request->fbToken ?? '');
@@ -52,7 +53,9 @@ class CourierController extends Controller
             ], 422);
         }
 
-        $courier = Courier::create($request->all());
+        $courier = new Courier();
+        $courier->mobile = $request->mobile;
+        $courier->save();
 
         return response([
             'courier'     => new CourierResource($courier),
@@ -64,9 +67,9 @@ class CourierController extends Controller
      * Login courier
      *
      * @param LoginCourierRequest $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function login(LoginCourierRequest $request): \Illuminate\Http\Response
+    public function login(LoginCourierRequest $request): Response
     {
 
         $courier = Courier::where('mobile', $request->mobile)->first();
@@ -104,20 +107,52 @@ class CourierController extends Controller
      * Update courier
      *
      * @param UpdateCourierRequest $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(UpdateCourierRequest $request): \Illuminate\Http\Response
+    public function update(UpdateCourierRequest $request): Response
     {
         /** @var Courier $courier */
         $courier = auth()->user();
 
-        if ($request->password) {
-            $courier->password = Hash::make($request->password);
+        if ($request->new_password) {
+            $courier->password = Hash::make($request->new_password);
         }
 
         $courier->is_active = 1;
 
-        $courier->fill($request->all());
+        $courier->fill($request->all())->save();
+
+        return response([
+            'courier' => new CourierResource( auth()->user()),
+        ]);
+    }
+
+    /**
+     * Story Update request for courier
+     *
+     * @param UpdateCourierRequest $request
+     * @return Response
+     */
+    public function storeUpdateRequest(UpdateCourierRequest $request): Response
+    {
+        /** @var Courier $courier */
+        $courier = auth()->user();
+
+        // Update password
+        if ($request->new_password) {
+            $courier->password = Hash::make($request->new_password);
+            $courier->save();
+        }
+
+        // Store courierUpdateRequest
+        $courier->courierUpdateRequest()->updateOrCreate(
+            ['courier_id' => $courier->id],
+            $request->except([
+                'new_password',
+                'new_password_confirmation',
+                'mobile'
+            ])
+        );
 
         return response([
             'courier' => new CourierResource( auth()->user()),
@@ -128,11 +163,11 @@ class CourierController extends Controller
      * Update courier's images
      *
      * @param UpdateImagesCourierRequest $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
-    public function updateImages(UpdateImagesCourierRequest $request): \Illuminate\Http\Response
+    public function updateImages(UpdateImagesCourierRequest $request): Response
     {
         /** @var Courier $courier */
         $courier = auth()->user();
@@ -166,9 +201,9 @@ class CourierController extends Controller
      * Reset password
      *
      * @param CourierResetPassword $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function resetPassword(CourierResetPassword $request): \Illuminate\Http\Response
+    public function resetPassword(CourierResetPassword $request): Response
     {
         // $this->firebaseAuth->verifyToken('fbToken')
 

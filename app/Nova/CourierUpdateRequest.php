@@ -58,7 +58,7 @@ class CourierUpdateRequest extends Resource
                 ->displayUsingLabels()
                 ->sortable(),
 
-            Text::make('IBAN Nnumber', 'iban_number')->hideFromIndex(),
+            Text::make('IBAN Nnumber', 'iban')->hideFromIndex(),
 
             Text::make('Car Number', 'car_number')->hideFromIndex(),
 

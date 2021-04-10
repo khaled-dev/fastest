@@ -34,15 +34,10 @@ class UpdateCourierRequest extends FormRequest
             'name' => 'required|max:225',
             'new_password' => 'sometimes|max:225|confirmed',
             'new_password_confirmation' => 'sometimes|max:225',
-            'mobile' => [
-                'required',
-                'max:225',
-                Rule::unique('couriers')->ignore($this->user()->id)
-            ],
             'national_number' => 'required|max:225',
             'gender' => 'required|in:male,female',
             'car_number' => 'required|max:225',
-            'iban_number' => 'required|max:225',
+            'iban' => 'required|max:225',
         ];
     }
 }

@@ -26,11 +26,10 @@ class Courier extends Model implements HasMedia
         'nationality_id',
         'bank_id',
         'name',
-        'mobile',
         'national_number',
         'gender',
         'car_number',
-        'iban_number',
+        'iban',
     ];
 
     /**
@@ -50,6 +49,16 @@ class Courier extends Model implements HasMedia
     protected $casts = [
         'created_at' => 'datetime',
     ];
+
+    /**
+     * Get the CourierUpdateRequest
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     */
+    public function courierUpdateRequest(): \Illuminate\Database\Eloquent\Relations\hasOne
+    {
+        return $this->hasOne(CourierUpdateRequest::class);
+    }
 
     /**
      * Get the territory

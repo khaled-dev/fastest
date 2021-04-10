@@ -40,7 +40,7 @@ class CourierUpdateRequestFactory extends Factory
             'national_number' => $this->faker->randomNumber(9),
             'gender'          => 'male',
             'car_number'      => $this->faker->randomNumber(4),
-            'iban_number'     => $this->faker->randomNumber(6),
+            'iban'     => $this->faker->randomNumber(6),
         ];
     }
 }
