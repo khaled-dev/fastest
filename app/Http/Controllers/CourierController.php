@@ -11,6 +11,7 @@ use App\Http\Requests\CourierResetPassword;
 use App\Http\Requests\UpdateCourierRequest;
 use App\Services\FirebaseAuth\FirebaseAuth;
 use App\Http\Requests\RegisterCourierRequest;
+use App\Http\Requests\UpdateCourierMobileRequest;
 use App\Http\Requests\UpdateImagesCourierRequest;
 
 class CourierController extends Controller
@@ -114,6 +115,29 @@ class CourierController extends Controller
             'courier' => new CourierResource( auth()->user()),
         ]);
     }
+
+    /**
+     * Update courier's mobile
+     *
+     * @param UpdateCourierMobileRequest $request
+     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function updateMobile(UpdateCourierMobileRequest $request): Response
+    {
+        $this->firebaseAuth->verifyToken($request->fb_token ?? '');
+
+        /** @var Courier $courier */
+        $courier = auth()->user();
+
+        $courier->mobile = $request->mobile;
+        $courier->save();
+
+        return $this->successResponse([
+            'courier' => new CourierResource( auth()->user()),
+        ]);
+    }
+
 
     /**
      * Story Update request for courier

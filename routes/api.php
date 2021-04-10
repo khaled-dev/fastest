@@ -39,6 +39,7 @@ Route::middleware('auth:customers')->group(function () {
 Route::middleware('auth:couriers')->group(function () {
     Route::get('/couriers', 'CourierController@show');
     Route::put('/couriers/update', 'CourierController@update');
+    Route::put('/couriers/update-mobile', 'CourierController@updateMobile');
     Route::post('/couriers/update-request', 'CourierController@storeUpdateRequest');
     Route::post('/couriers/update-images', 'CourierController@updateImages');
 });
