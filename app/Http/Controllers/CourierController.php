@@ -40,7 +40,7 @@ class CourierController extends Controller
      */
     public function store(RegisterCourierRequest $request): Response
     {
-        $this->firebaseAuth->verifyToken($request->fbToken ?? '');
+        $this->firebaseAuth->verifyToken($request->fb_token ?? '');
 
         $courier = new Courier();
         $courier->mobile = $request->mobile;
@@ -213,7 +213,7 @@ class CourierController extends Controller
      */
     public function resetPassword(CourierResetPassword $request): Response
     {
-         $this->firebaseAuth->verifyToken('fbToken');
+         $this->firebaseAuth->verifyToken($request->fb_token ?? '');
 
         $courier = Courier::where('mobile', $request->mobile)->first();
 

@@ -37,7 +37,7 @@ class CustomerController extends Controller
      */
     public function registerOrLogin(LoginCustomerRequest $request): Response
     {
-        $this->firebaseAuth->verifyToken($request->fbToken ?? '');
+        $this->firebaseAuth->verifyToken($request->fb_token ?? '');
 
         $customer = Customer::where('mobile', $request->mobile)->first();
 
