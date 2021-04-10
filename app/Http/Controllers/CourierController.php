@@ -79,9 +79,9 @@ class CourierController extends Controller
     /**
      * Show Courier resource
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function show(): \Illuminate\Http\Response
+    public function show(): Response
     {
         return $this->successResponse([
             'courier' => new CourierResource(auth()->user())
@@ -93,11 +93,14 @@ class CourierController extends Controller
      *
      * @param UpdateCourierRequest $request
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateCourierRequest $request): Response
     {
         /** @var Courier $courier */
         $courier = auth()->user();
+
+        $this->authorize('update', $courier);
 
         if ($request->new_password) {
             $courier->password = Hash::make($request->new_password);

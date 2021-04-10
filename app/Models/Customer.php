@@ -5,14 +5,12 @@ namespace App\Models;
 use Spatie\MediaLibrary\HasMedia;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Customer extends Model implements HasMedia
+class Customer extends User implements HasMedia
 {
-    use HasFactory, HasApiTokens, Authenticatable, InteractsWithMedia;
+    use HasApiTokens, Authenticatable, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.

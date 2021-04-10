@@ -58,6 +58,17 @@ class User extends Authenticatable
         return $this->type === self::SUPER_ADMIN;
     }
 
+
+    /**
+     * Check if this user is admin.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return in_array($this->type, [self::NORMAL_ADMIN, self::SUPER_ADMIN]);
+    }
+
     /**
      * Check if this user is the same as the given user.
      *

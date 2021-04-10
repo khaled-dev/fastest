@@ -4,35 +4,36 @@
 namespace App\Services\FirebaseAuth\Concerns;
 
 
+use Illuminate\Http\Response;
+
 trait ExceptionHandler
 {
+
+    /**
+     * Generate http response for unauthorized action
+     *
+     * @param $exception
+     * @return Response
+     */
+    protected function AuthorizationExceptionResponse($exception): Response
+    {
+        return $this->exceptionResponse($exception, 401);
+    }
+
     /**
      * Generate http response for invalid fbToken field
      *
      * @param $exception
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @param int $status
+     * @return Response
      */
-    protected function invalidFbTokenResponse($exception)
-    {
-        return $this->invalidArgumentResponse('fbToken', $exception);
-    }
-
-    /**
-     * Generate http response for invalid argument
-     *
-     * @param $field
-     * @param $exception
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     */
-    private function invalidArgumentResponse($field, $exception)
+    private function exceptionResponse($exception, int $status = 400): Response
     {
         return response([
-            'message' => 'The given data was invalid.',
-            'errors' => [
-                $field => [
-                    $exception->getMessage()
-                ],
-            ],
-        ], 422);
+            'message' => $exception->getMessage(),
+            'data' => [],
+            'metadata' => [],
+        ], $status);
     }
+
 }
