@@ -81,6 +81,7 @@ class CourierController extends Controller
         ], [
             'show' => route('couriers.show'),
             'update' => route('couriers.update_request'),
+            'updateMobile' => route('couriers.update_mobile'),
             'updateImages' => route('couriers.update_images'),
         ]);
     }
@@ -96,6 +97,7 @@ class CourierController extends Controller
             'courier' => new CourierResource(auth()->user())
         ], [
             'update' => route('couriers.update_request'),
+            'updateMobile' => route('couriers.update_mobile'),
             'updateImages' => route('couriers.update_images'),
         ]);
     }
@@ -126,6 +128,7 @@ class CourierController extends Controller
             'courier' => new CourierResource( auth()->user()),
         ], [
             'show' => route('couriers.show'),
+            'updateMobile' => route('couriers.update_mobile'),
             'updateImages' => route('couriers.update_images'),
         ]);
     }
@@ -149,6 +152,10 @@ class CourierController extends Controller
 
         return $this->successResponse([
             'courier' => new CourierResource( auth()->user()),
+        ],[
+            'show' => route('couriers.show'),
+            'update' => route('couriers.update_request'),
+            'updateImages' => route('couriers.update_images'),
         ]);
     }
 
@@ -184,6 +191,7 @@ class CourierController extends Controller
             'courier' => new CourierResource( auth()->user()),
         ], [
             'show' => route('couriers.show'),
+            'updateMobile' => route('couriers.update_mobile'),
             'updateImages' => route('couriers.update_images'),
         ]);
     }
@@ -225,6 +233,7 @@ class CourierController extends Controller
             'courier' => new CourierResource( auth()->user()),
         ], [
             'show' => route('couriers.show'),
+            'updateMobile' => route('couriers.update_mobile'),
             'update' => route('couriers.update_request'),
         ]);
     }
