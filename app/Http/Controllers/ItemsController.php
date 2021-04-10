@@ -19,11 +19,6 @@ class ItemsController extends Controller
 
     /**
      *
-     * @bodyParam banks object[].
-     * @bodyParam banks.id string required The content of the post.
-     * @bodyParam banks.name_ar string required The content of the post.
-     * @bodyParam banks.name_en string required The content of the post.
-     * @bodyParam banks.created_at string required The content of the post.
      * @return Response
      */
     public function banks(): Response
