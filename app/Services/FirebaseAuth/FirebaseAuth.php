@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Services\FirebaseAuth;
 
-use Kreait\Firebase\Auth;
 use Lcobucci\JWT\Token;
+use Kreait\Firebase\Auth;
 
 class FirebaseAuth
 {
@@ -21,33 +21,33 @@ class FirebaseAuth
     /**
      * Generate new FB token
      *
-     * @param string $id
+     * @param string $uid
      * @return \Lcobucci\JWT\Token
      */
-    public function generateToken(string $id): Token
+    public function generateToken(string $uid): Token
     {
-        return $this->auth->createCustomToken($id);
+        return $this->auth->createCustomToken($uid);
     }
 
     /**
      * Verify FB token
      *
-     * @param string $idToken
+     * @param string $uidToken
      * @return \Lcobucci\JWT\Token
      */
-    public function verifyToken(string $idToken): Token
+    public function verifyToken(string $uidToken): Token
     {
-        return $this->auth->verifyIdToken($idToken);
+        return $this->auth->verifyIdToken($uidToken);
     }
 
     /**
      *  Parse FB token
      *
-     * @param string $idToken
+     * @param string $uidToken
      * @return \Lcobucci\JWT\Token
      */
-    public function parseToken(string $idToken): Token
+    public function parseToken(string $uidToken): Token
     {
-        return $this->auth->parseToken($idToken);
+        return $this->auth->parseToken($uidToken);
     }
 }

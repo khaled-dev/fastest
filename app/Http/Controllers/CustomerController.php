@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
-use App\Services\FirebaseAuth;
+use Illuminate\Http\Response;
 use App\Http\Resources\CustomerResource;
+use App\Services\FirebaseAuth\FirebaseAuth;
 use App\Http\Requests\LoginCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Http\Requests\UpdateImagesCustomerRequest;
@@ -32,22 +33,11 @@ class CustomerController extends Controller
      * Register a new customer or login with an old one
      *
      * @param LoginCustomerRequest $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function registerOrLogin(LoginCustomerRequest $request): \Illuminate\Http\Response
+    public function registerOrLogin(LoginCustomerRequest $request): Response
     {
-        try {
-            $this->firebaseAuth->verifyToken($request->fbToken ?? '');
-        } catch (\Exception $exception) {
-            return response([
-                'message' => 'The given data was invalid.',
-                'errors' => [
-                    'fbToken' => [
-                        $exception->getMessage()
-                    ],
-                ],
-            ], 422);
-        }
+        $this->firebaseAuth->verifyToken($request->fbToken ?? '');
 
         $customer = Customer::where('mobile', $request->mobile)->first();
 
@@ -55,50 +45,48 @@ class CustomerController extends Controller
             $customer = Customer::create($request->all());
         }
 
-        $accessToken = $customer->createToken('authToken')->accessToken;
-
-        return response([
+        return $this->successResponse([
             'customer' => new CustomerResource($customer),
-            'accessToken' => $accessToken,
+            'accessToken' => $customer->createToken('authToken')->accessToken,
         ]);
     }
 
     /**
       * Show customer resource
      *
-     * @return CustomerResource[]
+     * @return Response
      */
-    public function show(): array
+    public function show(): Response
     {
-        return [
+        return $this->successResponse([
             'customer' => new CustomerResource(auth()->user())
-        ];
+        ]);
     }
 
     /**
      * Update customer
      *
      * @param UpdateCustomerRequest $request
-     * @return CustomerResource[]
+     * @return Response
      */
-    public function update(UpdateCustomerRequest $request): array
+    public function update(UpdateCustomerRequest $request): Response
     {
         auth()->user()->update($request->all());
 
-        return [
+        return $this->successResponse([
             'customer' => new CustomerResource(auth()->user())
-        ];
+        ]);
     }
 
     /**
      * Update customer's images
      *
      * @param UpdateImagesCustomerRequest $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
-    public function updateImages(UpdateImagesCustomerRequest $request): \Illuminate\Http\Response
+    public function updateImages(UpdateImagesCustomerRequest $request): Response
     {
         /** @var Customer $customer */
         $customer = auth()->user();
@@ -108,7 +96,7 @@ class CustomerController extends Controller
                 ->toMediaCollection('profile_picture');
         }
 
-        return response([
+        return $this->successResponse([
             'customer' => new CustomerResource( auth()->user()),
         ]);
     }
