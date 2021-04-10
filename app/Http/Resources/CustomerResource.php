@@ -18,7 +18,7 @@ class CustomerResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'mobile' => $this->mobile,
-            'profilePicture' => $this->getFirstMediaUrl('profile_picture'),
+            'profileImage' => $this->getFirstMediaUrl('profile_image'),
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];

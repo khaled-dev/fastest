@@ -101,9 +101,9 @@ class CustomerController extends Controller
         /** @var Customer $customer */
         $customer = auth()->user();
 
-        if ($request->exists('profile_picture')) {
-            $customer->addMediaFromRequest('profile_picture')
-                ->toMediaCollection('profile_picture');
+        if ($request->exists('profile_image')) {
+            $customer->addMediaFromRequest('profile_image')
+                ->toMediaCollection('profile_image');
         }
 
         return $this->successResponse([
