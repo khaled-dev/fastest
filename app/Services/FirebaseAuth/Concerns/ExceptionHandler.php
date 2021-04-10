@@ -17,7 +17,7 @@ trait ExceptionHandler
      */
     protected function AuthorizationExceptionResponse($exception): Response
     {
-        return $this->exceptionResponse($exception, 401);
+        return $this->exceptionResponse($exception, 403);
     }
 
     /**
