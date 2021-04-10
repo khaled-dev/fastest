@@ -37,7 +37,7 @@ class CustomerController extends Controller
      */
     public function registerOrLogin(LoginCustomerRequest $request): Response
     {
-        $this->firebaseAuth->verifyToken($request->fbToken ?? '');
+        $this->firebaseAuth->verifyToken($request->fb_token ?? '');
 
         $customer = Customer::where('mobile', $request->mobile)->first();
 
@@ -48,6 +48,10 @@ class CustomerController extends Controller
         return $this->successResponse([
             'customer' => new CustomerResource($customer),
             'accessToken' => $customer->createToken('authToken')->accessToken,
+        ], [
+            'show' => route('customers.show'),
+            'update' => route('customers.update'),
+            'updateImages' => route('customers.update_images'),
         ]);
     }
 
@@ -60,6 +64,9 @@ class CustomerController extends Controller
     {
         return $this->successResponse([
             'customer' => new CustomerResource(auth()->user())
+        ], [
+            'update' => route('customers.update'),
+            'updateImages' => route('customers.update_images'),
         ]);
     }
 
@@ -75,6 +82,9 @@ class CustomerController extends Controller
 
         return $this->successResponse([
             'customer' => new CustomerResource(auth()->user())
+        ], [
+            'show' => route('customers.show'),
+            'updateImages' => route('customers.update_images'),
         ]);
     }
 
@@ -91,13 +101,16 @@ class CustomerController extends Controller
         /** @var Customer $customer */
         $customer = auth()->user();
 
-        if ($request->exists('profile_picture')) {
-            $customer->addMediaFromRequest('profile_picture')
-                ->toMediaCollection('profile_picture');
+        if ($request->exists('profile_image')) {
+            $customer->addMediaFromRequest('profile_image')
+                ->toMediaCollection('profile_image');
         }
 
         return $this->successResponse([
-            'customer' => new CustomerResource( auth()->user()),
+            'customer' => new CustomerResource(auth()->user()),
+        ], [
+            'show' => route('customers.show'),
+            'update' => route('customers.update'),
         ]);
     }
 

@@ -40,7 +40,7 @@ class CourierController extends Controller
      */
     public function store(RegisterCourierRequest $request): Response
     {
-        $this->firebaseAuth->verifyToken($request->fbToken ?? '');
+        $this->firebaseAuth->verifyToken($request->fb_token ?? '');
 
         $courier = new Courier();
         $courier->mobile = $request->mobile;
@@ -49,7 +49,9 @@ class CourierController extends Controller
         return $this->successResponse([
             'courier'     => new CourierResource($courier),
             'accessToken' => $courier->createToken('authToken')->accessToken,
-        ], [],201);
+        ], [
+            'update' => route('couriers.update'),
+        ], 201);
     }
 
     /**
@@ -67,12 +69,18 @@ class CourierController extends Controller
                 "mobile" => [
                     "Invalid mobile or password."
                 ]
+            ], [
+                'resetPassword' => route('couriers.reset_password'),
             ]);
         }
 
         return $this->successResponse([
             'courier'     => new CourierResource($courier),
             'accessToken' => $courier->createToken('authToken')->accessToken,
+        ], [
+            'show' => route('couriers.show'),
+            'update' => route('couriers.update_request'),
+            'updateImages' => route('couriers.update_images'),
         ]);
     }
 
@@ -85,6 +93,9 @@ class CourierController extends Controller
     {
         return $this->successResponse([
             'courier' => new CourierResource(auth()->user())
+        ], [
+            'update' => route('couriers.update_request'),
+            'updateImages' => route('couriers.update_images'),
         ]);
     }
 
@@ -112,6 +123,9 @@ class CourierController extends Controller
 
         return $this->successResponse([
             'courier' => new CourierResource( auth()->user()),
+        ], [
+            'show' => route('couriers.show'),
+            'updateImages' => route('couriers.update_images'),
         ]);
     }
 
@@ -144,6 +158,9 @@ class CourierController extends Controller
 
         return $this->successResponse([
             'courier' => new CourierResource( auth()->user()),
+        ], [
+            'show' => route('couriers.show'),
+            'updateImages' => route('couriers.update_images'),
         ]);
     }
 
@@ -160,28 +177,31 @@ class CourierController extends Controller
         /** @var Courier $courier */
         $courier = auth()->user();
 
-        if ($request->exists('profile_picture')) {
-            $courier->addMediaFromRequest('profile_picture')
-                ->toMediaCollection('profile_picture');
+        if ($request->exists('profile_image')) {
+            $courier->addMediaFromRequest('profile_image')
+                ->toMediaCollection('profile_image');
         }
 
-        if ($request->exists('national_card_picture')) {
-            $courier->addMediaFromRequest('national_card_picture')
-                ->toMediaCollection('national_card_picture');
+        if ($request->exists('national_card_image')) {
+            $courier->addMediaFromRequest('national_card_image')
+                ->toMediaCollection('national_card_image');
         }
 
-        if ($request->exists('car_license_picture')) {
-            $courier->addMediaFromRequest('car_license_picture')
-                ->toMediaCollection('car_license_picture');
+        if ($request->exists('car_license_image')) {
+            $courier->addMediaFromRequest('car_license_image')
+                ->toMediaCollection('car_license_image');
         }
 
-        if ($request->exists('driving_license_picture')) {
-            $courier->addMediaFromRequest('driving_license_picture')
-                ->toMediaCollection('driving_license_picture');
+        if ($request->exists('driving_license_image')) {
+            $courier->addMediaFromRequest('driving_license_image')
+                ->toMediaCollection('driving_license_image');
         }
 
         return $this->successResponse([
             'courier' => new CourierResource( auth()->user()),
+        ], [
+            'show' => route('couriers.show'),
+            'update' => route('couriers.update_request'),
         ]);
     }
 
@@ -193,7 +213,7 @@ class CourierController extends Controller
      */
     public function resetPassword(CourierResetPassword $request): Response
     {
-         $this->firebaseAuth->verifyToken('fbToken');
+         $this->firebaseAuth->verifyToken($request->fb_token ?? '');
 
         $courier = Courier::where('mobile', $request->mobile)->first();
 
@@ -205,11 +225,13 @@ class CourierController extends Controller
             ]);
         }
 
-        $courier->password = Hash::make($request->password);
+        $courier->password = Hash::make($request->new_password);
 
         return $this->successResponse([
             'courier'     => new CourierResource($courier),
             'accessToken' => $courier->createToken('authToken')->accessToken,
+        ], [
+            'login' => route('couriers.login'),
         ]);
     }
 

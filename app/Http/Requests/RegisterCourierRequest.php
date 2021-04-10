@@ -25,7 +25,7 @@ class RegisterCourierRequest extends FormRequest
     {
         return [
             'mobile' => 'required|max:225|unique:couriers',
-            'fbToken' => 'required|string',
+            'fb_token' => 'required|string',
         ];
     }
 }

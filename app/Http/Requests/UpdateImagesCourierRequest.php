@@ -26,10 +26,10 @@ class UpdateImagesCourierRequest extends FormRequest
     public function rules()
     {
         return [
-            'profile_picture' => 'sometimes|image',
-            'national_card_picture' => 'sometimes|image',
-            'car_form_picture' => 'sometimes|image',
-            'driving_license_picture' => 'sometimes|image',
+            'profile_image' => 'sometimes|image',
+            'national_card_image' => 'sometimes|image',
+            'car_form_image' => 'sometimes|image',
+            'driving_license_image' => 'sometimes|image',
         ];
     }
 }

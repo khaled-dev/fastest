@@ -24,13 +24,15 @@ trait ResponseBuilder
      * Generate validation error response
      *
      * @param array $errors
+     * @param array $metadata
      * @return Response
      */
-    protected function validationErrorResponse(array $errors): Response
+    protected function validationErrorResponse(array $errors, array $metadata = []): Response
     {
         return response([
             "message" => "The given data was invalid.",
-            "errors" => $errors
+            "errors" => $errors,
+            "metadata" => $metadata
         ], 422);
     }
 

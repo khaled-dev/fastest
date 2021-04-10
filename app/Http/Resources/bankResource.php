@@ -16,9 +16,10 @@ class bankResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name_ar' => $this->name_ar,
-            'name_en' => $this->name_en,
-            'created_at' => $this->created_at->diffForHumans(),
+            'nameAr' => $this->name_ar,
+            'nameEn' => $this->name_en,
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at,
         ];
     }
 }

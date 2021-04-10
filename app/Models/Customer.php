@@ -52,7 +52,7 @@ class Customer extends User implements HasMedia
     public function registerMediaCollections(): void
     {
         $this
-            ->addMediaCollection('profile_picture')
+            ->addMediaCollection('profile_image')
             ->singleFile();
     }
 }

@@ -18,8 +18,9 @@ class CustomerResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'mobile' => $this->mobile,
-            'profile_picture' => $this->getFirstMediaUrl('profile_picture'),
-            'created_at' => $this->created_at->diffForHumans(),
+            'profileImage' => $this->getFirstMediaUrl('profile_image'),
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at,
         ];
     }
 }

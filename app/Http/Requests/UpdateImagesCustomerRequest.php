@@ -26,7 +26,7 @@ class UpdateImagesCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'profile_picture' => 'sometimes|image',
+            'profile_image' => 'sometimes|image',
         ];
     }
 }
