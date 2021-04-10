@@ -77,10 +77,18 @@ class Courier extends Resource
                 ->displayUsingLabels()
                 ->sortable(),
 
-            Select::make('Has Admin Approved', 'has_admin_approved')
+            Select::make('Has Admin Approval', 'has_admin_approval')
                 ->options([
                     '0' => 'Not Approved',
                     '1' => 'Approved',
+                ])
+                ->displayUsingLabels()
+                ->sortable(),
+            
+            Select::make('Is Banned', 'is_banned')
+                ->options([
+                    '0' => 'Not Banned',
+                    '1' => 'Banned',
                 ])
                 ->displayUsingLabels()
                 ->sortable(),
