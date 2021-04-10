@@ -132,19 +132,19 @@ class Courier extends User implements HasMedia
     public function registerMediaCollections(): void
     {
         $this
-            ->addMediaCollection('profile_picture')
+            ->addMediaCollection('profile_image')
             ->singleFile();
 
         $this
-            ->addMediaCollection('national_card_picture')
+            ->addMediaCollection('national_card_image')
             ->singleFile();
 
         $this
-            ->addMediaCollection('car_license_picture')
+            ->addMediaCollection('car_license_image')
             ->singleFile();
 
         $this
-            ->addMediaCollection('driving_license_picture')
+            ->addMediaCollection('driving_license_image')
             ->singleFile();
     }
 

@@ -177,24 +177,24 @@ class CourierController extends Controller
         /** @var Courier $courier */
         $courier = auth()->user();
 
-        if ($request->exists('profile_picture')) {
-            $courier->addMediaFromRequest('profile_picture')
-                ->toMediaCollection('profile_picture');
+        if ($request->exists('profile_image')) {
+            $courier->addMediaFromRequest('profile_image')
+                ->toMediaCollection('profile_image');
         }
 
-        if ($request->exists('national_card_picture')) {
-            $courier->addMediaFromRequest('national_card_picture')
-                ->toMediaCollection('national_card_picture');
+        if ($request->exists('national_card_image')) {
+            $courier->addMediaFromRequest('national_card_image')
+                ->toMediaCollection('national_card_image');
         }
 
-        if ($request->exists('car_license_picture')) {
-            $courier->addMediaFromRequest('car_license_picture')
-                ->toMediaCollection('car_license_picture');
+        if ($request->exists('car_license_image')) {
+            $courier->addMediaFromRequest('car_license_image')
+                ->toMediaCollection('car_license_image');
         }
 
-        if ($request->exists('driving_license_picture')) {
-            $courier->addMediaFromRequest('driving_license_picture')
-                ->toMediaCollection('driving_license_picture');
+        if ($request->exists('driving_license_image')) {
+            $courier->addMediaFromRequest('driving_license_image')
+                ->toMediaCollection('driving_license_image');
         }
 
         return $this->successResponse([

@@ -55,7 +55,7 @@ class Courier extends Resource
 
             Text::make('Name', 'name')->sortable(),
 
-            Images::make( 'Profile Picture', 'profile_picture'),
+            Images::make( 'Profile Image', 'profile_image'),
 
             Text::make('National ID', 'national_number')->sortable(),
 
@@ -109,13 +109,13 @@ class Courier extends Resource
 
             BelongsTo::make('Car Type', 'car_type')->hideFromIndex(),
 
-            Images::make('National Card Picture', 'national_card_picture')
+            Images::make('National Card Image', 'national_card_image')
                 ->hideFromIndex(),
 
-            Images::make('Car License Picture', 'car_license_picture')
+            Images::make('Car License Image', 'car_license_image')
                 ->hideFromIndex(),
 
-            Images::make('Driving License Picture', 'driving_license_picture')
+            Images::make('Driving License Image', 'driving_license_image')
                 ->hideFromIndex(),
         ];
     }
