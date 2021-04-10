@@ -48,6 +48,10 @@ class CustomerController extends Controller
         return $this->successResponse([
             'customer' => new CustomerResource($customer),
             'accessToken' => $customer->createToken('authToken')->accessToken,
+        ], [
+            'show' => route('customers.show'),
+            'update' => route('customers.update'),
+            'updateImages' => route('customers.update_images'),
         ]);
     }
 
@@ -60,6 +64,9 @@ class CustomerController extends Controller
     {
         return $this->successResponse([
             'customer' => new CustomerResource(auth()->user())
+        ], [
+            'update' => route('customers.update'),
+            'updateImages' => route('customers.update_images'),
         ]);
     }
 
@@ -75,6 +82,9 @@ class CustomerController extends Controller
 
         return $this->successResponse([
             'customer' => new CustomerResource(auth()->user())
+        ], [
+            'show' => route('customers.show'),
+            'updateImages' => route('customers.update_images'),
         ]);
     }
 
@@ -98,6 +108,9 @@ class CustomerController extends Controller
 
         return $this->successResponse([
             'customer' => new CustomerResource(auth()->user()),
+        ], [
+            'show' => route('customers.show'),
+            'update' => route('customers.update'),
         ]);
     }
 

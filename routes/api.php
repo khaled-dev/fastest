@@ -30,9 +30,9 @@ Route::get('/terms-and-conditions', 'SettingController@termsAndConditions');
 
 // Customer
 Route::middleware('auth:customers')->group(function () {
-    Route::get('/customers', 'CustomerController@show');
-    Route::put('/customers/update', 'CustomerController@update');
-    Route::post('/customers/update-images', 'CustomerController@updateImages');
+    Route::get('/customers', 'CustomerController@show')->name('customers.show');
+    Route::put('/customers/update', 'CustomerController@update')->name('customers.update');
+    Route::post('/customers/update-images', 'CustomerController@updateImages')->name('customers.update_images');
 });
 
 // Courier
