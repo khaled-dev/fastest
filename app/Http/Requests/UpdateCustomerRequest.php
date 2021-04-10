@@ -29,7 +29,7 @@ class UpdateCustomerRequest extends FormRequest
         return [
             'name' => 'required|max:225',
             'mobile' => [
-                'required|',
+                'required',
                 'max:225',
                 Rule::unique('customers')->ignore($this->user()->id)
             ],

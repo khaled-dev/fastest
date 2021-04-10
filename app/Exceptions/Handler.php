@@ -2,11 +2,16 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Firebase\Auth\Token\Exception\InvalidToken;
+use Kreait\Firebase\Exception\InvalidArgumentException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Services\FirebaseAuth\Concerns\ExceptionHandler as FbExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    use FbExceptionHandler;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -37,5 +42,25 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Throwable  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
+     */
+    public function render($request, Throwable $exception)
+    {
+        // firebase token handler
+        if ($exception instanceof InvalidArgumentException || $exception instanceof  InvalidToken) {
+            return $this->invalidFbTokenResponse($exception);
+        }
+
+        return parent::render($request, $exception);
+
     }
 }

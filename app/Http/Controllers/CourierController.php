@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Courier;
 use Illuminate\Http\Response;
-use App\Services\FirebaseAuth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\CourierResource;
 use App\Http\Requests\LoginCourierRequest;
 use App\Http\Requests\CourierResetPassword;
 use App\Http\Requests\UpdateCourierRequest;
+use App\Services\FirebaseAuth\FirebaseAuth;
 use App\Http\Requests\RegisterCourierRequest;
 use App\Http\Requests\UpdateImagesCourierRequest;
 
@@ -40,27 +40,16 @@ class CourierController extends Controller
      */
     public function store(RegisterCourierRequest $request): Response
     {
-        try {
-            $this->firebaseAuth->verifyToken($request->fbToken ?? '');
-        } catch (\Exception $exception) {
-            return response([
-                'message' => 'The given data was invalid.',
-                'errors' => [
-                    'fbToken' => [
-                        $exception->getMessage()
-                    ],
-                ],
-            ], 422);
-        }
+        $this->firebaseAuth->verifyToken($request->fbToken ?? '');
 
         $courier = new Courier();
         $courier->mobile = $request->mobile;
         $courier->save();
 
-        return response([
+        return $this->successResponse([
             'courier'     => new CourierResource($courier),
             'accessToken' => $courier->createToken('authToken')->accessToken,
-        ]);
+        ], [],201);
     }
 
     /**
@@ -71,21 +60,17 @@ class CourierController extends Controller
      */
     public function login(LoginCourierRequest $request): Response
     {
-
         $courier = Courier::where('mobile', $request->mobile)->first();
 
         if (empty($courier) || ! Hash::check($request->password, $courier->password)) {
-            return response([
-                "message" => "The given data was invalid.",
-                "errors" => [
-                    "mobile" => [
-                        "Invalid mobile or password."
-                    ]
+            return $this->validationErrorResponse([
+                "mobile" => [
+                    "Invalid mobile or password."
                 ]
-            ], 401);
+            ]);
         }
 
-        return response([
+        return $this->successResponse([
             'courier'     => new CourierResource($courier),
             'accessToken' => $courier->createToken('authToken')->accessToken,
         ]);
@@ -94,13 +79,13 @@ class CourierController extends Controller
     /**
      * Show Courier resource
      *
-     * @return CourierResource[]
+     * @return \Illuminate\Http\Response
      */
-    public function show(): array
+    public function show(): \Illuminate\Http\Response
     {
-        return [
+        return $this->successResponse([
             'courier' => new CourierResource(auth()->user())
-        ];
+        ]);
     }
 
     /**
@@ -122,7 +107,7 @@ class CourierController extends Controller
 
         $courier->fill($request->all())->save();
 
-        return response([
+        return $this->successResponse([
             'courier' => new CourierResource( auth()->user()),
         ]);
     }
@@ -154,7 +139,7 @@ class CourierController extends Controller
             ])
         );
 
-        return response([
+        return $this->successResponse([
             'courier' => new CourierResource( auth()->user()),
         ]);
     }
@@ -192,7 +177,7 @@ class CourierController extends Controller
                 ->toMediaCollection('driving_license_picture');
         }
 
-        return response([
+        return $this->successResponse([
             'courier' => new CourierResource( auth()->user()),
         ]);
     }
@@ -205,24 +190,21 @@ class CourierController extends Controller
      */
     public function resetPassword(CourierResetPassword $request): Response
     {
-        // $this->firebaseAuth->verifyToken('fbToken')
+         $this->firebaseAuth->verifyToken('fbToken');
 
         $courier = Courier::where('mobile', $request->mobile)->first();
 
         if (empty($courier)) {
-            return response([
-                "message" => "The given data was invalid.",
-                "errors" => [
-                    "mobile" => [
-                        "Invalid mobile number."
-                    ]
+            return $this->validationErrorResponse([
+                "mobile" => [
+                    "Invalid mobile or password."
                 ]
             ]);
         }
 
         $courier->password = Hash::make($request->password);
 
-        return response([
+        return $this->successResponse([
             'courier'     => new CourierResource($courier),
             'accessToken' => $courier->createToken('authToken')->accessToken,
         ]);
