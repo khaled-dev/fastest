@@ -16,7 +16,7 @@ trait ResponseBuilder
     protected function invalidFbTokenResponse($exception): Response
     {
         return $this->validationErrorResponse([
-            'fbToken' =>  [$exception->getMessage()]
+            'fb_token' =>  [$exception->getMessage()]
         ]);
     }
 
