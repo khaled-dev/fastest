@@ -27,7 +27,7 @@ class CreateCouriersTable extends Migration
             $table->string('national_number')->unique()->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->string('car_number')->nullable();
-            $table->string('iban')->nullable();
+            $table->string('iban')->unique()->nullable();
             $table->boolean('is_active')->default(false);
             $table->boolean('is_banned')->default(false);
             $table->boolean('has_admin_approval')->default(false);
