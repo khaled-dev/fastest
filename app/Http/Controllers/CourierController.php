@@ -49,7 +49,9 @@ class CourierController extends Controller
         return $this->successResponse([
             'courier'     => new CourierResource($courier),
             'accessToken' => $courier->createToken('authToken')->accessToken,
-        ], [],201);
+        ], [
+            'update' => route('couriers.update'),
+        ], 201);
     }
 
     /**
@@ -67,12 +69,18 @@ class CourierController extends Controller
                 "mobile" => [
                     "Invalid mobile or password."
                 ]
+            ], [
+                'resetPassword' => route('couriers.reset_password'),
             ]);
         }
 
         return $this->successResponse([
             'courier'     => new CourierResource($courier),
             'accessToken' => $courier->createToken('authToken')->accessToken,
+        ], [
+            'show' => route('couriers.show'),
+            'update' => route('couriers.update_request'),
+            'updateImages' => route('couriers.update_images'),
         ]);
     }
 
@@ -85,6 +93,9 @@ class CourierController extends Controller
     {
         return $this->successResponse([
             'courier' => new CourierResource(auth()->user())
+        ], [
+            'update' => route('couriers.update_request'),
+            'updateImages' => route('couriers.update_images'),
         ]);
     }
 
@@ -112,6 +123,9 @@ class CourierController extends Controller
 
         return $this->successResponse([
             'courier' => new CourierResource( auth()->user()),
+        ], [
+            'show' => route('couriers.show'),
+            'updateImages' => route('couriers.update_images'),
         ]);
     }
 
@@ -144,6 +158,9 @@ class CourierController extends Controller
 
         return $this->successResponse([
             'courier' => new CourierResource( auth()->user()),
+        ], [
+            'show' => route('couriers.show'),
+            'updateImages' => route('couriers.update_images'),
         ]);
     }
 
@@ -182,6 +199,9 @@ class CourierController extends Controller
 
         return $this->successResponse([
             'courier' => new CourierResource( auth()->user()),
+        ], [
+            'show' => route('couriers.show'),
+            'update' => route('couriers.update_request'),
         ]);
     }
 
@@ -205,11 +225,13 @@ class CourierController extends Controller
             ]);
         }
 
-        $courier->password = Hash::make($request->password);
+        $courier->password = Hash::make($request->new_password);
 
         return $this->successResponse([
             'courier'     => new CourierResource($courier),
             'accessToken' => $courier->createToken('authToken')->accessToken,
+        ], [
+            'login' => route('couriers.login'),
         ]);
     }
 

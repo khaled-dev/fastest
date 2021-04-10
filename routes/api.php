@@ -15,10 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Auth
-Route::post('/couriers', 'CourierController@store');
-Route::post('/couriers-login', 'CourierController@login');
-Route::put('/couriers-reset-password', 'CourierController@resetPassword');
-Route::post('/customers-login', 'CustomerController@registerOrLogin');
+Route::post('/couriers', 'CourierController@store')->name('couriers.store');
+Route::post('/couriers-login', 'CourierController@login')->name('couriers.login');
+Route::put('/couriers-reset-password', 'CourierController@resetPassword')->name('couriers.reset_password');
+Route::post('/customers-login', 'CustomerController@registerOrLogin')->name('couriers.login');
 
 // Items
 Route::get('/banks', 'ItemsController@banks');
@@ -37,8 +37,8 @@ Route::middleware('auth:customers')->group(function () {
 
 // Courier
 Route::middleware('auth:couriers')->group(function () {
-    Route::get('/couriers', 'CourierController@show');
-    Route::put('/couriers/update', 'CourierController@update');
-    Route::post('/couriers/update-request', 'CourierController@storeUpdateRequest');
-    Route::post('/couriers/update-images', 'CourierController@updateImages');
+    Route::get('/couriers', 'CourierController@show')->name('couriers.show');
+    Route::put('/couriers/update', 'CourierController@update')->name('couriers.update');
+    Route::post('/couriers/update-request', 'CourierController@storeUpdateRequest')->name('couriers.update_request');
+    Route::post('/couriers/update-images', 'CourierController@updateImages')->name('couriers.update_images');
 });
