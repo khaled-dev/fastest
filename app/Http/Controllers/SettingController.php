@@ -15,7 +15,7 @@ class SettingController extends Controller
     public function termsAndConditions(): Response
     {
         return $this->successResponse([
-            'terms_and_conditions' => Setting::first()->terms_and_conditions,
+            'termsAndConditions' => Setting::first()->terms_and_conditions,
         ]);
     }
 }

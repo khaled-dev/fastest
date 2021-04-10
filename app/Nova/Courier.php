@@ -84,7 +84,7 @@ class Courier extends Resource
                 ])
                 ->displayUsingLabels()
                 ->sortable(),
-            
+
             Select::make('Is Banned', 'is_banned')
                 ->options([
                     '0' => 'Not Banned',

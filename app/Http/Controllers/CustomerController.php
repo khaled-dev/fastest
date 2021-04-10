@@ -97,7 +97,7 @@ class CustomerController extends Controller
         }
 
         return $this->successResponse([
-            'customer' => new CustomerResource( auth()->user()),
+            'customer' => new CustomerResource(auth()->user()),
         ]);
     }
 
