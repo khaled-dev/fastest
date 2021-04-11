@@ -15,22 +15,43 @@ trait ExceptionHandler
      * @param $exception
      * @return Response
      */
-    protected function AuthorizationExceptionResponse($exception): Response
+    protected function authorizationExceptionResponse($exception): Response
     {
-        return $this->exceptionResponse($exception, 403);
+        return $this->exceptionResponse($exception->getMessage(), 403);
+    }
+
+    /**
+     * Generate http response for authenticated action
+     *
+     * @param $exception
+     * @return Response
+     */
+    protected function authenticationExceptionResponse($exception): Response
+    {
+        return $this->exceptionResponse($exception->getMessage(), 401);
+    }
+
+    /**
+     * Generate http response for not found action
+     *
+     * @return Response
+     */
+    protected function notFoundExceptionResponse(): Response
+    {
+        return $this->exceptionResponse("Not Found", 404);
     }
 
     /**
      * Generate http response for invalid fbToken field
      *
-     * @param $exception
+     * @param string $message
      * @param int $status
      * @return Response
      */
-    private function exceptionResponse($exception, int $status = 400): Response
+    private function exceptionResponse(string $message, int $status = 400): Response
     {
         return response([
-            'message' => $exception->getMessage(),
+            'message' => $message,
             'data' => [],
             'metadata' => [],
         ], $status);

@@ -4,9 +4,12 @@ namespace App\Exceptions;
 
 use Throwable;
 use App\Services\Http\ResponseBuilder;
+use Illuminate\Auth\AuthenticationException;
 use Firebase\Auth\Token\Exception\InvalidToken;
 use Illuminate\Auth\Access\AuthorizationException;
 use Kreait\Firebase\Exception\InvalidArgumentException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use App\Services\FirebaseAuth\Concerns\ExceptionHandler as FbExceptionHandler;
 
@@ -63,7 +66,15 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof AuthorizationException) {
-            return $this->AuthorizationExceptionResponse($exception);
+            return $this->authorizationExceptionResponse($exception);
+        }
+
+        if ($exception instanceof AuthenticationException) {
+            return $this->authenticationExceptionResponse($exception);
+        }
+
+        if ($exception instanceof NotFoundHttpException || $exception instanceof ModelNotFoundException) {
+            return $this->notFoundExceptionResponse();
         }
 
         return parent::render($request, $exception);
