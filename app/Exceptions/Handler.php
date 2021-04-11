@@ -60,6 +60,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($request->is('nova')) {
+            return parent::render($request, $exception);
+        }
+
         // firebase token handler
         if ($exception instanceof InvalidArgumentException || $exception instanceof  InvalidToken) {
             return $this->invalidFbTokenResponse($exception);
