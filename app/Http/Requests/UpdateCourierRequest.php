@@ -39,12 +39,12 @@ class UpdateCourierRequest extends FormRequest
             'national_number' => [
                 'required',
                 'max:225',
-                Rule::unique('couriers')->ignore($this->user()->id)
+                Rule::unique('couriers')->ignore($this->user()->id ?? '')
             ],
             'iban' => [
                 'required',
                 'max:225',
-                Rule::unique('couriers')->ignore($this->user()->id)
+                Rule::unique('couriers')->ignore($this->user()->id ?? '')
             ],
         ];
     }

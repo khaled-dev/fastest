@@ -31,7 +31,7 @@ class UpdateCourierMobileRequest extends FormRequest
             'mobile' => [
                 'required',
                 'max:225',
-                Rule::unique('couriers')->ignore($this->user()->id)
+                Rule::unique('couriers')->ignore($this->user()->id ?? '')
             ],
         ];
     }

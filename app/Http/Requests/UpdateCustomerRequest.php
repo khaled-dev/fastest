@@ -31,7 +31,7 @@ class UpdateCustomerRequest extends FormRequest
             'mobile' => [
                 'required',
                 'max:225',
-                Rule::unique('customers')->ignore($this->user()->id)
+                Rule::unique('customers')->ignore($this->user()->id ?? '')
             ],
         ];
     }
