@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Response;
 use App\Http\Resources\CustomerResource;
-use App\Services\FirebaseAuth\FirebaseAuth;
+use App\Services\contracts\IAuthenticateOTP;
 use App\Http\Requests\LoginCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Http\Requests\UpdateImagesCustomerRequest;
@@ -15,16 +15,16 @@ class CustomerController extends Controller
     /**
      * Instance of FirebaseAuth service.
      *
-     * @var FirebaseAuth
+     * @var IAuthenticateOTP
      */
     private $firebaseAuth;
 
     /**
      * CustomerController constructor.
      *
-     * @param FirebaseAuth $firebaseAuth
+     * @param IAuthenticateOTP $firebaseAuth
      */
-    public function __construct(FirebaseAuth $firebaseAuth)
+    public function __construct(IAuthenticateOTP $firebaseAuth)
     {
         $this->firebaseAuth = $firebaseAuth;
     }

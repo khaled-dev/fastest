@@ -5,14 +5,20 @@ namespace App\Services\FirebaseAuth;
 
 use Lcobucci\JWT\Token;
 use Kreait\Firebase\Auth;
+use App\Services\contracts\IAuthenticateOTP;
 
-class FirebaseAuth
+class FirebaseAuth implements IAuthenticateOTP
 {
     /**
      * @var Auth
      */
     private $auth;
 
+    /**
+     * Construct an object and set auth instance.
+     *
+     * @param Auth $auth
+     */
     public function __construct(Auth $auth)
     {
         $this->auth = $auth;

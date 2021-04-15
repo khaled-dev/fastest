@@ -9,7 +9,7 @@ use App\Http\Resources\CourierResource;
 use App\Http\Requests\LoginCourierRequest;
 use App\Http\Requests\CourierResetPassword;
 use App\Http\Requests\UpdateCourierRequest;
-use App\Services\FirebaseAuth\FirebaseAuth;
+use App\Services\contracts\IAuthenticateOTP;
 use App\Http\Requests\RegisterCourierRequest;
 use App\Http\Requests\UpdateCourierMobileRequest;
 use App\Http\Requests\UpdateImagesCourierRequest;
@@ -19,16 +19,16 @@ class CourierController extends Controller
     /**
      * Instance of FirebaseAuth service.
      *
-     * @var FirebaseAuth
+     * @var IAuthenticateOTP
      */
     private $firebaseAuth;
 
     /**
      * CourierController constructor.
      *
-     * @param FirebaseAuth $firebaseAuth
+     * @param IAuthenticateOTP $firebaseAuth
      */
-    public function __construct(FirebaseAuth $firebaseAuth)
+    public function __construct(IAuthenticateOTP $firebaseAuth)
     {
         $this->firebaseAuth = $firebaseAuth;
     }
