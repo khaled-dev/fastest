@@ -260,6 +260,8 @@ class CourierController extends Controller
 
         $courier->password = Hash::make($request->new_password);
 
+        $courier->save();
+
         return $this->successResponse([
             'courier'     => new CourierResource($courier),
             'accessToken' => $courier->createToken('authToken')->accessToken,

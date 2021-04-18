@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/couriers', 'CourierController@store')->name('couriers.store');
 Route::post('/couriers-login', 'CourierController@login')->name('couriers.login');
 Route::put('/couriers-reset-password', 'CourierController@resetPassword')->name('couriers.reset_password');
-Route::post('/customers-login', 'CustomerController@registerOrLogin')->name('couriers.login');
+Route::post('/customers-login', 'CustomerController@registerOrLogin')->name('customers.login');
 
 // Items
 Route::get('/banks', 'ItemsController@banks');

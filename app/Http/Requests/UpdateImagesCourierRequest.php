@@ -28,7 +28,7 @@ class UpdateImagesCourierRequest extends FormRequest
         return [
             'profile_image' => 'sometimes|image',
             'national_card_image' => 'sometimes|image',
-            'car_form_image' => 'sometimes|image',
+            'car_license_image' => 'sometimes|image',
             'driving_license_image' => 'sometimes|image',
         ];
     }

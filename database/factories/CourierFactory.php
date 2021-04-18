@@ -26,13 +26,13 @@ class CourierFactory extends Factory
      */
     public function definition()
     {
-        $territory_id = Territory::first()->id;
+        $territory_id = Territory::first()->id ?? null;
         return [
             'territory_id'       => $territory_id ?? null,
             'city_id'            => $territory_id ? City::forTerritoryId($territory_id)->first()->id : null,
-            'car_type_id'        => CarType::first()->id,
-            'nationality_id'     => Nationality::first()->id,
-            'bank_id'            => Bank::first()->id,
+            'car_type_id'        => CarType::first()->id ?? null,
+            'nationality_id'     => Nationality::first()->id ?? null,
+            'bank_id'            => Bank::first()->id ?? null,
             'name'               => $this->faker->name,
             'mobile'             => $this->faker->phoneNumber,
             'national_number'    => $this->faker->randomNumber(9),
