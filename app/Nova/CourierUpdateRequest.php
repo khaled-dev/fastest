@@ -48,7 +48,7 @@ class CourierUpdateRequest extends Resource
 
             Text::make('Name', 'name')->sortable(),
 
-            Text::make('National ID', 'national_number')->sortable(),
+            Text::make('National Number', 'national_number')->sortable(),
 
             Select::make('Gender', 'gender')
                 ->options([

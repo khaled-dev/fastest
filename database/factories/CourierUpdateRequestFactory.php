@@ -27,15 +27,19 @@ class CourierUpdateRequestFactory extends Factory
      */
     public function definition()
     {
-        $territory_id = Territory::first()->id;
+        $territory_id = Territory::first()->id ??
+                        Territory::factory()->create()->id;
+
+        $city_id      = City::forTerritoryId($territory_id)->first()->id ??
+                        City::factory(['territory_id' => $territory_id])->create()->id;
 
         return [
             'courier_id'      => Courier::factory()->create()->id,
-            'territory_id'    => $territory_id ?? null,
-            'city_id'         => $territory_id ? City::forTerritoryId($territory_id)->first()->id : null,
-            'car_type_id'     => CarType::first()->id,
-            'nationality_id'  => Nationality::first()->id,
-            'bank_id'         => Bank::first()->id,
+            'territory_id'    => $territory_id,
+            'city_id'         => $city_id,
+            'car_type_id'     => CarType::first()->id ?? CarType::factory()->create()->id,
+            'nationality_id'  => Nationality::first()->id ?? Nationality::factory()->create()->id,
+            'bank_id'         => Bank::first()->id ?? Bank::factory()->create()->id,
             'name'            => $this->faker->name,
             'national_number' => $this->faker->randomNumber(9),
             'gender'          => 'male',
