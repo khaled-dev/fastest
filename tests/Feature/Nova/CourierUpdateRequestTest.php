@@ -2,12 +2,13 @@
 
 namespace Tests\Feature\Nova;
 
-use App\Models\CourierUpdateRequest;
-use App\Nova\Actions\ApproveCourierUpdate;
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Bank;
 use NovaTesting\NovaAssertions;
+use Illuminate\Support\Collection;
+use App\Models\CourierUpdateRequest;
+use Laravel\Nova\Fields\ActionFields;
+use App\Nova\Actions\ApproveCourierUpdate;
 
 class CourierUpdateRequestTest extends TestCase
 {
@@ -86,6 +87,26 @@ class CourierUpdateRequestTest extends TestCase
         $this->novaDetail($this->resourceName, $this->courierUpdateRequests[0]->id)
             ->assertOk()
             ->assertActionsInclude(ApproveCourierUpdate::class);
+    }
+
+    /**
+     * @test
+     */
+    public function itAcceptsCourierUpdateRequest()
+    {
+        $this->be(User::factory()->create());
+
+        $this->novaDetail($this->resourceName, $this->courierUpdateRequests[0]->id)
+            ->assertOk();
+
+        (new ApproveCourierUpdate())
+            ->handle(
+                new ActionFields(new Collection, new Collection),
+                collect([$this->courierUpdateRequests[0]])
+            );
+
+        $this->novaDetail($this->resourceName, $this->courierUpdateRequests[0]->id)
+            ->assertStatus(404);
     }
 
     /**
