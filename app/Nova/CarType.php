@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
 
 class CarType extends CRUDResource
@@ -19,6 +20,21 @@ class CarType extends CRUDResource
      * @var string
      */
     public static $group = 'Items';
+
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function fields(Request $request)
+    {
+        return array_merge(parent::fields($request), [
+            Images::make( 'Car Image', 'car_image'),
+
+        ]);
+
+    }
 
     /**
      * Determine if the current user can delete the given resource.

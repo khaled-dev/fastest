@@ -16,6 +16,7 @@ class CarTypeResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'carImage' => $this->getFirstMediaUrl('car_image'),
             'nameAr' => $this->name_ar,
             'nameEn' => $this->name_en,
             'createdAt' => $this->created_at,
