@@ -54,7 +54,7 @@ class CourierUpdateRequestTest extends TestCase
 
         $this->novaIndex($this->resourceName)
             ->assertOk()
-            ->assertFieldsInclude('courier', $this->courierUpdateRequests[0]->courier->id)
+            ->assertFieldsInclude('courier')
             ->assertFieldsInclude('name', $this->courierUpdateRequests[0]->name)
             ->assertFieldsInclude('gender', $this->courierUpdateRequests[0]->gender)
             ->assertFieldsInclude('city', $this->courierUpdateRequests[0]->city->name_ar);
@@ -69,7 +69,7 @@ class CourierUpdateRequestTest extends TestCase
 
         $this->novaDetail($this->resourceName, $this->courierUpdateRequests[0]->id)
             ->assertOk()
-            ->assertFieldsInclude('courier', $this->courierUpdateRequests[0]->courier->id)
+            ->assertFieldsInclude('courier')
             ->assertFieldsInclude('name', $this->courierUpdateRequests[0]->name)
             ->assertFieldsInclude('gender', $this->courierUpdateRequests[0]->gender)
             ->assertFieldsInclude('bank', $this->courierUpdateRequests[0]->bank->name_ar)
