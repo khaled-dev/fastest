@@ -2,17 +2,17 @@
 
 namespace Tests\Feature\Nova;
 
+use Tests\TestCase;
 use App\Models\Bank;
-use App\Models\CarType;
 use App\Models\City;
-use App\Models\Nationality;
+use App\Models\User;
+use App\Models\CarType;
+use App\Models\Courier;
 use App\Models\Territory;
+use App\Models\Nationality;
+use NovaTesting\NovaAssertions;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Courier;
-use NovaTesting\NovaAssertions;
 
 class CourierTest extends TestCase
 {
@@ -102,7 +102,6 @@ class CourierTest extends TestCase
     {
         Storage::fake('media');
 
-        $mobile = 'en name test';
         $name = 'new name';
         $territory = Territory::factory()->create();
         $city = City::factory()->create(['territory_id' => $territory->id]);
@@ -114,8 +113,7 @@ class CourierTest extends TestCase
         $national_number = '123123';
         $iban = '123123';
 
-
-        $response = $this->be(User::factory()->create())
+        $this->be(User::factory()->create())
             ->putJson('nova-api/couriers/' . $this->couriers[0]->id, [
                 'name'            => $name,
                 'territory'       => $territory->id,
@@ -127,26 +125,25 @@ class CourierTest extends TestCase
                 'national_number' => $national_number,
                 'iban'            => $iban,
                 'car_type'        => $carType->id,
-                'profile_image'         => UploadedFile::fake()->image('image.jpg'),
-                'national_card_image'   => UploadedFile::fake()->image('image.jpg'),
-                'car_license_image'     => UploadedFile::fake()->image('image.jpg'),
-                'driving_license_image' => UploadedFile::fake()->image('image.jpg'),
+                '__media__' => [
+                    'profile_image'         => [UploadedFile::fake()->image('image.jpg')],
+                    'national_card_image'   => [UploadedFile::fake()->image('image.jpg')],
+                    'car_license_image'     => [UploadedFile::fake()->image('image.jpg')],
+                    'driving_license_image' => [UploadedFile::fake()->image('image.jpg')],
+                ]
             ])->assertOk();
 
-        $this->novaDetail($this->resourceName, $this->couriers[0]->id)
-            ->assertOk()
-            ->assertFieldsInclude('name', $name)
-            ->assertFieldsInclude('territory', $territory->id)
-            ->assertFieldsInclude('city', $city->id)
-            ->assertFieldsInclude('nationality', $nationality->id)
-            ->assertFieldsInclude('bank', $bank->id)
-            ->assertFieldsInclude('gender', $gender)
-            ->assertFieldsInclude('car_number', $car_number)
-            ->assertFieldsInclude('national_number', $national_number)
-            ->assertFieldsInclude('iban', $iban)
-            ->assertFieldsInclude('car_type', $carType->id);
+        $this->couriers[0] = $this->couriers[0]->fresh();
 
-        $this->couriers[0]->reload();
+        $this->assertEquals($this->couriers[0]->name, $name);
+        $this->assertEquals($this->couriers[0]->territory->id, $territory->id);
+        $this->assertEquals($this->couriers[0]->city->id, $city->id);
+        $this->assertEquals($this->couriers[0]->nationality->id, $nationality->id);
+        $this->assertEquals($this->couriers[0]->bank->id, $bank->id);
+        $this->assertEquals($this->couriers[0]->gender, $gender);
+        $this->assertEquals($this->couriers[0]->car_number, $car_number);
+        $this->assertEquals($this->couriers[0]->national_number, $national_number);
+        $this->assertEquals($this->couriers[0]->iban, $iban);
 
         $profile_image = $this->couriers[0]->getFirstMedia('profile_image');
         Storage::disk('media')->assertExists("$profile_image->id/$profile_image->file_name");

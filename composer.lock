@@ -9020,16 +9020,16 @@
         },
         {
             "name": "khaled-dev/nova-assertions",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/khaled-dev/nova-assertions.git",
-                "reference": "d57ef44d7bc077d4fac62961cc3cb32476a8e501"
+                "reference": "c03fbbe95aee859b2ba1c29ce4d4b18ca9995213"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/khaled-dev/nova-assertions/zipball/d57ef44d7bc077d4fac62961cc3cb32476a8e501",
-                "reference": "d57ef44d7bc077d4fac62961cc3cb32476a8e501",
+                "url": "https://api.github.com/repos/khaled-dev/nova-assertions/zipball/c03fbbe95aee859b2ba1c29ce4d4b18ca9995213",
+                "reference": "c03fbbe95aee859b2ba1c29ce4d4b18ca9995213",
                 "shasum": ""
             },
             "type": "library",
@@ -9049,7 +9049,7 @@
                 }
             ],
             "description": "Nova api testing requests & assertions",
-            "time": "2021-04-23T18:48:34+00:00"
+            "time": "2021-04-24T04:00:23+00:00"
         },
         {
             "name": "knuckleswtf/pastel",

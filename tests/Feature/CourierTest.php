@@ -296,7 +296,7 @@ class CourierTest extends TestCase
     /**
      * @test
      */
-    public function itUpdatesCustomerImages()
+    public function itUpdatesCourierImages()
     {
         Storage::fake('media');
         $courier = Courier::factory()->create();
