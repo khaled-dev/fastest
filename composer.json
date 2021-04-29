@@ -29,6 +29,7 @@
         "laravel/nova": "~3.0",
         "laravel/passport": "^10.1",
         "laravel/tinker": "^2.5",
+        "skagarwal/google-places-api": "^1.7",
         "spatie/laravel-medialibrary": "^9.0.0"
     },
     "require-dev": {
