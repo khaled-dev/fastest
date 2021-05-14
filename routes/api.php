@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use SKAgarwal\GoogleApi\PlacesApi;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,10 +42,3 @@ Route::middleware('auth:couriers')->group(function () {
     Route::post('/couriers/update-request', 'CourierController@storeUpdateRequest')->name('couriers.update_request');
     Route::post('/couriers/update-images', 'CourierController@updateImages')->name('couriers.update_images');
 });
-
-Route::get('/test', function () {
-    $googlePlaces = new PlacesApi('AIzaSyCK1TpG1NCXTjjhJVnSGx3mhZ35JxbrNZ8');
-    $test  = $googlePlaces->queryAutocomplete('dfg', ['region' => 'SA-01']);
-    dd($test);
-});
-
