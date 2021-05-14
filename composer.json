@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.4|^8.0",
         "daniel-de-wit/nova-single-record-resource": "^1.2",
         "david-griffiths/nova-dark-theme": "^1.0",
         "ebess/advanced-nova-media-library": "^3.6",
