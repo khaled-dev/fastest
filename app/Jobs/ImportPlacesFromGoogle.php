@@ -2,10 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Models\Store;
 use Illuminate\Bus\Queueable;
-use SKAgarwal\GoogleApi\PlacesApi;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Services\GooglePlaces\GooglePlaces;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -32,14 +33,21 @@ class ImportPlacesFromGoogle implements ShouldQueue
      */
     public function handle()
     {
-        // use env variable
-        // api-key AIzaSyDNfwbrYEUHTk5PXcCH3gpgmqJNqfpFF5o
-        $googlePlaces = new PlacesApi('AIzaSyDNfwbrYEUHTk5PXcCH3gpgmqJNqfpFF5o');
-        // make region list
-        // SA-01
-        // SA-14
-        $test  = $googlePlaces->textSearch('', ['region' => 'SA-01']);
+        $places = (new GooglePlaces())
+            ->setTypes(['restaurant', 'cafe', 'store'])
+            ->importPlaces()
+            ->getPlaces();
 
-        dd($test);
+        $existsPlaces = Store::whereIn('place_id', $places->pluck('place_id'))->get();
+
+        if (! $existsPlaces->isEmpty()) {
+            $places = $places->filter(function ($place) use ($existsPlaces) {
+                return ! in_array($place['place_id'], $existsPlaces->pluck('place_id')->toArray());
+            });
+        }
+
+        $places->each(function ($place) {
+            Store::create($place);
+        });
     }
 }
