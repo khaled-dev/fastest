@@ -32,6 +32,8 @@ Route::middleware('auth:customers')->group(function () {
     Route::get('/customers', 'CustomerController@show')->name('customers.show');
     Route::put('/customers/update', 'CustomerController@update')->name('customers.update');
     Route::post('/customers/update-images', 'CustomerController@updateImages')->name('customers.update_images');
+    Route::get('/locations', 'LocationController@index')->name('locations.index');
+    Route::post('/locations', 'LocationController@store')->name('locations.store');
 });
 
 // Courier
