@@ -16,8 +16,8 @@ class CreateStoresTable extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
             $table->string('place_id')->index();
-            $table->float('lat');
-            $table->float('lng');
+            $table->double('lat');
+            $table->double('lng');
             $table->string('formatted_address');
             $table->string('business_status');
             $table->string('name');
