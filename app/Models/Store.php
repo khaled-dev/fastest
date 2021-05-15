@@ -25,4 +25,16 @@ class Store extends Model
         'rating',
         'user_ratings_total',
     ];
+
+    /**
+     * Search in stores by store name.
+     *
+     * @param $query
+     * @param $name
+     * @return mixed
+     */
+    public function scopeForNameLike($query, $name)
+    {
+        return $query->where('name', 'like', "%{$name}%");
+    }
 }

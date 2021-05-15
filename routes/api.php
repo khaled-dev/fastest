@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\ImportPlacesFromGoogle;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +35,10 @@ Route::middleware('auth:customers')->group(function () {
     Route::post('/customers/update-images', 'CustomerController@updateImages')->name('customers.update_images');
 
 });
+
 Route::post('/stores/search', 'StoreController@search')->name('stores.search');
+Route::post('/stores/nearby', 'StoreController@nearby')->name('stores.nearby');
+Route::post('/stores/{store}', 'StoreController@show')->name('stores.show');
 
 // Courier
 Route::middleware('auth:couriers')->group(function () {
@@ -43,4 +47,8 @@ Route::middleware('auth:couriers')->group(function () {
     Route::put('/couriers/update-mobile', 'CourierController@updateMobile')->name('couriers.update_mobile');
     Route::post('/couriers/update-request', 'CourierController@storeUpdateRequest')->name('couriers.update_request');
     Route::post('/couriers/update-images', 'CourierController@updateImages')->name('couriers.update_images');
+});
+
+Route::get('test', function () {
+    ImportPlacesFromGoogle::dispatch();
 });
