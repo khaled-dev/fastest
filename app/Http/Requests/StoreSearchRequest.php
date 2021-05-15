@@ -25,8 +25,8 @@ class StoreSearchRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:225',
-            'lat'  => 'required|string|max:225',
-            'lng'  => 'required|string|max:225',
+            'lat'  => 'required|numeric',
+            'lng'  => 'required|numeric',
         ];
     }
 }

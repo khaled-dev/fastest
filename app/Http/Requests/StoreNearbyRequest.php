@@ -24,8 +24,8 @@ class StoreNearbyRequest extends FormRequest
     public function rules()
     {
         return [
-            'lat'  => 'required|string|max:225',
-            'lng'  => 'required|string|max:225',
+            'lat'  => 'required|numeric',
+            'lng'  => 'required|numeric',
         ];
     }
 }
