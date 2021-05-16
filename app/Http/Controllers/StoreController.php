@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreNearbyRequest;
 use App\Models\Store;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use App\Http\Resources\StoreResource;
+use App\Http\Requests\StoreNearbyRequest;
 use App\Http\Requests\StoreSearchRequest;
 
 class StoreController extends Controller
 {
     /**
-     * Search for a store by name
+     * Search for a store by name.
      *
      * @param StoreSearchRequest $request
      * @return Response
      */
     public function search(StoreSearchRequest $request): Response
     {
-        // TODO: limit by city|range
-        $stores = Store::forNameLike($request->name)->get();
+        $range = $this->range($request->lat, $request->lng);
+
+        $stores = Store::inRange($range['latRange'], $range['lngRange'])
+            ->forNameLike($request->name)->get();
 
         return $this->successResponse([
             'stores' => StoreResource::collection($stores),
         ]);
     }
-
 
     /**
      * Show a single store data
@@ -36,8 +36,11 @@ class StoreController extends Controller
      */
     public function nearby(StoreNearbyRequest $request): Response
     {
-        // TODO: get first five in range
-        $stores = Store::take(5)->get();
+        $range = $this->range($request->lat, $request->lng);
+
+        $stores = Store::inRange($range['latRange'], $range['lngRange'])
+            ->take(5)
+            ->get();
 
         return $this->successResponse([
             'stores' => StoreResource::collection($stores),
@@ -45,7 +48,7 @@ class StoreController extends Controller
     }
 
     /**
-     * Show a single store data
+     * Show a single store data.
      *
      * @param Store $store
      * @return Response
@@ -55,5 +58,21 @@ class StoreController extends Controller
         return $this->successResponse([
             'store' => new StoreResource($store),
         ]);
+    }
+
+    /**
+     * Returns the available range.
+     *
+     * @param $lat
+     * @param $lng
+     * @return array
+     */
+    private function range($lat, $lng): array
+    {
+        // TODO the Five is dynamic
+        return [
+            'latRange' => [$lat - (111 * 5), $lat + (111 * 5)],
+            'lngRange' => [$lng - (111 * 5), $lng + (111 * 5)],
+        ];
     }
 }

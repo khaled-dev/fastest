@@ -37,4 +37,17 @@ class Store extends Model
     {
         return $query->where('name', 'like', "%{$name}%");
     }
+
+    /**
+     * Get stores in given range.
+     *
+     * @param $query
+     * @param array $latRang
+     * @param array $lngRange
+     * @return mixed
+     */
+    public function scopeInRange($query, array $latRang, array $lngRange)
+    {
+        return $query->whereBetween('lat', $latRang)->whereBetween('lng', $lngRange);
+    }
 }
