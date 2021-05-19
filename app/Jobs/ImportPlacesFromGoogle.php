@@ -63,7 +63,6 @@ class ImportPlacesFromGoogle implements ShouldQueue
                 'pet_store',
                 'pharmacy',
                 'post_office',
-                'primary_school',
                 'restaurant',
                 'school',
                 'secondary_school',
@@ -72,7 +71,6 @@ class ImportPlacesFromGoogle implements ShouldQueue
                 'storage',
                 'store',
                 'supermarket',
-                'university',
             ])
             ->importPlaces()
             ->getPlaces();
