@@ -29,6 +29,16 @@ class Customer extends User implements HasMedia
     ];
 
     /**
+     * Get all locations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function locations(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Location::class);
+    }
+
+    /**
      * Set model image Conversions
      *
      * @param Media|null $media
