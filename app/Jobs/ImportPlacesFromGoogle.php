@@ -34,7 +34,46 @@ class ImportPlacesFromGoogle implements ShouldQueue
     public function handle()
     {
         $places = (new GooglePlaces())
-            ->setTypes(['restaurant', 'cafe', 'store'])
+            ->setTypes([
+                'accounting',
+                'amusement_park',
+                'aquarium',
+                'art_gallery',
+                'bakery',
+                'beauty_salon',
+                'book_store',
+                'cafe',
+                'clothing_store',
+                'convenience_store',
+                'drugstore',
+                'electronics_store',
+                'florist',
+                'furniture_store',
+                'gas_station',
+                'hardware_store',
+                'hospital',
+                'jewelry_store',
+                'laundry',
+                'library',
+                'light_rail_station',
+                'locksmith',
+                'meal_delivery',
+                'meal_takeaway',
+                'mosque',
+                'pet_store',
+                'pharmacy',
+                'post_office',
+                'primary_school',
+                'restaurant',
+                'school',
+                'secondary_school',
+                'shoe_store',
+                'shopping_mall',
+                'storage',
+                'store',
+                'supermarket',
+                'university',
+            ])
             ->importPlaces()
             ->getPlaces();
 
