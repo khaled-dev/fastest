@@ -17,7 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('store_id')->index();
             $table->unsignedBigInteger('customer_id')->index();
-            $table->string('description');
+            $table->unsignedBigInteger('location_id')->index();
+            $table->text('description');
             $table->double('min_offer_price');
             $table->double('max_offer_price');
             $table->enum('state', [
@@ -32,12 +33,17 @@ class CreateOrdersTable extends Migration
             $table->foreign('store_id')
                 ->references('id')
                 ->on('stores')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->foreign('customer_id')
                 ->references('id')
                 ->on('customers')
-                ->onDelete('cascade');
+                ->onDelete('set null');
+
+            $table->foreign('location_id')
+                ->references('id')
+                ->on('locations')
+                ->onDelete('set null');
         });
     }
 
