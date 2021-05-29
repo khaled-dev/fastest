@@ -59,6 +59,16 @@ class Courier extends User implements HasMedia
     }
 
     /**
+     * Get all courier offers
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function offers(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Offer::class);
+    }
+
+    /**
      * Get the territory
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

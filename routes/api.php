@@ -52,6 +52,7 @@ Route::middleware('auth:couriers')->group(function () {
     Route::put('/couriers/update-mobile', 'CourierController@updateMobile')->name('couriers.update_mobile');
     Route::post('/couriers/update-request', 'CourierController@storeUpdateRequest')->name('couriers.update_request');
     Route::post('/couriers/update-images', 'CourierController@updateImages')->name('couriers.update_images');
+    Route::post('/offers/{order}', 'OfferController@store')->name('offers.store');
 });
 
 Route::get('test', function () {
