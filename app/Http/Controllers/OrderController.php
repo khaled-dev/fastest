@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderStateCountResource;
 use App\Models\Store;
 use App\Models\Order;
 use App\Models\Customer;
@@ -51,4 +52,21 @@ class OrderController extends Controller
             'order' => new OrderResource($order),
         ]);
     }
+
+    /**
+     * Show order's three states
+     *
+     * @return Response
+     */
+    public function ordersStateCounts(): Response
+    {
+        return $this->successResponse([
+            'ordersStateCount' => new OrderStateCountResource([
+                'opened' => Order::opened()->count(),
+                'underNegotiation' => Order::underNegotiation()->count(),
+                'inProgress' => Order::inProgress()->count(),
+            ]),
+        ]);
+    }
+
 }

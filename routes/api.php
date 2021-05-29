@@ -37,6 +37,7 @@ Route::middleware('auth:customers')->group(function () {
     Route::post('/locations', 'LocationController@store')->name('locations.store');
     Route::post('/stores/{store}/orders', 'OrderController@store')->name('orders.store');
     Route::post('/orders/{order}/images', 'OrderController@updateImages')->name('orders.update_images');
+    Route::get('/orders/state-counts', 'OrderController@ordersStateCounts')->name('orders.orders_state_counts');
 });
 
 Route::post('/stores/search', 'StoreController@search')->name('stores.search');

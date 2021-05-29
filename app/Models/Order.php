@@ -34,6 +34,40 @@ class Order extends Model implements HasMedia
     const COMPLETED = 'completed';
     const CANCELED = 'canceled';
 
+
+    /**
+     * Get all opened orders
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeOpened($query)
+    {
+        return $query->where('state', static::OPENED);
+    }
+
+    /**
+     * Get all under_negotiation orders
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeUnderNegotiation($query)
+    {
+        return $query->where('state', static::UNDER_NEGOTIATION);
+    }
+
+    /**
+     * Get all in_progress orders
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeInProgress($query)
+    {
+        return $query->where('state', static::IN_PROGRESS);
+    }
+
     /**
      * List all states
      *
