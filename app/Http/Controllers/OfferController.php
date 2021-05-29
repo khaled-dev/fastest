@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Courier;
 use Illuminate\Http\Response;
@@ -31,4 +32,32 @@ class OfferController extends Controller
             'offer' => new OfferResource($offer->refresh())
         ]);
     }
+
+    /**
+     * List all Offers
+     *
+     * @param Order $order
+     * @return Response
+     */
+    public function index(Order $order): Response
+    {
+        return $this->successResponse([
+            'offers' => OfferResource::collection($order->offers()->get())
+        ]);
+    }
+
+    /**
+     * Show one Offer
+     *
+     * @param Offer $offer
+     * @return Response
+     */
+    public function show(Offer $offer): Response
+    {
+        return $this->successResponse([
+            'offer' => new OfferResource($offer)
+        ]);
+    }
+
+    //TODO: state machine
 }

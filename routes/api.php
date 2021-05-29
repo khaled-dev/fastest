@@ -39,6 +39,8 @@ Route::middleware('auth:customers')->group(function () {
     Route::post('/orders/{order}/images', 'OrderController@updateImages')->name('orders.update_images');
     Route::get('/orders/state-counts', 'OrderController@ordersStateCounts')->name('orders.orders_state_counts');
     Route::get('/orders/{state}', 'OrderController@listByState')->name('orders.by_state');
+    Route::get('/orders/{order}/offers', 'OfferController@index')->name('offers.index');
+    Route::get('/offers/{offer}', 'OfferController@show')->name('offers.show');
 });
 
 Route::post('/stores/search', 'StoreController@search')->name('stores.search');

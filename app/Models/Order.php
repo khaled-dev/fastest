@@ -34,6 +34,15 @@ class Order extends Model implements HasMedia
     const COMPLETED = 'completed';
     const CANCELED = 'canceled';
 
+    /**
+     * Get all order offers
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function offers(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Offer::class);
+    }
 
     /**
      * Get all opened orders
