@@ -43,7 +43,7 @@ class Order extends Model implements HasMedia
      */
     public function scopeOpened($query)
     {
-        return $query->where('state', static::OPENED);
+        return $query->forGivenState(static::OPENED);
     }
 
     /**
@@ -54,7 +54,7 @@ class Order extends Model implements HasMedia
      */
     public function scopeUnderNegotiation($query)
     {
-        return $query->where('state', static::UNDER_NEGOTIATION);
+        return $query->forGivenState(static::UNDER_NEGOTIATION);
     }
 
     /**
@@ -65,7 +65,19 @@ class Order extends Model implements HasMedia
      */
     public function scopeInProgress($query)
     {
-        return $query->where('state', static::IN_PROGRESS);
+        return $query->forGivenState(static::IN_PROGRESS);
+    }
+
+    /**
+     * Get orders filtered by given state
+     *
+     * @param $query
+     * @param $state
+     * @return mixed
+     */
+    public function scopeForGivenState($query, $state)
+    {
+        return $query->where('state', $state);
     }
 
     /**

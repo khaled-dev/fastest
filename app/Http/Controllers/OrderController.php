@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\OrderStateCountResource;
 use App\Models\Store;
 use App\Models\Order;
 use App\Models\Customer;
 use Illuminate\Http\Response;
 use App\Http\Resources\OrderResource;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Resources\OrderStateCountResource;
 use App\Http\Requests\UpdateOrderImagesRequest;
 
 class OrderController extends Controller
@@ -69,4 +69,24 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * Create new order for auth user
+     *
+     * @param string $state
+     * @return \Illuminate\Http\Response
+     */
+    public function listByState(string $state)
+    {
+        if (! in_array($state, Order::listStates())) {
+            return $this->validationErrorResponse([
+                "state" => [
+                    "Invalid State Given."
+                ]
+            ]);
+        }
+
+        return $this->successResponse([
+            'orders' => OrderResource::collection(Order::forGivenState($state)->get())
+        ]);
+    }
 }
