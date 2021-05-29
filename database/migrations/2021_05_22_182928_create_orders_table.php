@@ -15,9 +15,9 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('store_id')->index();
-            $table->unsignedBigInteger('customer_id')->index();
-            $table->unsignedBigInteger('location_id')->index();
+            $table->unsignedBigInteger('store_id')->nullable()->index();
+            $table->unsignedBigInteger('customer_id')->nullable()->index();
+            $table->unsignedBigInteger('location_id')->nullable()->index();
             $table->text('description');
             $table->double('min_offer_price');
             $table->double('max_offer_price');
