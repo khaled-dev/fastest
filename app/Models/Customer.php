@@ -39,6 +39,16 @@ class Customer extends User implements HasMedia
     }
 
     /**
+     * Get all orders
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function orders(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
      * Set model image Conversions
      *
      * @param Media|null $media
