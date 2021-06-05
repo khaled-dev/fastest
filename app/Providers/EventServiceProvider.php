@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\OfferAccepted;
+use App\Listeners\CancelOtherOffersOnOrders;
 use App\Models\Order;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -19,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        OfferAccepted::class => [
+            CancelOtherOffersOnOrders::class,
         ],
     ];
 
