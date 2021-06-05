@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OfferAccepted;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Courier;
@@ -59,5 +60,24 @@ class OfferController extends Controller
         ]);
     }
 
-    //TODO: state machine
+    /**
+     * Accept given offer.
+     *
+     * @param Offer $offer
+     * @return Response
+     */
+    public function accept(Offer $offer): Response
+    {
+        $offer->accept();
+
+        OfferAccepted::dispatch($offer);
+
+        $offer->order->inProgress();
+
+        // TODO: open chat
+
+        return $this->successResponse([
+            'offer' => new OfferResource($offer->refresh())
+        ]);
+    }
 }

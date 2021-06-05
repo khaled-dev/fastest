@@ -35,6 +35,19 @@ class Order extends Model implements HasMedia
     const CANCELED = 'canceled';
 
     /**
+     * change order state to be `canceled`
+     *
+     * @return $this
+     */
+    public function cancel(): Order
+    {
+        $this->state = static::CANCELED;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
      * Get all order offers
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
@@ -87,6 +100,17 @@ class Order extends Model implements HasMedia
     public function scopeForGivenState($query, $state)
     {
         return $query->where('state', $state);
+    }
+
+    /**
+     * @return $this
+     */
+    public function inProgress(): Order
+    {
+        $this->state = static::IN_PROGRESS;
+        $this->save();
+
+        return $this;
     }
 
     /**

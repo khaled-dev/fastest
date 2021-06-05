@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Offer extends Model
 {
@@ -27,5 +27,40 @@ class Offer extends Model
     const ACCEPTED = 'accepted';
     const COMPLETED = 'completed';
     const CANCELED = 'canceled';
+
+    /**
+     * Get other offer.
+     *
+     * @param $query
+     * @param Offer $offer
+     * @return mixed
+     */
+    public function scopeOtherOffers($query, Offer $offer)
+    {
+        return $query->where('id', '!=', $offer->id);
+    }
+
+    /**
+     * change offer state to be `accepted`
+     *
+     * @return $this
+     */
+    public function accept(): Offer
+    {
+        $this->state = static::ACCEPTED;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
+     * Get the order of this offer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function order(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
 
 }

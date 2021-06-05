@@ -89,4 +89,19 @@ class OrderController extends Controller
             'orders' => OrderResource::collection(Order::forGivenState($state)->get())
         ]);
     }
+
+    /**
+     * Cancel the given order
+     *
+     * @param Order $order
+     * @return Response
+     */
+    public function cancel(Order $order): Response
+    {
+        $order->cancel();
+
+        return $this->successResponse([
+            'order' => new OrderResource($order->refresh())
+        ]);
+    }
 }
