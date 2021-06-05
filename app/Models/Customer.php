@@ -29,6 +29,17 @@ class Customer extends User implements HasMedia
     ];
 
     /**
+     * Check if this customer owns the given order.
+     *
+     * @param Order $order
+     * @return bool
+     */
+    public function hasOrdered(Order $order): bool
+    {
+        return $this->id = $order->customer_id;
+    }
+
+    /**
      * Get all locations
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany

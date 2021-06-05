@@ -19,9 +19,12 @@ class OfferController extends Controller
      * @param StoreOfferRequest $request
      * @param Order $order
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreOfferRequest $request, Order $order): Response
     {
+        $this->authorize('store', $order);
+
         /** @var Courier $courier */
         $courier = auth()->user();
 
@@ -65,9 +68,12 @@ class OfferController extends Controller
      *
      * @param Offer $offer
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function accept(Offer $offer): Response
     {
+        $this->authorize('accept', $offer);
+
         $offer->accept();
 
         OfferAccepted::dispatch($offer);

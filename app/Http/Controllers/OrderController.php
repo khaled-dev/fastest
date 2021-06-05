@@ -95,9 +95,12 @@ class OrderController extends Controller
      *
      * @param Order $order
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function cancel(Order $order): Response
     {
+        $this->authorize('cancel', $order);
+
         $order->cancel();
 
         return $this->successResponse([

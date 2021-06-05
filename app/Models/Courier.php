@@ -49,6 +49,16 @@ class Courier extends User implements HasMedia
     ];
 
     /**
+     * Check if this courier has no working offers.
+     *
+     * @return bool
+     */
+    public function isAvailable(): bool
+    {
+        return $this->offers()->whereNotIN('state', [Offer::ACCEPTED, Offer::UNDER_NEGOTIATION])->exists();
+    }
+
+    /**
      * Get the CourierUpdateRequest
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasOne

@@ -29,6 +29,16 @@ class Offer extends Model
     const CANCELED = 'canceled';
 
     /**
+     * Check if this offer is `under_negotiation`
+     *
+     * @return bool
+     */
+    public function isUnderNegotiation(): bool
+    {
+        return $this->state == static::UNDER_NEGOTIATION;
+    }
+
+    /**
      * Get other offer.
      *
      * @param $query

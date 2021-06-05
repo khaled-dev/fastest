@@ -48,6 +48,16 @@ class Order extends Model implements HasMedia
     }
 
     /**
+     * change order state to be `canceled`
+     *
+     * @return bool
+     */
+    public function isOpened(): bool
+    {
+       return in_array($this->state, [static::OPENED, static::UNDER_NEGOTIATION]);
+    }
+
+    /**
      * Get all order offers
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
