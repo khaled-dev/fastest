@@ -26,9 +26,11 @@ class StoreOfferRequest extends FormRequest
     {
         /** @var Order $order */
         $order = $this->order;
+        $maxPrice = $order->min_offer_price ?? 0;
+        $minPrice = $order->max_offer_price ?? 100;
 
         return [
-            'price' => "required|numeric|between:{$order->min_offer_price},{$order->max_offer_price}",
+            'price' => "required|numeric|between:{$maxPrice},{$minPrice}",
             'delivery_time' => 'required|string|max:255',
         ];
     }

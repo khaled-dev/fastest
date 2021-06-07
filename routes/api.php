@@ -59,6 +59,6 @@ Route::middleware('auth:couriers')->group(function () {
     Route::post('/orders/{order}/offers', 'OfferController@store')->name('offers.store');
 });
 
-Route::get('test', function () {
-    ImportPlacesFromGoogle::dispatch();
-});
+//Route::get('test', function () {
+//    ImportPlacesFromGoogle::dispatch();
+//});
