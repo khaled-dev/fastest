@@ -42,6 +42,7 @@ Route::middleware('auth:customers')->group(function () {
     Route::get('/orders/{order}/cancel', 'OrderController@cancel')->name('orders.cancel');
     Route::get('/orders/{order}/offers', 'OfferController@index')->name('offers.index');
     Route::get('/offers/{offer}', 'OfferController@show')->name('offers.show');
+    Route::put('/offers/{offer}/accept', 'OfferController@accept')->name('offers.accept');
 });
 
 Route::post('/stores/search', 'StoreController@search')->name('stores.search');
@@ -56,7 +57,6 @@ Route::middleware('auth:couriers')->group(function () {
     Route::post('/couriers/update-request', 'CourierController@storeUpdateRequest')->name('couriers.update_request');
     Route::post('/couriers/update-images', 'CourierController@updateImages')->name('couriers.update_images');
     Route::post('/orders/{order}/offers', 'OfferController@store')->name('offers.store');
-    Route::put('/offers/{offer}/accept', 'OfferController@accept')->name('offers.accept');
 });
 
 Route::get('test', function () {
