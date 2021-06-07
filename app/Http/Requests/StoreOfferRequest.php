@@ -30,7 +30,7 @@ class StoreOfferRequest extends FormRequest
         $minPrice = $order->max_offer_price ?? 100;
 
         return [
-            'price' => "required|numeric|between:{$maxPrice},{$minPrice}",
+            'price' => "required|numeric|between:{$minPrice},{$maxPrice}",
             'delivery_time' => 'required|string|max:255',
         ];
     }
