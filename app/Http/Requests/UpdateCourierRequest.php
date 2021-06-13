@@ -31,6 +31,7 @@ class UpdateCourierRequest extends FormRequest
             'city_id' => 'required|exists:cities,id',
             'nationality_id' => 'required|exists:nationalities,id',
             'bank_id' => 'required|exists:banks,id',
+            'car_type_id' => 'required|exists:car_types,id',
             'name' => 'required|max:225',
             'new_password' => 'sometimes|max:225|confirmed',
             'new_password_confirmation' => 'sometimes|max:225',

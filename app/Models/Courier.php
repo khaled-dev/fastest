@@ -123,7 +123,7 @@ class Courier extends User implements HasMedia
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function car_type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function carType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(CarType::class);
     }
