@@ -49,6 +49,29 @@ class Courier extends User implements HasMedia
     ];
 
     /**
+     * Filter by mobile number
+     *
+     * @param $query
+     * @param string $mobile
+     * @return mixed
+     */
+    public function scopeForMobile($query, string $mobile)
+    {
+        return $query->where('mobile', $mobile);
+    }
+
+    /**
+     * Filter with `is_active` field is false
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeNotActive($query)
+    {
+        return $query->where('is_active', false);
+    }
+
+    /**
      * Check if this courier has no working offers.
      *
      * @return bool
