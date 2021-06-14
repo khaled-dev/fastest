@@ -107,7 +107,7 @@ class Courier extends Resource
                 ->dependsOn('territory', 'territory_id')
                 ->hideFromIndex(),
 
-            BelongsTo::make('Car Type', 'car_type')->hideFromIndex(),
+            BelongsTo::make('Car Type', 'carType')->hideFromIndex(),
 
             Images::make('National Card Image', 'national_card_image')
                 ->hideFromIndex(),

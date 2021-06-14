@@ -70,7 +70,7 @@ class CourierUpdateRequest extends Resource
 
             BelongsTo::make('City', 'city'),
 
-            BelongsTo::make('Car Type', 'car_type')->hideFromIndex(),
+            BelongsTo::make('Car Type', 'carType')->hideFromIndex(),
         ];
     }
 
