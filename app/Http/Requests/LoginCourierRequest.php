@@ -24,7 +24,7 @@ class LoginCourierRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => 'required|max:225',
+            'mobile' => 'required|max:225|exists:couriers,mobile',
             'password' => 'required|max:225',
         ];
     }
