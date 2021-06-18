@@ -7,7 +7,7 @@ namespace App\Models\Concerns;
 use App\Models\Notification;
 use App\Models\NotificationToken;
 
-trait notifiable
+trait Notifiable
 {
 
     /**
