@@ -5,7 +5,7 @@ namespace App\Services\FirebaseAuth;
 
 use Lcobucci\JWT\Token;
 use Kreait\Firebase\Auth;
-use App\Services\contracts\IAuthenticateOTP;
+use App\Services\Contracts\IAuthenticateOTP;
 
 class FirebaseAuth implements IAuthenticateOTP
 {

@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\FirebaseAuth\FirebaseAuth;
-use App\Services\contracts\IAuthenticateOTP;
+use App\Services\Contracts\ICloudMessaging;
+use App\Services\Contracts\IAuthenticateOTP;
+use App\Services\FirebaseCloudMessaging\FirebaseCloudMessaging;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public $bindings = [
         IAuthenticateOTP::class => FirebaseAuth::class,
+        ICloudMessaging::class => FirebaseCloudMessaging::class,
     ];
 
     /**

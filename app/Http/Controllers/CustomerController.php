@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Response;
 use App\Http\Resources\CustomerResource;
-use App\Services\contracts\IAuthenticateOTP;
 use App\Http\Requests\LoginCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Services\Contracts\IAuthenticateOTP;
 use App\Http\Requests\UpdateImagesCustomerRequest;
 
 class CustomerController extends Controller

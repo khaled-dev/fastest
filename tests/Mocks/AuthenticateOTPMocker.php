@@ -4,7 +4,7 @@
 namespace Tests\Mocks;
 
 
-use App\Services\contracts\IAuthenticateOTP;
+use App\Services\Contracts\IAuthenticateOTP;
 use Lcobucci\JWT\Token;
 use Mockery;
 use Mockery\MockInterface;
