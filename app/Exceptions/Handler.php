@@ -6,11 +6,13 @@ use Throwable;
 use App\Services\Http\ResponseBuilder;
 use Illuminate\Auth\AuthenticationException;
 use Firebase\Auth\Token\Exception\InvalidToken;
+use Kreait\Firebase\Exception\MessagingException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Kreait\Firebase\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Services\Exceptions\InvalidFirebaseRegistrationTokenException;
 use App\Services\FirebaseAuth\Concerns\ExceptionHandler as FbExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -64,9 +66,14 @@ class Handler extends ExceptionHandler
             return parent::render($request, $exception);
         }
 
-        // firebase token handler
+        // firebase auth token handler
         if ($exception instanceof InvalidArgumentException || $exception instanceof  InvalidToken) {
             return $this->invalidFbTokenResponse($exception);
+        }
+
+        // firebase cloud messaging token
+        if ($exception instanceof InvalidFirebaseRegistrationTokenException || $exception instanceof  MessagingException ) {
+            return $this->invalidFbRegistrationTokenResponse($exception);
         }
 
         if ($exception instanceof AuthorizationException) {
