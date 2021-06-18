@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Response;
 use App\Http\Resources\CustomerResource;
+use App\Services\Logic\NotificationService;
 use App\Services\Contracts\ICloudMessaging;
 use App\Http\Requests\LoginCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
@@ -62,6 +63,8 @@ class CustomerController extends Controller
         if (empty($customer)) {
             $customer = Customer::create($request->all());
         }
+
+        NotificationService::saveRegistrationToken($customer, $request->fb_registration_token);
 
         return $this->successResponse([
             'customer' => new CustomerResource($customer),
