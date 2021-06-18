@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Auth\Authenticatable;
@@ -10,7 +11,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Courier extends User implements HasMedia
 {
-    use HasApiTokens, Authenticatable, InteractsWithMedia;
+    use HasApiTokens, Authenticatable, InteractsWithMedia, notifiable;
 
     /**
      * The attributes that are mass assignable.

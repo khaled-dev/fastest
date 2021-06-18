@@ -73,4 +73,14 @@ class Offer extends Model
         return $this->belongsTo(Order::class);
     }
 
+    /**
+     * Get the courier who placed the offer.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function courier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Courier::class);
+    }
+
 }
