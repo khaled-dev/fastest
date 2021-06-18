@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
-use App\Events\OfferAccepted;
-use App\Listeners\CancelOtherOffersOnOrders;
 use App\Models\Order;
+use App\Events\OfferPlaced;
+use App\Events\OfferAccepted;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Models\Observers\OrderObserver;
+use App\Listeners\CancelOtherOffersOnOrders;
+use App\Listeners\SendPlacedOfferNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -24,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         OfferAccepted::class => [
             CancelOtherOffersOnOrders::class,
+        ],
+        OfferPlaced::class => [
+            SendPlacedOfferNotification::class,
         ],
     ];
 
