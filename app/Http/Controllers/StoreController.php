@@ -25,6 +25,9 @@ class StoreController extends Controller
 
         return $this->successResponse([
             'stores' => StoreResource::collection($stores),
+        ], [
+            'show' => route('stores.show'),
+            'nearby' => route('stores.nearby'),
         ]);
     }
 
@@ -44,6 +47,9 @@ class StoreController extends Controller
 
         return $this->successResponse([
             'stores' => StoreResource::collection($stores),
+        ], [
+            'show' => route('stores.show'),
+            'search' => route('stores.search'),
         ]);
     }
 
@@ -57,6 +63,9 @@ class StoreController extends Controller
     {
         return $this->successResponse([
             'store' => new StoreResource($store),
+        ], [
+            'nearby' => route('stores.nearby'),
+            'search' => route('stores.search'),
         ]);
     }
 
