@@ -48,7 +48,6 @@ class StoreController extends Controller
         return $this->successResponse([
             'stores' => StoreResource::collection($stores),
         ], [
-            'show' => route('stores.show'),
             'search' => route('stores.search'),
         ]);
     }
