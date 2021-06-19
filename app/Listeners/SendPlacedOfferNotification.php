@@ -40,18 +40,18 @@ class SendPlacedOfferNotification
         /** @var Order $order */
         /** @var Customer $customer */
         $offer    = $event->offer;
-        $order    = $event->offer->order();
-        $customer = $order->order()->customer();
+        $order    = $event->offer->order;
+        $customer = $order->customer;
 
         $notification = [
             'title' => __('notifications.offers.placed.title'),
             'body' => __('notifications.offers.placed.body'),
-            'image_url' => $offer->courier()->profile_picture,
+            'image_url' => $offer->courier->profile_picture,
         ];
 
         NotificationService::saveNotification($customer, $notification);
-        
-        if ($token = $customer->notificationToken()) {
+
+        if ($token = $customer->notificationToken) {
             // send notification
             $this->cloudMessaging
                 ->withToken($token)
