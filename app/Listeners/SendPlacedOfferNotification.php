@@ -61,6 +61,6 @@ class SendPlacedOfferNotification
             return;
         }
 
-        Log::warning("customer with ID {$customer->id} dose not have fcm-token");
+        Log::channel('handwrite')->warning("customer with ID {$customer->id} dose not have fcm-token");
     }
 }

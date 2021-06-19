@@ -37,13 +37,19 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'extralog'],
             'ignore_exceptions' => false,
         ],
 
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+        'handwrite' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/handwrite.log'),
             'level' => env('LOG_LEVEL', 'debug'),
         ],
 
