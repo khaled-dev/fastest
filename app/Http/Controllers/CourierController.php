@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCourierRequest;
 use App\Models\Courier;
 use App\Rules\Mobile;
+use App\Services\Exceptions\InvalidFirebaseRegistrationTokenException;
+use App\Services\Logic\NotificationService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\CourierResource;
 use App\Http\Requests\LoginCourierRequest;
 use App\Http\Requests\CourierResetPassword;
+use App\Services\Contracts\ICloudMessaging;
 use App\Http\Requests\UpdateCourierRequest;
 use App\Services\Contracts\IAuthenticateOTP;
 use App\Http\Requests\UpdateCourierMobileRequest;
 use App\Http\Requests\UpdateImagesCourierRequest;
+use Kreait\Firebase\Exception\FirebaseException;
+use Kreait\Firebase\Exception\MessagingException;
 
 class CourierController extends Controller
 {
@@ -25,45 +32,54 @@ class CourierController extends Controller
     private $firebaseAuth;
 
     /**
-     * CourierController constructor.
+     * Instance of FirebaseCloudMessaging service.
+     *
+     * @var ICloudMessaging
+     */
+    private $cloudMessaging;
+
+    /**
+     * CustomerController constructor.
      *
      * @param IAuthenticateOTP $firebaseAuth
+     * @param ICloudMessaging $cloudMessaging
      */
-    public function __construct(IAuthenticateOTP $firebaseAuth)
+    public function __construct(IAuthenticateOTP $firebaseAuth, ICloudMessaging $cloudMessaging)
     {
         $this->firebaseAuth = $firebaseAuth;
+        $this->cloudMessaging = $cloudMessaging;
     }
 
     /**
      * Register a new courier
      *
-     * @param Request $request
+     * @param StoreCourierRequest $request
      * @return Response
+     * @throws FirebaseException
+     * @throws InvalidFirebaseRegistrationTokenException
+     * @throws MessagingException
      */
-    public function store(Request $request): Response
+    public function store(StoreCourierRequest $request): Response
     {
-        $this->firebaseAuth->verifyToken($request->fb_token ?? '');
+        $this->firebaseAuth->verifyToken($request->fb_token);
+
+        $this->cloudMessaging->validateRegistrationToken($request->fb_registration_token);
 
         $courier = Courier::forMobile($request->mobile)
             ->notActive()
             ->first();
 
-
-        $validates = ['fb_token' => 'required|string'];
-
         if (empty($courier)) {
-            $validates = array_merge($validates, [
+            $request->validate([
                 'mobile' => ['required', 'max:225', 'unique:couriers', new Mobile],
             ]);
-        }
 
-        $request->validate($validates);
-
-        if (empty($courier)) {
             $courier = new Courier();
             $courier->mobile = $request->mobile;
             $courier->save();
         }
+
+        NotificationService::saveRegistrationToken($courier, $request->fb_registration_token);
 
         return $this->successResponse([
             'courier'     => new CourierResource($courier->refresh()),
@@ -78,13 +94,18 @@ class CourierController extends Controller
      *
      * @param LoginCourierRequest $request
      * @return Response
+     * @throws FirebaseException
+     * @throws InvalidFirebaseRegistrationTokenException
+     * @throws MessagingException
      */
     public function login(LoginCourierRequest $request): Response
     {
+        $this->cloudMessaging->validateRegistrationToken($request->fb_registration_token);
+
         $courier = Courier::where('mobile', $request->mobile)->first();
 
         if ($courier->is_active) {
-            if (empty($courier) || ! Hash::check($request->password, $courier->password)) {
+            if (! Hash::check($request->password, $courier->password)) {
                 return $this->validationErrorResponse([
                     "mobile" => [
                         "Invalid mobile or password."
@@ -94,6 +115,8 @@ class CourierController extends Controller
                 ]);
             }
         }
+
+        NotificationService::saveRegistrationToken($courier, $request->fb_registration_token);
 
         return $this->successResponse([
             'courier'     => new CourierResource($courier),

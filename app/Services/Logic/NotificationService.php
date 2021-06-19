@@ -18,7 +18,10 @@ class NotificationService
      */
     public static function saveRegistrationToken(User $user, string $token): Model
     {
-        return $user->notificationToken()->create(['token' => $token]);
+        return $user->notificationToken()->updateOrCreate(
+            ['resource_type' => get_class($user), 'resource_id' => $user->id],
+            ['token' => $token]
+        );
     }
 
     /**
