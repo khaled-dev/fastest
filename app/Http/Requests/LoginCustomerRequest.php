@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Mobile;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginCustomerRequest extends FormRequest
@@ -24,7 +25,7 @@ class LoginCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => 'required|max:225',
+            'mobile' => ['required', 'max:225', new Mobile],
             'fb_token' => 'required|string',
         ];
     }

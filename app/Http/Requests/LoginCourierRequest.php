@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Mobile;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginCourierRequest extends FormRequest
@@ -24,7 +25,7 @@ class LoginCourierRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => 'required|max:225|exists:couriers,mobile',
+            'mobile' => ['required', 'max:225', 'exists:couriers,mobile', new Mobile],
             'password' => 'required|max:225',
         ];
     }
