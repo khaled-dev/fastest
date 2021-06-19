@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\OfferAccepted;
+use App\Events\OfferPlaced;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Courier;
@@ -23,7 +24,7 @@ class OfferController extends Controller
      */
     public function store(StoreOfferRequest $request, Order $order): Response
     {
-        $this->authorize('store', $order);
+        $this->authorize('store', [Offer::class, $order]);
 
         /** @var Courier $courier */
         $courier = auth()->user();
@@ -31,6 +32,8 @@ class OfferController extends Controller
         $offer = $courier->offers()->create(
             array_merge($request->all(), ['order_id' => $order->id])
         );
+
+        OfferPlaced::dispatch($offer);
 
         return $this->successResponse([
             'offer' => new OfferResource($offer->refresh())

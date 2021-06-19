@@ -11,7 +11,7 @@ use App\Http\Resources\CourierResource;
 use App\Http\Requests\LoginCourierRequest;
 use App\Http\Requests\CourierResetPassword;
 use App\Http\Requests\UpdateCourierRequest;
-use App\Services\contracts\IAuthenticateOTP;
+use App\Services\Contracts\IAuthenticateOTP;
 use App\Http\Requests\UpdateCourierMobileRequest;
 use App\Http\Requests\UpdateImagesCourierRequest;
 

@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Response;
 use App\Http\Resources\CustomerResource;
-use App\Services\contracts\IAuthenticateOTP;
+use App\Services\Logic\NotificationService;
+use App\Services\Contracts\ICloudMessaging;
 use App\Http\Requests\LoginCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Services\Contracts\IAuthenticateOTP;
+use Kreait\Firebase\Exception\FirebaseException;
+use Kreait\Firebase\Exception\MessagingException;
 use App\Http\Requests\UpdateImagesCustomerRequest;
+use App\Services\Exceptions\InvalidFirebaseRegistrationTokenException;
 
 class CustomerController extends Controller
 {
@@ -20,13 +25,22 @@ class CustomerController extends Controller
     private $firebaseAuth;
 
     /**
+     * Instance of FirebaseCloudMessaging service.
+     *
+     * @var ICloudMessaging
+     */
+    private $cloudMessaging;
+
+    /**
      * CustomerController constructor.
      *
      * @param IAuthenticateOTP $firebaseAuth
+     * @param ICloudMessaging $cloudMessaging
      */
-    public function __construct(IAuthenticateOTP $firebaseAuth)
+    public function __construct(IAuthenticateOTP $firebaseAuth, ICloudMessaging $cloudMessaging)
     {
         $this->firebaseAuth = $firebaseAuth;
+        $this->cloudMessaging = $cloudMessaging;
     }
 
     /**
@@ -34,16 +48,23 @@ class CustomerController extends Controller
      *
      * @param LoginCustomerRequest $request
      * @return Response
+     * @throws FirebaseException
+     * @throws InvalidFirebaseRegistrationTokenException
+     * @throws MessagingException
      */
     public function registerOrLogin(LoginCustomerRequest $request): Response
     {
         $this->firebaseAuth->verifyToken($request->fb_token ?? '');
+
+        $this->cloudMessaging->validateRegistrationToken($request->fb_registration_token);
 
         $customer = Customer::where('mobile', $request->mobile)->first();
 
         if (empty($customer)) {
             $customer = Customer::create($request->all());
         }
+
+        NotificationService::saveRegistrationToken($customer, $request->fb_registration_token);
 
         return $this->successResponse([
             'customer' => new CustomerResource($customer),
@@ -56,7 +77,7 @@ class CustomerController extends Controller
     }
 
     /**
-      * Show customer resource
+     * Show customer resource
      *
      * @return Response
      */

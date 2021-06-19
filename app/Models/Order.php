@@ -67,6 +67,17 @@ class Order extends Model implements HasMedia
         return $this->hasMany(Offer::class);
     }
 
+
+    /**
+     * Get the customer who requested the order.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
     /**
      * Get all opened orders
      *

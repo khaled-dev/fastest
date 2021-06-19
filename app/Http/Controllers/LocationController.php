@@ -21,6 +21,8 @@ class LocationController extends Controller
 
         return $this->successResponse([
             'locations' => LocationResource::collection($customer->locations)
+        ], [
+            'store' => route('locations.store'),
         ]);
     }
 
@@ -39,6 +41,8 @@ class LocationController extends Controller
 
         return $this->successResponse([
             'location' => new LocationResource($location)
+        ], [
+            'index' => route('locations.index'),
         ]);
     }
 }

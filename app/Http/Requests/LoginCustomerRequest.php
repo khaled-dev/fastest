@@ -27,6 +27,7 @@ class LoginCustomerRequest extends FormRequest
         return [
             'mobile' => ['required', 'max:225', new Mobile],
             'fb_token' => 'required|string',
+            'fb_registration_token' => 'required|string',
         ];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Services\GooglePlaces;
 
 use Illuminate\Support\Collection;
 use SKAgarwal\GoogleApi\PlacesApi;
-use App\Services\contracts\IGooglePlaces;
+use App\Services\Contracts\IGooglePlaces;
 
 class GooglePlaces implements IGooglePlaces
 {

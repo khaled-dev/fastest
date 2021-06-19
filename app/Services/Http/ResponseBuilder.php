@@ -21,6 +21,19 @@ trait ResponseBuilder
     }
 
     /**
+     * Generate validation error response for invalid fb CloudMessaging Token
+     *
+     * @param $exception
+     * @return Response
+     */
+    protected function invalidFbRegistrationTokenResponse($exception): Response
+    {
+        return $this->validationErrorResponse([
+            'fb_registration_token' =>  [$exception->getMessage()]
+        ]);
+    }
+
+    /**
      * Generate validation error response
      *
      * @param array $errors

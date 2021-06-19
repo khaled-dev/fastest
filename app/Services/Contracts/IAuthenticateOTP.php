@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\contracts;
+namespace App\Services\Contracts;
 
 
 use Lcobucci\JWT\Token;

@@ -49,6 +49,16 @@ class Courier extends User implements HasMedia
     ];
 
     /**
+     * Get the courier's profile picture.
+     *
+     * @return string
+     */
+    public function getProfilePictureAttribute(): string
+    {
+        return $this->getFirstMediaUrl('profile_image');
+    }
+
+    /**
      * Filter by mobile number
      *
      * @param $query
