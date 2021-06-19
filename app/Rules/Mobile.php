@@ -42,7 +42,6 @@ class Mobile implements Rule
      */
     public function message()
     {
-        // TODO: localize
-        return 'Mobile format must be +966XXXXXXXXX';
+        return __('validation.mobile_format');
     }
 }
