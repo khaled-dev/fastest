@@ -124,7 +124,7 @@ class CourierTest extends TestCase
                 'car_number'      => $car_number,
                 'national_number' => $national_number,
                 'iban'            => $iban,
-                'car_type'        => $carType->id,
+                'carType'        => $carType->id,
                 '__media__' => [
                     'profile_image'         => [UploadedFile::fake()->image('image.jpg')],
                     'national_card_image'   => [UploadedFile::fake()->image('image.jpg')],
