@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Registered;
 use App\Models\Observers\OrderObserver;
 use App\Listeners\CancelOtherOffersOnOrders;
 use App\Listeners\SendPlacedOfferNotification;
+use App\Listeners\SendOfferAcceptedNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -26,6 +27,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         OfferAccepted::class => [
             CancelOtherOffersOnOrders::class,
+            SendOfferAcceptedNotification::class,
         ],
         OfferPlaced::class => [
             SendPlacedOfferNotification::class,

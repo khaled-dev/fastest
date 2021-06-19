@@ -1,17 +1,16 @@
 <?php
 
-
 namespace App\Services\Logic;
 
-
 use App\Models\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Services\Contracts\ICloudMessaging;
 
 class NotificationService
 {
     /**
-     * save the given registration token of a device.
+     * Saves the given registration token of a device.
      *
      * @param User $user
      * @param string $token
@@ -36,5 +35,22 @@ class NotificationService
             'body'  => $data['body'],
             'image_url'  => $data['image_url'],
         ]);
+    }
+
+    /**
+     * Push notification to a given device.
+     *
+     * @param string $token
+     * @param array $data
+     * @return array
+     */
+    public static function pushNotification(string $token, array $data): array
+    {
+        $firebaseCloudMessaging = App::make(ICloudMessaging::class);
+
+        return $firebaseCloudMessaging
+            ->withToken($token)
+            ->withNotification($data)
+            ->send();
     }
 }
