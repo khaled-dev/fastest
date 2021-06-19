@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\CarType;
 use Tests\TestCase;
 use App\Models\Bank;
 use App\Models\City;
@@ -40,7 +41,7 @@ class CourierTest extends TestCase
         $this->mockAuthenticateOTP();
 
         $this->postJson(route('couriers.store'), [
-            'mobile' => '4444433749e6',
+            'mobile' => '+966123456789',
             'fb_token' => '000000',
         ])
         ->assertStatus(201)
@@ -53,7 +54,7 @@ class CourierTest extends TestCase
     public function itCanNotLoginCourier()
     {
         $this->postJson(route('couriers.login'), [
-            'mobile' => '123456',
+            'mobile' => '+966123456789',
             'password' => '123456',
         ])
         ->assertStatus(422)
@@ -67,7 +68,7 @@ class CourierTest extends TestCase
      */
     public function itLoginCourier()
     {
-        $courierMobile = '123123123';
+        $courierMobile = '+966123456789';
 
         // create couriers
         Courier::factory()->create([
@@ -119,6 +120,7 @@ class CourierTest extends TestCase
         $city = City::factory()->create(['territory_id' => $territory->id]);
         $nationality = Nationality::factory()->create();
         $bank = Bank::factory()->create();
+        $carType = CarType::factory()->create();
         $gender = 'male';
         $car_number = '123213';
         $national_number = '123123';
@@ -133,6 +135,7 @@ class CourierTest extends TestCase
                     'city_id'         => $city->id,
                     'nationality_id'  => $nationality->id,
                     'bank_id'         => $bank->id,
+                    'car_type_id'         => $carType->id,
                     'gender'          => $gender,
                     'car_number'      => $car_number,
                     'national_number' => $national_number,
@@ -167,6 +170,7 @@ class CourierTest extends TestCase
         ]);
         $nationality = Nationality::factory()->create();
         $bank = Bank::factory()->create();
+        $carType = CarType::factory()->create();
         $gender = 'female';
         $car_number = '123213';
         $national_number = '123123';
@@ -181,6 +185,7 @@ class CourierTest extends TestCase
                     'city_id'         => $city->id,
                     'nationality_id'  => $nationality->id,
                     'bank_id'         => $bank->id,
+                    'car_type_id'         => $carType->id,
                     'gender'          => $gender,
                     'car_number'      => $car_number,
                     'national_number' => $national_number,
@@ -220,7 +225,7 @@ class CourierTest extends TestCase
 
         $courier = Courier::factory()->create();
 
-        $mobile = '123123123';
+        $mobile = '+966123456789';
 
         $this->actingAs($courier, 'couriers')
             ->putJson(
@@ -243,7 +248,7 @@ class CourierTest extends TestCase
     {
         $this->mockAuthenticateOTP();
 
-        $mobile = '123123123';
+        $mobile = '+966123456789';
         $password = '123123123';
 
         $courier = Courier::factory([
