@@ -9,7 +9,9 @@ return [
     */
 
     'offers' => [
-        'title' => 'You have received an offer',
-        'body' => 'New offer received for your order',
+        'placed' => [
+            'title' => 'You have received an offer',
+            'body' => 'New offer received for your order',
+        ]
     ]
 ];
