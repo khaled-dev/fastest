@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Courier;
+use App\Rules\Mobile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -52,7 +53,7 @@ class CourierController extends Controller
 
         if (empty($courier)) {
             $validates = array_merge($validates, [
-                'mobile' => 'required|max:225|unique:couriers',
+                'mobile' => ['required', 'max:225', 'unique:couriers', new Mobile],
             ]);
         }
 

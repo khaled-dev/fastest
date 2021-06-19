@@ -84,7 +84,7 @@ class CustomerTest extends TestCase
     public function itCanStoreCustomer()
     {
         $name = 'ar name test';
-        $mobile = 'en name test';
+        $mobile = '+966123456789';
 
         $this->be(User::factory()->create())
             ->postJson('nova-api/customers/', [
@@ -115,7 +115,7 @@ class CustomerTest extends TestCase
     public function itCanUpdateCustomer()
     {
         $name = 'ar name test';
-        $mobile = 'en name test';
+        $mobile = '+966123456789';
 
         $this->be(User::factory()->create())
             ->putJson('nova-api/customers/' . $this->customers[0]->id, [

@@ -23,7 +23,7 @@ class CustomerFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'mobile' => $this->faker->phoneNumber,
+            'mobile' => '+966' . random_int(111111111, 999999999),
         ];
     }
 }

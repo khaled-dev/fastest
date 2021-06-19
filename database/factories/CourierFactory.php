@@ -34,7 +34,7 @@ class CourierFactory extends Factory
             'nationality_id'     => Nationality::first()->id ?? null,
             'bank_id'            => Bank::first()->id ?? null,
             'name'               => $this->faker->name,
-            'mobile'             => $this->faker->phoneNumber,
+            'mobile'             => '+966' . random_int(111111111, 999999999),
             'national_number'    => $this->faker->randomNumber(9),
             'gender'             => 'male',
             'car_number'         => $this->faker->randomNumber(4),

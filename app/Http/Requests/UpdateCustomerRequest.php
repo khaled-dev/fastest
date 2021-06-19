@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Customer;
+use App\Rules\Mobile;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -31,6 +32,7 @@ class UpdateCustomerRequest extends FormRequest
             'mobile' => [
                 'required',
                 'max:225',
+                new Mobile,
                 Rule::unique('customers')->ignore($this->user()->id ?? '')
             ],
         ];

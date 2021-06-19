@@ -36,7 +36,7 @@ class CustomerTest extends TestCase
         $this->mockAuthenticateOTP();
 
         $this->postJson(route('customers.login'), [
-                'mobile' => '4444433749e6',
+                'mobile' => '+966123456789',
                 'fb_token' => '000000',
         ])
         ->assertOk()

@@ -2,7 +2,9 @@
 
 namespace App\Nova;
 
+use App\Rules\Mobile;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -52,7 +54,9 @@ class Customer extends Resource
 
             Text::make('Name', 'name')->sortable(),
 
-            Text::make('Mobile', 'mobile')->sortable(),
+            Text::make('Mobile', 'mobile')
+                ->rules(new Mobile, Rule::unique('customers')->ignore($this->resource->id))
+                ->sortable(),
         ];
     }
 }

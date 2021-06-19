@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Courier;
+use App\Rules\Mobile;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -31,6 +32,7 @@ class UpdateCourierMobileRequest extends FormRequest
             'mobile' => [
                 'required',
                 'max:225',
+                new Mobile,
                 Rule::unique('couriers')->ignore($this->user()->id ?? '')
             ],
         ];

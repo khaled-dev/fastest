@@ -120,7 +120,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
-
+    'mobile_format' => 'Mobile format must be +966XXXXXXXXX',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

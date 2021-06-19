@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Mobile;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CourierResetPassword extends FormRequest
@@ -24,7 +25,7 @@ class CourierResetPassword extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => 'required|max:225',
+            'mobile' => ['required', 'max:225', new Mobile],
             'new_password' => 'required|max:225|confirmed',
             'new_password_confirmation' => 'required|max:225',
             'fb_token' => 'required|string',
