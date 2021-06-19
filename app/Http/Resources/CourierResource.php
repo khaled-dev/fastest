@@ -28,7 +28,7 @@ class CourierResource extends JsonResource
             'nationality' => new NationalityResource($this->nationality),
             'bank' => new bankResource($this->bank),
             'carType' => new CarTypeResource($this->carType),
-            'profileImage' => $$this->profile_picture,
+            'profileImage' => $this->profile_picture,
             'nationalCardImage' => $this->getFirstMediaUrl('national_card_image'),
             'carLicenseImage' => $this->getFirstMediaUrl('car_license_image'),
             'drivingLicenseImage' => $this->getFirstMediaUrl('driving_license_image'),
