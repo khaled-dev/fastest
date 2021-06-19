@@ -24,7 +24,7 @@ class OfferController extends Controller
      */
     public function store(StoreOfferRequest $request, Order $order): Response
     {
-        $this->authorize('store', $order);
+        $this->authorize('store', [Offer::class, $order]);
 
         /** @var Courier $courier */
         $courier = auth()->user();
