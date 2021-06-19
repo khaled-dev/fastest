@@ -46,7 +46,7 @@ class ItemsController extends Controller
     public function carTypes(): Response
     {
         return $this->successResponse([
-            'car_types' => CarTypeResource::collection(CarType::all())
+            'carTypes' => CarTypeResource::collection(CarType::all())
         ]);
     }
 

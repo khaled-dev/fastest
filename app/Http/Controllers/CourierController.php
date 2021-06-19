@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Courier;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\CourierResource;
@@ -10,7 +11,6 @@ use App\Http\Requests\LoginCourierRequest;
 use App\Http\Requests\CourierResetPassword;
 use App\Http\Requests\UpdateCourierRequest;
 use App\Services\Contracts\IAuthenticateOTP;
-use App\Http\Requests\RegisterCourierRequest;
 use App\Http\Requests\UpdateCourierMobileRequest;
 use App\Http\Requests\UpdateImagesCourierRequest;
 
@@ -36,19 +36,36 @@ class CourierController extends Controller
     /**
      * Register a new courier
      *
-     * @param RegisterCourierRequest $request
+     * @param Request $request
      * @return Response
      */
-    public function store(RegisterCourierRequest $request): Response
+    public function store(Request $request): Response
     {
         $this->firebaseAuth->verifyToken($request->fb_token ?? '');
 
-        $courier = new Courier();
-        $courier->mobile = $request->mobile;
-        $courier->save();
+        $courier = Courier::forMobile($request->mobile)
+            ->notActive()
+            ->first();
+
+
+        $validates = ['fb_token' => 'required|string'];
+
+        if (empty($courier)) {
+            $validates = array_merge($validates, [
+                'mobile' => 'required|max:225|unique:couriers',
+            ]);
+        }
+
+        $request->validate($validates);
+
+        if (empty($courier)) {
+            $courier = new Courier();
+            $courier->mobile = $request->mobile;
+            $courier->save();
+        }
 
         return $this->successResponse([
-            'courier'     => new CourierResource($courier),
+            'courier'     => new CourierResource($courier->refresh()),
             'accessToken' => $courier->createToken('authToken')->accessToken,
         ], [
             'update' => route('couriers.update'),
@@ -65,14 +82,16 @@ class CourierController extends Controller
     {
         $courier = Courier::where('mobile', $request->mobile)->first();
 
-        if (empty($courier) || ! Hash::check($request->password, $courier->password)) {
-            return $this->validationErrorResponse([
-                "mobile" => [
-                    "Invalid mobile or password."
-                ]
-            ], [
-                'resetPassword' => route('couriers.reset_password'),
-            ]);
+        if ($courier->is_active) {
+            if (empty($courier) || ! Hash::check($request->password, $courier->password)) {
+                return $this->validationErrorResponse([
+                    "mobile" => [
+                        "Invalid mobile or password."
+                    ]
+                ], [
+                    'resetPassword' => route('couriers.reset_password'),
+                ]);
+            }
         }
 
         return $this->successResponse([
@@ -120,7 +139,7 @@ class CourierController extends Controller
             $courier->password = Hash::make($request->new_password);
         }
 
-        $courier->is_active = 1;
+        $courier->is_active = true;
 
         $courier->fill($request->all())->save();
 

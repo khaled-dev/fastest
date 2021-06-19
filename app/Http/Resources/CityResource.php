@@ -18,7 +18,7 @@ class CityResource extends JsonResource
             'id' => $this->id,
             'nameAr' => $this->name_ar,
             'nameEn' => $this->name_en,
-            'territory' =>  new TerritoryResource($request->territory),
+            'territory' =>  new TerritoryResource($this->territory),
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];
