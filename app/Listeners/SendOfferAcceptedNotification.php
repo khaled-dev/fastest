@@ -29,7 +29,7 @@ class SendOfferAcceptedNotification
 
         NotificationService::saveNotification($courier, $notification);
 
-        if ($token = $courier->notificationToken) {
+        if (!empty($courier->notificationToken) && $token = $courier->notificationToken->token) {
             NotificationService::pushNotification($token, $notification);
             return;
         }

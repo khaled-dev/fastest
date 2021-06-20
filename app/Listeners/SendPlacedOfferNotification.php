@@ -28,7 +28,7 @@ class SendPlacedOfferNotification
 
         NotificationService::saveNotification($customer, $notification);
 
-        if ($token = $customer->notificationToken) {
+        if (!empty($customer->notificationToken) && $token = $customer->notificationToken->token) {
             NotificationService::pushNotification($token, $notification);
             return;
         }
