@@ -131,7 +131,7 @@ class FirebaseCloudMessaging implements ICloudMessaging
         $message = CloudMessage::withTarget($this->target['type'], $this->target['value'])
             ->withNotification(
                 Notification::create(
-                    $this->notifications['title'], $this->notifications['body'], $this->notifications['imageUrl']
+                    $this->notifications['title'], $this->notifications['body'], $this->notifications['image_url']
                 )
             )
             ->withData($this->data);
