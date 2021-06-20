@@ -63,6 +63,7 @@ Route::middleware('auth:couriers')->group(function () {
 Route::middleware(['auth:customers', 'auth:couriers'])->group(function () {
     Route::get('/notifications', 'NotificationController@index')->name('notifications.index');
     Route::put('/notifications/{notification}/read', 'NotificationController@read')->name('notifications.read');
+    Route::post('/notifications/token', 'NotificationController@storeNotificationToken')->name('notifications.store_token');
 
 });
 

@@ -18,7 +18,10 @@ class NotificationService
      */
     public static function saveRegistrationToken(User $user, string $token): Model
     {
-        return $user->notificationToken()->create(['token' => $token]);
+        return $user->notificationToken()->updateOrCreate(
+            ['resource_type' => get_class($user), 'resource_id' => $user->id],
+            ['token' => $token]
+        );
     }
 
     /**
@@ -52,5 +55,18 @@ class NotificationService
             ->withToken($token)
             ->withNotification($data)
             ->send();
+    }
+
+    /**
+     * Validate registration token.
+     *
+     * @param string $token
+     * @return bool
+     */
+    public static function validateRegistrationToken(string $token): bool
+    {
+        $firebaseCloudMessaging = App::make(ICloudMessaging::class);
+
+        return $firebaseCloudMessaging->validateRegistrationToken($token);
     }
 }

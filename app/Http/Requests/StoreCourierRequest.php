@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\Mobile;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginCourierRequest extends FormRequest
+class StoreCourierRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,8 @@ class LoginCourierRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => ['required', 'max:225', 'exists:couriers,mobile', new Mobile],
-            'password' => 'required|max:225',
-            'fb_registration_token' => 'required|max:225',
+            'fb_token' => 'required|string',
+            'fb_registration_token' => 'required|string',
         ];
     }
 }
