@@ -25,21 +25,21 @@ class FirebaseCloudMessaging implements ICloudMessaging
      *
      * @var array
      */
-    protected array $notifications;
+    protected array $notifications = [];
 
     /**
      * Messaging object.
      *
      * @var array
      */
-    protected array $data;
+    protected array $data = [];
 
     /**
      * Messaging object.
      *
      * @var array
      */
-    protected array $target;
+    protected array $target = [];
 
     /**
      * FirebaseCloudMessaging constructor.
