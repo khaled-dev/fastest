@@ -88,7 +88,7 @@ class Courier extends User implements HasMedia
      */
     public function isAvailable(): bool
     {
-        return $this->offers()->whereNotIN('state', [Offer::ACCEPTED, Offer::UNDER_NEGOTIATION])->exists();
+        return !$this->offers()->whereIn('state', [Offer::ACCEPTED, Offer::UNDER_NEGOTIATION])->exists();
     }
 
     /**
@@ -200,5 +200,4 @@ class Courier extends User implements HasMedia
             ->addMediaCollection('driving_license_image')
             ->singleFile();
     }
-
 }
