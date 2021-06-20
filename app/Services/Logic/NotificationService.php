@@ -56,4 +56,17 @@ class NotificationService
             ->withNotification($data)
             ->send();
     }
+
+    /**
+     * Validate registration token.
+     *
+     * @param string $token
+     * @return bool
+     */
+    public static function validateRegistrationToken(string $token): bool
+    {
+        $firebaseCloudMessaging = App::make(ICloudMessaging::class);
+
+        return $firebaseCloudMessaging->validateRegistrationToken($token);
+    }
 }
