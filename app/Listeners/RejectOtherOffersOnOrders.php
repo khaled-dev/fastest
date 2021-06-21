@@ -22,7 +22,7 @@ class CancelOtherOffersOnOrders implements shouldQueue
         $otherOffers = $event->offer->order->offers()->otherOffers($event->offer);
 
         $otherOffers->update([
-            'state' => Offer::CANCELED,
+            'state' => Offer::REJECTED,
         ]);
     }
 }

@@ -24,6 +24,7 @@ class Offer extends Model
      * Offer states
      */
     const UNDER_NEGOTIATION = 'under_negotiation';
+    const REJECTED = 'rejected';
     const ACCEPTED = 'accepted';
     const COMPLETED = 'completed';
     const CANCELED = 'canceled';
@@ -36,6 +37,16 @@ class Offer extends Model
     public function isUnderNegotiation(): bool
     {
         return $this->state == static::UNDER_NEGOTIATION;
+    }
+
+    /**
+     * Check if this offer is `accepted`
+     *
+     * @return bool
+     */
+    public function isAccepted(): bool
+    {
+        return $this->state == static::ACCEPTED;
     }
 
     /**
@@ -58,6 +69,45 @@ class Offer extends Model
     public function accept(): Offer
     {
         $this->state = static::ACCEPTED;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
+     * change offer state to be `completed`
+     *
+     * @return $this
+     */
+    public function complete(): Offer
+    {
+        $this->state = static::COMPLETED;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
+     * change offer state to be `canceled`
+     *
+     * @return $this
+     */
+    public function cancel(): Offer
+    {
+        $this->state = static::CANCELED;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
+     * change offer state to be `rejected`
+     *
+     * @return $this
+     */
+    public function reject(): Offer
+    {
+        $this->state = static::REJECTED;
         $this->save();
 
         return $this;
