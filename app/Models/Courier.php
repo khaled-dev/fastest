@@ -59,6 +59,18 @@ class Courier extends User implements HasMedia
     }
 
     /**
+     * Check if this courier owns the given offer.
+     *
+     * @param Offer $offer
+     * @return bool
+     */
+    public function hasProposed(Offer $offer): bool
+    {
+        return $this->id == $offer->courier_id;
+    }
+
+
+    /**
      * Filter by mobile number
      *
      * @param $query

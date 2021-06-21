@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Events\OfferAccepted;
+use App\Events\OfferCanceled;
+use App\Events\OfferCompleted;
 use App\Events\OfferPlaced;
+use App\Events\OfferRejected;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Courier;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use App\Http\Resources\OfferResource;
 use App\Http\Requests\StoreOfferRequest;
@@ -84,6 +88,72 @@ class OfferController extends Controller
         $offer->order->inProgress();
 
         // TODO: open chat
+
+        return $this->successResponse([
+            'offer' => new OfferResource($offer->refresh())
+        ]);
+    }
+
+    /**
+     * Cancel given offer.
+     *
+     * @param Offer $offer
+     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function cancel(Offer $offer): Response
+    {
+        $this->authorize('cancel', $offer);
+
+        $offer->cancel();
+
+        OfferCanceled::dispatch($offer);
+
+        // TODO: close chat
+
+        return $this->successResponse([
+            'offer' => new OfferResource($offer->refresh())
+        ]);
+    }
+
+    /**
+     * Reject given offer.
+     *
+     * @param Offer $offer
+     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function reject(Offer $offer): Response
+    {
+        $this->authorize('reject', $offer);
+
+        $offer->reject();
+
+        OfferRejected::dispatch($offer);
+
+        return $this->successResponse([
+            'offer' => new OfferResource($offer->refresh())
+        ]);
+    }
+
+    /**
+     * Complete given offer.
+     *
+     * @param Offer $offer
+     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function complete(Offer $offer): Response
+    {
+        $this->authorize('complete', $offer);
+
+        $offer->complete();
+
+        OfferCompleted::dispatch($offer);
+
+        $offer->order->complete();
+
+        // TODO: close chat
 
         return $this->successResponse([
             'offer' => new OfferResource($offer->refresh())

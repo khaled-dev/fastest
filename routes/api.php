@@ -1,6 +1,7 @@
 <?php
 
 use App\Jobs\ImportPlacesFromGoogle;
+use App\Services\Logic\NotificationService;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +44,8 @@ Route::middleware('auth:customers')->group(function () {
     Route::get('/orders/{order}/offers', 'OfferController@index')->name('offers.index');
     Route::get('/offers/{offer}', 'OfferController@show')->name('offers.show');
     Route::put('/offers/{offer}/accept', 'OfferController@accept')->name('offers.accept');
+    Route::put('/offers/{offer}/reject', 'OfferController@reject')->name('offers.reject');
+    Route::put('/offers/{offer}/complete', 'OfferController@complete')->name('offers.complete');
 });
 
 Route::post('/stores/search', 'StoreController@search')->name('stores.search');
@@ -64,9 +67,18 @@ Route::middleware(['auth:customers', 'auth:couriers'])->group(function () {
     Route::get('/notifications', 'NotificationController@index')->name('notifications.index');
     Route::put('/notifications/{notification}/read', 'NotificationController@read')->name('notifications.read');
     Route::post('/notifications/token', 'NotificationController@storeNotificationToken')->name('notifications.store_token');
-
+    Route::put('/offers/{offer}/cancel', 'OfferController@cancel')->name('offers.cancel');
 });
 
 //Route::get('test', function () {
-//    ImportPlacesFromGoogle::dispatch();
+//    $t = 'daSyLdv0SteR-aqJ2qlrHe:APA91bFPC8hLvC-VEGbSfIzJWTbdPnMZqcdxeGmOr3f6Yymc3ro-CXcAck-7dahibqg6xYJd3Z0Q4YswXglDg6HOoPAjSDCR0KDQ1rP_NQ91tc4xK8PrRj1kpyHG45LvInE-QT3bopAO';
+//
+//    NotificationService::validateRegistrationToken($t);
+//
+//    NotificationService::pushNotification($t, [
+//        'title'     => __('notifications.offers.placed.title'),
+//        'body'      => __('notifications.offers.placed.body'),
+//        'image_url' => 'test',
+//    ]);
+//
 //});

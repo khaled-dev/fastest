@@ -17,5 +17,17 @@ return [
             'title' => 'Offer Accepted',
             'body' => 'Your offer has been accepted',
         ],
+        'canceled' => [
+            'title' => 'Offer Canceled',
+            'body' => 'Your offer has been canceled',
+        ],
+        'rejected' => [
+            'title' => 'Offer Rejected',
+            'body' => 'Offer has been rejected',
+        ],
+        'completed' => [
+            'title' => 'Offer Completed',
+            'body' => 'Your offer has been completed',
+        ],
     ]
 ];

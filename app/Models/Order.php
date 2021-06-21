@@ -35,6 +35,32 @@ class Order extends Model implements HasMedia
     const CANCELED = 'canceled';
 
     /**
+     * change order state to be `in_progress`
+     *
+     * @return $this
+     */
+    public function inProgress(): Order
+    {
+        $this->state = static::IN_PROGRESS;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
+     * change order state to be `completed`
+     *
+     * @return $this
+     */
+    public function complete(): Order
+    {
+        $this->state = static::COMPLETED;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
      * change order state to be `canceled`
      *
      * @return $this
@@ -66,7 +92,6 @@ class Order extends Model implements HasMedia
     {
         return $this->hasMany(Offer::class);
     }
-
 
     /**
      * Get the customer who requested the order.
@@ -121,17 +146,6 @@ class Order extends Model implements HasMedia
     public function scopeForGivenState($query, $state)
     {
         return $query->where('state', $state);
-    }
-
-    /**
-     * @return $this
-     */
-    public function inProgress(): Order
-    {
-        $this->state = static::IN_PROGRESS;
-        $this->save();
-
-        return $this;
     }
 
     /**

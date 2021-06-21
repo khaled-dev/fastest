@@ -2,34 +2,36 @@
 
 namespace App\Listeners;
 
-use App\Events\OfferAccepted;
-use Illuminate\Support\Facades\Log;
+use App\Events\OfferCompleted;
 use App\Services\Logic\NotificationService;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 
-class SendOfferAcceptedNotification
+class SendCompletedOfferNotification
 {
     /**
      * Handle the event.
      *
-     * @param  OfferAccepted  $event
+     * @param  OfferCompleted  $event
      * @return void
      */
-    public function handle(OfferAccepted $event)
+    public function handle(OfferCompleted $event)
     {
         $offer    = $event->offer;
-        $order    = $offer->order;
+        $order    = $event->offer->order;
         $customer = $order->customer;
         $courier  = $offer->courier; // send to
 
         $notification = [
-            'title'     => __('notifications.offers.accepted.title'),
-            'body'      => __('notifications.offers.accepted.body'),
+            'title'     => __('notifications.offers.completed.title'),
+            'body'      => __('notifications.offers.completed.body'),
             'image_url' => $customer->profile_picture,
         ];
 
         NotificationService::saveNotification($courier, $notification);
 
-        if (!empty($courier->notificationToken) && $token = $courier->notificationToken->token) {
+        if ($token = $courier->notificationToken) {
             NotificationService::pushNotification($token, $notification);
             return;
         }

@@ -18,7 +18,7 @@ class SendPlacedOfferNotification
     {
         $offer    = $event->offer;
         $order    = $event->offer->order;
-        $customer = $order->customer;
+        $customer = $order->customer; // send to
 
         $notification = [
             'title'     => __('notifications.offers.placed.title'),

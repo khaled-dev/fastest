@@ -36,7 +36,7 @@ class Customer extends User implements HasMedia
      */
     public function hasOrdered(Order $order): bool
     {
-        return $this->id = $order->customer_id;
+        return $this->id == $order->customer_id;
     }
 
     /**

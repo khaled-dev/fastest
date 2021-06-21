@@ -7,7 +7,7 @@ use App\Events\OfferAccepted;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CancelOtherOffersOnOrders implements shouldQueue
+class RejectOtherOffersOnOrders implements shouldQueue
 {
     use InteractsWithQueue;
 
