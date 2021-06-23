@@ -81,11 +81,11 @@ class OfferController extends Controller
     {
         $this->authorize('accept', $offer);
 
-        $offer->accept();
+        $offer->markAsAccepted();
+
+        $offer->order->markAsInProgress();
 
         OfferAccepted::dispatch($offer);
-
-        $offer->order->inProgress();
 
         // TODO: open chat
 
@@ -105,7 +105,7 @@ class OfferController extends Controller
     {
         $this->authorize('cancel', $offer);
 
-        $offer->cancel();
+        $offer->markAsCanceled();
 
         OfferCanceled::dispatch($offer);
 
@@ -127,7 +127,7 @@ class OfferController extends Controller
     {
         $this->authorize('reject', $offer);
 
-        $offer->reject();
+        $offer->markAsRejected();
 
         OfferRejected::dispatch($offer);
 
@@ -147,11 +147,11 @@ class OfferController extends Controller
     {
         $this->authorize('complete', $offer);
 
-        $offer->complete();
+        $offer->markAsCompleted();
+
+        $offer->order->markAsCompleted();
 
         OfferCompleted::dispatch($offer);
-
-        $offer->order->complete();
 
         // TODO: close chat
 

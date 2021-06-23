@@ -6,7 +6,7 @@ use App\Models\Customer;
 use App\Models\Offer;
 use App\Models\Courier;
 use App\Models\Order;
-use App\Nova\User;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OfferPolicy
