@@ -66,7 +66,7 @@ class Offer extends Model
      *
      * @return $this
      */
-    public function accept(): Offer
+    public function markAsAccepted(): Offer
     {
         $this->state = static::ACCEPTED;
         $this->save();
@@ -79,7 +79,7 @@ class Offer extends Model
      *
      * @return $this
      */
-    public function complete(): Offer
+    public function markAsCompleted(): Offer
     {
         $this->state = static::COMPLETED;
         $this->save();
@@ -92,7 +92,7 @@ class Offer extends Model
      *
      * @return $this
      */
-    public function cancel(): Offer
+    public function markAsCanceled(): Offer
     {
         $this->state = static::CANCELED;
         $this->save();
@@ -105,7 +105,7 @@ class Offer extends Model
      *
      * @return $this
      */
-    public function reject(): Offer
+    public function markAsRejected(): Offer
     {
         $this->state = static::REJECTED;
         $this->save();

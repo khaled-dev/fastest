@@ -39,7 +39,7 @@ class Order extends Model implements HasMedia
      *
      * @return $this
      */
-    public function inProgress(): Order
+    public function markAsInProgress(): Order
     {
         $this->state = static::IN_PROGRESS;
         $this->save();
@@ -52,7 +52,7 @@ class Order extends Model implements HasMedia
      *
      * @return $this
      */
-    public function complete(): Order
+    public function markAsCompleted(): Order
     {
         $this->state = static::COMPLETED;
         $this->save();
@@ -65,7 +65,7 @@ class Order extends Model implements HasMedia
      *
      * @return $this
      */
-    public function cancel(): Order
+    public function markAsCanceled(): Order
     {
         $this->state = static::CANCELED;
         $this->save();
