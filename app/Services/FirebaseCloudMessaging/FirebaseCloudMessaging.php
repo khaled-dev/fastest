@@ -160,4 +160,18 @@ class FirebaseCloudMessaging implements ICloudMessaging
 
         return true;
     }
+
+    /**
+     * checks if firebase cloud messaging registration token valid.
+     *
+     * @throws \Kreait\Firebase\Exception\MessagingException
+     * @throws \Kreait\Firebase\Exception\FirebaseException
+     * @throws InvalidFirebaseRegistrationTokenException
+     */
+    public function isRegistrationTokenValid(string $token): bool
+    {
+        $validation  = $this->messaging->validateRegistrationTokens($token);
+
+        return !empty($validation['valid']);
+    }
 }

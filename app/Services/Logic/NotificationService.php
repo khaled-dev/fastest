@@ -51,10 +51,14 @@ class NotificationService
     {
         $firebaseCloudMessaging = App::make(ICloudMessaging::class);
 
-        return $firebaseCloudMessaging
-            ->withToken($token)
-            ->withNotification($data)
-            ->send();
+        if (static::isRegistrationTokenValid($token)) {
+            return $firebaseCloudMessaging
+                ->withToken($token)
+                ->withNotification($data)
+                ->send();
+        }
+
+        return [];
     }
 
     /**
@@ -68,5 +72,18 @@ class NotificationService
         $firebaseCloudMessaging = App::make(ICloudMessaging::class);
 
         return $firebaseCloudMessaging->validateRegistrationToken($token);
+    }
+
+    /**
+     * Is registration token valid.
+     *
+     * @param string $token
+     * @return bool
+     */
+    public static function isRegistrationTokenValid(string $token): bool
+    {
+        $firebaseCloudMessaging = App::make(ICloudMessaging::class);
+
+        return $firebaseCloudMessaging->isRegistrationTokenValid($token);
     }
 }
