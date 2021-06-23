@@ -2,7 +2,6 @@
 
 namespace App\Listeners;
 
-use App\Events\OfferCanceled;
 use App\Events\OfferRejected;
 use App\Services\Logic\NotificationService;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,10 +13,10 @@ class SendRejectedOfferNotification
     /**
      * Handle the event.
      *
-     * @param  OfferCanceled  $event
+     * @param  OfferRejected $event
      * @return void
      */
-    public function handle(OfferCanceled $event)
+    public function handle(OfferRejected $event)
     {
         $offer    = $event->offer;
         $order    = $event->offer->order;
@@ -32,7 +31,7 @@ class SendRejectedOfferNotification
 
         NotificationService::saveNotification($courier, $notification);
 
-        if ($token = $courier->notificationToken) {
+        if (!empty($courier->notificationToken) && $token = $courier->notificationToken->token) {
             NotificationService::pushNotification($token, $notification);
             return;
         }

@@ -40,7 +40,7 @@ class SendCanceledOfferNotification
 
         NotificationService::saveNotification($sendTo, $notification);
 
-        if ($token = $sendTo->notificationToken) {
+        if (!empty($sendTo->notificationToken) && $token = $sendTo->notificationToken->token) {
             NotificationService::pushNotification($token, $notification);
             return;
         }
