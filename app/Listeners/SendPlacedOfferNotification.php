@@ -3,11 +3,12 @@
 namespace App\Listeners;
 
 use App\Events\OfferPlaced;
-use Illuminate\Support\Facades\Log;
-use App\Services\Logic\NotificationService;
+use App\Listeners\Concerns\PushNotificationHelper;
 
 class SendPlacedOfferNotification
 {
+    use PushNotificationHelper;
+
     /**
      * Handle the event.
      *
@@ -16,23 +17,13 @@ class SendPlacedOfferNotification
      */
     public function handle(OfferPlaced $event)
     {
-        $offer    = $event->offer;
-        $order    = $event->offer->order;
-        $customer = $order->customer; // send to
+        $offer = $event->offer;
+        $order = $event->offer->order;
 
-        $notification = [
-            'title'     => __('notifications.offers.placed.title'),
-            'body'      => __('notifications.offers.placed.body'),
-            'image_url' => $offer->courier->profile_picture,
-        ];
-
-        NotificationService::saveNotification($customer, $notification);
-
-        if (!empty($customer->notificationToken) && $token = $customer->notificationToken->token) {
-            NotificationService::pushNotification($token, $notification);
-            return;
-        }
-
-        Log::channel('handwrite')->warning("customer with ID {$customer->id} dose not have fcm-token");
+        $this->from($offer->courier)
+            ->to($order->customer)
+            ->setNotification('notifications.offers.placed')
+            ->setData('offer-placed', $offer)
+            ->push(true);
     }
 }

@@ -2,17 +2,9 @@
 
 namespace App\Listeners;
 
+use App\Models\Courier;
 use App\Events\SendMessage;
 use App\Listeners\Concerns\PushNotificationHelper;
-use App\Models\Courier;
-use App\Models\Message;
-use App\Models\Offer;
-use App\Models\User;
-use App\Services\Logic\NotificationService;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Log;
 
 class PushMessage
 {

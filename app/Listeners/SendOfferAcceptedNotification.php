@@ -3,11 +3,12 @@
 namespace App\Listeners;
 
 use App\Events\OfferAccepted;
-use Illuminate\Support\Facades\Log;
-use App\Services\Logic\NotificationService;
+use App\Listeners\Concerns\PushNotificationHelper;
 
 class SendOfferAcceptedNotification
 {
+    use PushNotificationHelper;
+
     /**
      * Handle the event.
      *
@@ -16,24 +17,13 @@ class SendOfferAcceptedNotification
      */
     public function handle(OfferAccepted $event)
     {
-        $offer    = $event->offer;
-        $order    = $offer->order;
-        $customer = $order->customer;
-        $courier  = $offer->courier; // send to
+        $offer = $event->offer;
+        $order = $offer->order;
 
-        $notification = [
-            'title'     => __('notifications.offers.accepted.title'),
-            'body'      => __('notifications.offers.accepted.body'),
-            'image_url' => $customer->profile_picture,
-        ];
-
-        NotificationService::saveNotification($courier, $notification);
-
-        if (!empty($courier->notificationToken) && $token = $courier->notificationToken->token) {
-            NotificationService::pushNotification($token, $notification);
-            return;
-        }
-
-        Log::channel('handwrite')->warning("courier with ID {$courier->id} dose not have fcm-token");
+        $this->from($order->customer)
+            ->to($offer->courier)
+            ->setNotification('notifications.offers.accepted')
+            ->setData('offer-accepted', $offer)
+            ->push(true);
     }
 }
