@@ -24,7 +24,7 @@ class CreateMessagesTable extends Migration
             $table->foreign('offer_id')
                 ->references('id')
                 ->on('offers')
-                ->onDelete('set null');
+                ->onDelete('cascade');
         });
     }
 
