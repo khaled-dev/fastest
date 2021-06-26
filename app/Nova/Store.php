@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -50,9 +51,18 @@ class Store extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
+
             Text::make('Place ID', 'place_id')->sortable(),
+
             Text::make('Name', 'name')->sortable(),
+
             ExternalImage::make('Icon', 'icon')->width(32),
+
+            MapMarker::make('Location')
+                ->latitude('lat')
+                ->longitude('lng')
+                ->defaultZoom(10)
+                ->hideFromIndex(),
         ];
     }
 
