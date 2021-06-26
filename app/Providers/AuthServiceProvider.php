@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Message;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Courier;
 use App\Models\Notification;
+use App\Policies\MessagePolicy;
 use App\Policies\OfferPolicy;
 use App\Policies\OrderPolicy;
 use Laravel\Passport\Passport;
@@ -26,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
          Offer::class => OfferPolicy::class,
          Order::class => OrderPolicy::class,
          Notification::class => NotificationPolicy::class,
+         Message::class => MessagePolicy::class,
     ];
 
     /**
