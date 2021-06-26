@@ -68,6 +68,8 @@ Route::middleware('auth:couriers,customers')->group(function () {
     Route::put('/notifications/{notification}/read', 'NotificationController@read')->name('notifications.read');
     Route::post('/notifications/token', 'NotificationController@storeNotificationToken')->name('notifications.store_token');
     Route::put('/offers/{offer}/cancel', 'OfferController@cancel')->name('offers.cancel');
+    Route::post('/offers/{offer}/chat', 'MessageController@send')->name('offers.chat.send');
+    Route::get('/offers/{offer}/chat', 'MessageController@list')->name('offers.chat.list');
 });
 
 //Route::get('test', function () {
