@@ -128,12 +128,11 @@ trait PushNotificationHelper
             ];
         }
 
-        $this->data = [
+        $this->data = array_merge([
             'type'         => $type,
             'resourceId'   => $resource->id,
             'resourceType' => $this->getType(get_class($resource)),
-            'extraData'    => $extraData
-        ];
+        ], $extraData);
 
         return $this;
     }
