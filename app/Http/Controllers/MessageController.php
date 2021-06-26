@@ -12,6 +12,14 @@ use Illuminate\Http\Response;
 class MessageController extends Controller
 {
 
+    /**
+     * Sends message in the offer room.
+     *
+     * @param Request $request
+     * @param Offer $offer
+     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function send(Request $request, Offer $offer): Response
     {
         $this->authorize('send', [Message::class, $offer]);
@@ -35,6 +43,12 @@ class MessageController extends Controller
 
     }
 
+    /**
+     * Lists all message in the offer room.
+     *
+     * @param Offer $offer
+     * @return Response
+     */
     public function list(Offer $offer): Response
     {
         return $this->successResponse([
