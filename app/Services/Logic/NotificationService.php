@@ -44,17 +44,19 @@ class NotificationService
      * Push notification to a given device.
      *
      * @param string $token
+     * @param array $notification
      * @param array $data
      * @return array
      */
-    public static function pushNotification(string $token, array $data): array
+    public static function pushNotification(string $token, array $notification, array $data): array
     {
         $firebaseCloudMessaging = App::make(ICloudMessaging::class);
 
         if (static::isRegistrationTokenValid($token)) {
             return $firebaseCloudMessaging
                 ->withToken($token)
-                ->withNotification($data)
+                ->withNotification($notification)
+                ->withData($data)
                 ->send();
         }
 

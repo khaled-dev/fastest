@@ -57,7 +57,7 @@ trait PushNotificationHelper
         }
 
         if (!empty($sendTo->notificationToken) && $token = $sendTo->notificationToken->token) {
-            NotificationService::pushMessage($token, $this->notification, $this->data);
+            NotificationService::pushNotification($token, $this->notification, $this->data);
             return;
         }
 
