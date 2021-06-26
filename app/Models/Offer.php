@@ -133,4 +133,14 @@ class Offer extends Model
         return $this->belongsTo(Courier::class);
     }
 
+    /**
+     * Get all messages of this offer.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
+
 }

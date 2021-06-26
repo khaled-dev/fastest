@@ -79,4 +79,14 @@ class User extends Authenticatable
     {
         return $this->id === $user->id;
     }
+
+    /**
+     * get all messages for this model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function messages(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
 }
