@@ -104,6 +104,16 @@ class Order extends Model implements HasMedia
     }
 
     /**
+     * Get the store of this order.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    /**
      * Get all opened orders
      *
      * @param $query
