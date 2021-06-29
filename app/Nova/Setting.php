@@ -2,13 +2,14 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laraning\NovaTimeField\TimeField;
-use Laravel\Nova\Fields\DateTime;
+use NovaItemsField\Items;;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Currency;
+use Laraning\NovaTimeField\TimeField;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use DanielDeWit\NovaSingleRecordResource\Contracts\SingleRecordResourceInterface;
 use DanielDeWit\NovaSingleRecordResource\Traits\SupportSingleRecordNavigationLinks;
@@ -60,6 +61,14 @@ class Setting extends Resource implements SingleRecordResourceInterface
                 ->nullable(),
 
             TimeField::make('Cancellation Time', 'cancellation_time'),
+
+            Items::make('Delivery Time', 'delivery_time')
+                ->inputType('text')
+                ->placeholder('00:00')
+                ->rules([
+                     'delivery_time.*' => 'string|date_format:H:i',
+                ])
+                ->draggable(),
         ];
     }
 

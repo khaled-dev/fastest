@@ -15,9 +15,11 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
+        "64robots/nova-fields": "^0.21.0",
         "chaseconey/nova-external-image": "^0.3.0",
         "daniel-de-wit/nova-single-record-resource": "^1.2",
         "david-griffiths/nova-dark-theme": "^1.0",
+        "dillingham/nova-items-field": "^0.6.0",
         "doctrine/dbal": "^2.9|^3.0",
         "ebess/advanced-nova-media-library": "^3.6",
         "fideloper/proxy": "^4.4",
