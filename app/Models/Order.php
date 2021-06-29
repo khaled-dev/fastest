@@ -74,6 +74,16 @@ class Order extends Model implements HasMedia
     }
 
     /**
+     * Get max offer price for this order.
+     *
+     * @return mixed
+     */
+    public function getMaxOfferPriceAttribute()
+    {
+        return $this->offers()->max('price') ?? Setting::all()->first()->max_offer_price;
+    }
+
+    /**
      * change order state to be `canceled`
      *
      * @return bool
