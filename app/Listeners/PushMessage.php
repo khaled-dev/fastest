@@ -21,14 +21,13 @@ class PushMessage
         $message  = $event->message;
         $offer    = $event->message->offer;
         $sendFrom = $offer->order->customer;
-        $sendTo   = $offer->courier;
 
         if (auth()->user() instanceof Courier) {
-            list($sendTo, $sendFrom) = array($sendFrom, $sendTo);
+            $sendFrom = $offer->courier;
         }
 
         $this->from($sendFrom)
-            ->to($sendTo)
+            ->toTopic("{$offer->id}-chat-topic")
             ->setNotification('notifications.offers.message')
             ->setData('chat', $offer, $message)
             ->push();

@@ -4,12 +4,10 @@
 namespace App\Listeners\Concerns;
 
 
-use App\Listeners\PushMessage;
 use App\Models\Message;
-use App\Models\User;
-use App\Services\Logic\NotificationService;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Model;
+use App\Services\Logic\NotificationService;
 
 trait PushNotificationHelper
 {
@@ -42,6 +40,14 @@ trait PushNotificationHelper
      */
     private Model $to;
 
+
+    /**
+     * Holds the topic name.
+     *
+     * @var string
+     */
+    private string $topic;
+
     /**
      * Push the prepared notification.
      *
@@ -58,6 +64,11 @@ trait PushNotificationHelper
 
         if (!empty($sendTo->notificationToken) && $token = $sendTo->notificationToken->token) {
             NotificationService::pushNotification($token, $this->notification, $this->data);
+            return;
+        }
+
+        if (!empty($this->topic)) {
+            NotificationService::pushToTopic($this->topic, $this->notification, $this->data);
             return;
         }
 
@@ -88,6 +99,19 @@ trait PushNotificationHelper
     protected function to(Model $toUser): PushNotificationHelper
     {
         $this->to = $toUser;
+
+        return $this;
+    }
+
+    /**
+     * Set topic name to push to.
+     *
+     * @param string $topic
+     * @return $this
+     */
+    protected function toTopic(string $topic): PushNotificationHelper
+    {
+        $this->topic = $topic;
 
         return $this;
     }
