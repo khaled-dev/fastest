@@ -3,6 +3,8 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laraning\NovaTimeField\TimeField;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
@@ -56,6 +58,8 @@ class Setting extends Resource implements SingleRecordResourceInterface
                 ->currency('SAR')
                 ->step(0.50)
                 ->nullable(),
+
+            TimeField::make('Cancellation Time', 'cancellation_time'),
         ];
     }
 

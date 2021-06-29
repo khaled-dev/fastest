@@ -28,6 +28,7 @@
         "khaled-dev/nova-belongs-to-dependency": "^1.2",
         "kreait/laravel-firebase": "^3.1",
         "kristories/nova-inspire": "^1.1",
+        "laraning/nova-time-field": "^1.2",
         "laravel/framework": "^8.12",
         "laravel/nova": "^3.26",
         "laravel/passport": "^10.1",

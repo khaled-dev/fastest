@@ -14,6 +14,11 @@ class Setting extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['terms_and_conditions', 'min_offer_price', 'max_offer_price'];
+    protected $fillable = [
+        'terms_and_conditions',
+        'min_offer_price',
+        'max_offer_price',
+        'cancellation_time'
+    ];
 
 }
