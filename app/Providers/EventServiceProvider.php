@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\OfferRejected;
+use App\Events\RequestCancellation;
 use App\Listeners\SendRejectedOfferNotification;
+use App\Listeners\SendRequestCancellationNotification;
 use App\Models\Order;
 use App\Events\OfferPlaced;
 use App\Events\OfferAccepted;
@@ -43,6 +45,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         OfferCanceled::class => [
             SendCanceledOfferNotification::class,
+        ],
+        RequestCancellation::class => [
+            SendRequestCancellationNotification::class,
         ],
         OfferCompleted::class => [
             SendCompletedOfferNotification::class,
