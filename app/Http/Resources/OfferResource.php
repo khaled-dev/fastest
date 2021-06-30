@@ -23,6 +23,7 @@ class OfferResource extends JsonResource
             'price' => $this->price,
             'deliveryTime' => $this->delivery_time,
             'state' => $this->state,
+            'hasCancellationRequest' => ! empty($this->is_cancel_requested),
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];
