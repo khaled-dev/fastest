@@ -23,6 +23,7 @@ class Order extends Model implements HasMedia
         'description',
         'min_offer_price',
         'max_offer_price',
+        'delivery_time',
     ];
 
     /**
