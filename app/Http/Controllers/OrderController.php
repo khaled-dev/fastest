@@ -50,11 +50,6 @@ class OrderController extends Controller
 
         return $this->successResponse([
             'order' => new OrderResource($order),
-        ], [
-            'store' => route('stores.store'),
-            'ordersStateCounts' => route('stores.orders_state_counts'),
-            'listByState' => route('stores.by_state'),
-            'cancel' => route('stores.cancel'),
         ]);
     }
 
@@ -71,11 +66,6 @@ class OrderController extends Controller
                 'underNegotiation' => Order::underNegotiation()->count(),
                 'inProgress' => Order::inProgress()->count(),
             ]),
-        ], [
-            'store' => route('stores.store'),
-            'updateImages' => route('stores.update_images'),
-            'listByState' => route('stores.by_state'),
-            'cancel' => route('stores.cancel'),
         ]);
     }
 
@@ -97,11 +87,6 @@ class OrderController extends Controller
 
         return $this->successResponse([
             'orders' => OrderResource::collection(Order::forGivenState($state)->get())
-        ], [
-            'store' => route('stores.store'),
-            'updateImages' => route('stores.update_images'),
-            'ordersStateCounts' => route('stores.orders_state_counts'),
-            'cancel' => route('stores.cancel'),
         ]);
     }
 
@@ -120,11 +105,6 @@ class OrderController extends Controller
 
         return $this->successResponse([
             'order' => new OrderResource($order->refresh())
-        ], [
-            'store' => route('stores.store'),
-            'updateImages' => route('stores.update_images'),
-            'ordersStateCounts' => route('stores.orders_state_counts'),
-            'listByState' => route('stores.by_state'),
         ]);
     }
 }
