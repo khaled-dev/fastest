@@ -53,12 +53,12 @@ class Setting extends Resource implements SingleRecordResourceInterface
             Currency::make('Minimum Offer Price', 'min_offer_price')
                 ->currency('SAR')
                 ->step(0.50)
-                ->nullable(),
+                ->required(),
 
             Currency::make('Maximum Offer Price', 'max_offer_price')
                 ->currency('SAR')
                 ->step(0.50)
-                ->nullable(),
+                ->required(),
 
             TimeField::make('Cancellation Time', 'cancellation_time'),
 
