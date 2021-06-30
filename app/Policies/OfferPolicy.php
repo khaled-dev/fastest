@@ -48,11 +48,13 @@ class OfferPolicy
      */
     public function cancel(User $user, Offer $offer)
     {
-        // TODO: reject after some time
+        if ($offer->hasCancellationRequest() && $offer->hasUserRequestedCancellation($user)) {
+            return false;
+        }
 
         return
-            ($user instanceof Courier && $user->hasProposed($offer) && $offer->isUnderNegotiation())
-            || ($user instanceof Customer && $user->hasOrdered($offer->order) && $offer->isAccepted());
+            ($user instanceof Courier && $user->hasProposed($offer) && $offer->isNotEnded())
+            || ($user instanceof Customer && $user->hasOrdered($offer->order) && $offer->isNotEnded());
     }
 
     /**
