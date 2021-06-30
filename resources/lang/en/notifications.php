@@ -21,6 +21,10 @@ return [
             'title' => 'Offer Canceled',
             'body' => 'Your offer has been canceled',
         ],
+        'request_cancellation' => [
+            'title' => 'Offer Cancellation Request',
+            'body' => 'Your offer has been Requested to be canceled',
+        ],
         'rejected' => [
             'title' => 'Offer Rejected',
             'body' => 'Offer has been rejected',
