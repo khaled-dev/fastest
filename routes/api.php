@@ -70,6 +70,7 @@ Route::middleware('auth:couriers,customers')->group(function () {
     Route::put('/offers/{offer}/cancel', 'OfferController@cancel')->name('offers.cancel');
     Route::post('/offers/{offer}/chat', 'MessageController@send')->name('offers.chat.send');
     Route::get('/offers/{offer}/chat', 'MessageController@list')->name('offers.chat.list');
+    Route::get('/order-delivery-times', 'OrderController@deliveryTimeList')->name('orders.deliveryTimeList');
 });
 
 //Route::get('test', function () {

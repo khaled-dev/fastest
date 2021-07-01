@@ -3,6 +3,7 @@
 namespace App\Models\Observers;
 
 use App\Models\Order;
+use App\Models\Setting;
 
 class OrderObserver
 {
@@ -14,8 +15,9 @@ class OrderObserver
      */
     public function creating(Order $order)
     {
-        // TODO: make it dynamic
-        $order->min_offer_price = 10.001;
-        $order->max_offer_price = 100.01;
+        $settings = Setting::all()->first();
+
+        $order->min_offer_price = $settings->min_offer_price;
+        $order->max_offer_price = $settings->max_offer_price;
     }
 }

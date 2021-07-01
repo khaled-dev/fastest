@@ -2,10 +2,14 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
+use NovaItemsField\Items;;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Currency;
+use Laraning\NovaTimeField\TimeField;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use DanielDeWit\NovaSingleRecordResource\Contracts\SingleRecordResourceInterface;
 use DanielDeWit\NovaSingleRecordResource\Traits\SupportSingleRecordNavigationLinks;
@@ -45,6 +49,26 @@ class Setting extends Resource implements SingleRecordResourceInterface
     {
         return [
             Trix::make('Terms And Conditions', 'terms_and_conditions')->nullable(),
+
+            Currency::make('Minimum Offer Price', 'min_offer_price')
+                ->currency('SAR')
+                ->step(0.50)
+                ->required(),
+
+            Currency::make('Maximum Offer Price', 'max_offer_price')
+                ->currency('SAR')
+                ->step(0.50)
+                ->required(),
+
+            TimeField::make('Cancellation Time', 'cancellation_time'),
+
+            Items::make('Delivery Time', 'delivery_time')
+                ->inputType('text')
+                ->placeholder('00:00')
+                ->rules([
+                     'delivery_time.*' => 'string|date_format:H:i',
+                ])
+                ->draggable(),
         ];
     }
 

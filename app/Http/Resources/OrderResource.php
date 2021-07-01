@@ -29,6 +29,7 @@ class OrderResource extends JsonResource
             'location' => new LocationResource(Location::find($this->location_id)),
             'state' => $this->state,
             'description' => $this->description,
+            'deliveryTime' => $this->delivery_time,
             'minOfferPrice' => $this->min_offer_price,
             'maxOfferPrice' => $this->max_offer_price,
             'images' => $this->getMedia('images'),

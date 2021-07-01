@@ -26,6 +26,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'location_id' => 'required|exists:locations,id',
             'description' => 'required|string',
+            'delivery_time' => 'required|string',
         ];
     }
 }

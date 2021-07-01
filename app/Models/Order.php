@@ -23,6 +23,7 @@ class Order extends Model implements HasMedia
         'description',
         'min_offer_price',
         'max_offer_price',
+        'delivery_time',
     ];
 
     /**
@@ -74,6 +75,16 @@ class Order extends Model implements HasMedia
     }
 
     /**
+     * Get max offer price for this order.
+     *
+     * @return mixed
+     */
+    public function getMaxOfferPriceAttribute()
+    {
+        return $this->offers()->max('price') ?? Setting::all()->first()->max_offer_price;
+    }
+
+    /**
      * change order state to be `canceled`
      *
      * @return bool
@@ -101,6 +112,16 @@ class Order extends Model implements HasMedia
     public function customer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    /**
+     * Get the store of this order.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class);
     }
 
     /**

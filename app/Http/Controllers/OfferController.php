@@ -7,13 +7,16 @@ use App\Events\OfferCanceled;
 use App\Events\OfferCompleted;
 use App\Events\OfferPlaced;
 use App\Events\OfferRejected;
+use App\Events\RequestCancellation;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Courier;
+use App\Models\Setting;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use App\Http\Resources\OfferResource;
 use App\Http\Requests\StoreOfferRequest;
+use Illuminate\Support\Carbon;
 
 class OfferController extends Controller
 {
@@ -104,6 +107,16 @@ class OfferController extends Controller
     public function cancel(Offer $offer): Response
     {
         $this->authorize('cancel', $offer);
+
+        if ($offer->hasCancelTimePassed() && ! $offer->hasCancellationRequest()) {
+            RequestCancellation::dispatch($offer);
+
+            $offer->requestCancellation(auth()->user());
+
+            return $this->successResponse([
+                'offer' => new OfferResource($offer->refresh())
+            ]);
+        }
 
         $offer->markAsCanceled();
 

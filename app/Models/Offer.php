@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Carbon;
 
 class Offer extends Model
 {
@@ -30,6 +31,22 @@ class Offer extends Model
     const CANCELED = 'canceled';
 
     /**
+     * Check if the cancellation time has passed.
+     *
+     * @return bool
+     */
+    public function hasCancelTimePassed(): bool
+    {
+        $cancellationTime = Setting::all()->first()->cancellation_time;
+
+        $minute = Carbon::parse($cancellationTime)->minute;
+        $hour   = Carbon::parse($cancellationTime)->hour;
+        $hour   = empty($hour) ? 0 : $hour * 60;
+
+        return $this->updated_at->diffInMinutes(now()) > ($hour + $minute);
+    }
+
+    /**
      * Check if this offer is `under_negotiation`
      *
      * @return bool
@@ -37,6 +54,16 @@ class Offer extends Model
     public function isUnderNegotiation(): bool
     {
         return $this->state == static::UNDER_NEGOTIATION;
+    }
+
+    /**
+     * Check if this offer is ended yet
+     *
+     * @return bool
+     */
+    public function isNotEnded(): bool
+    {
+        return !in_array($this->state, [static::COMPLETED, static::REJECTED, static::CANCELED]);
     }
 
     /**
@@ -98,6 +125,41 @@ class Offer extends Model
         $this->save();
 
         return $this;
+    }
+
+    /**
+     * Request cancellation approve.
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function requestCancellation(User $user): Offer
+    {
+        $this->is_cancel_requested = $user->id;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
+     * check if given user has Request cancellation.
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function hasUserRequestedCancellation(User $user): bool
+    {
+        return $this->is_cancel_requested == $user->id;
+    }
+
+    /**
+     * check if this offer has cancellation Request.
+     *
+     * @return bool
+     */
+    public function hasCancellationRequest(): bool
+    {
+        return ! empty($this->is_cancel_requested);
     }
 
     /**

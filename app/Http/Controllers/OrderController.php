@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Store;
 use App\Models\Order;
 use App\Models\Customer;
+use App\Models\Setting;
 use Illuminate\Http\Response;
 use App\Http\Resources\OrderResource;
 use App\Http\Requests\StoreOrderRequest;
@@ -50,11 +51,6 @@ class OrderController extends Controller
 
         return $this->successResponse([
             'order' => new OrderResource($order),
-        ], [
-            'store' => route('stores.store'),
-            'ordersStateCounts' => route('stores.orders_state_counts'),
-            'listByState' => route('stores.by_state'),
-            'cancel' => route('stores.cancel'),
         ]);
     }
 
@@ -71,11 +67,6 @@ class OrderController extends Controller
                 'underNegotiation' => Order::underNegotiation()->count(),
                 'inProgress' => Order::inProgress()->count(),
             ]),
-        ], [
-            'store' => route('stores.store'),
-            'updateImages' => route('stores.update_images'),
-            'listByState' => route('stores.by_state'),
-            'cancel' => route('stores.cancel'),
         ]);
     }
 
@@ -97,11 +88,18 @@ class OrderController extends Controller
 
         return $this->successResponse([
             'orders' => OrderResource::collection(Order::forGivenState($state)->get())
-        ], [
-            'store' => route('stores.store'),
-            'updateImages' => route('stores.update_images'),
-            'ordersStateCounts' => route('stores.orders_state_counts'),
-            'cancel' => route('stores.cancel'),
+        ]);
+    }
+
+    /**
+     * List the delivery times set by the admin
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deliveryTimeList(): Response
+    {
+        return $this->successResponse([
+            'deliveryTimes' => Setting::all()->first()->delivery_time ?? []
         ]);
     }
 
@@ -120,11 +118,6 @@ class OrderController extends Controller
 
         return $this->successResponse([
             'order' => new OrderResource($order->refresh())
-        ], [
-            'store' => route('stores.store'),
-            'updateImages' => route('stores.update_images'),
-            'ordersStateCounts' => route('stores.orders_state_counts'),
-            'listByState' => route('stores.by_state'),
         ]);
     }
 }

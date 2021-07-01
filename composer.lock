@@ -4,8 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab8c42bab431774baea34a8c62c1504c",
+    "content-hash": "b33afcaf93548a6e82cd8fbb93dd0713",
     "packages": [
+        {
+            "name": "64robots/nova-fields",
+            "version": "0.21.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/64robots/nova-fields.git",
+                "reference": "b8150c8c5bb53d484bb64b10128e9e62e96ffd36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/64robots/nova-fields/zipball/b8150c8c5bb53d484bb64b10128e9e62e96ffd36",
+                "reference": "b8150c8c5bb53d484bb64b10128e9e62e96ffd36",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "R64\\NovaFields\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "R64\\NovaFields\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/64robots/nova-fields/issues",
+                "source": "https://github.com/64robots/nova-fields/tree/0.21.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/beliolfa",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-04-08T13:26:22+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.0.3",
@@ -239,6 +290,51 @@
             "time": "2021-06-17T13:49:10+00:00"
         },
         {
+            "name": "chaseconey/nova-external-image",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chaseconey/nova-external-image.git",
+                "reference": "13f08d153d11dbd86a457a31142b88bb30b6ab36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chaseconey/nova-external-image/zipball/13f08d153d11dbd86a457a31142b88bb30b6ab36",
+                "reference": "13f08d153d11dbd86a457a31142b88bb30b6ab36",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chaseconey\\ExternalImage\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chaseconey\\ExternalImage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/chaseconey/nova-external-image/issues",
+                "source": "https://github.com/chaseconey/nova-external-image/tree/master"
+            },
+            "time": "2020-08-15T01:49:08+00:00"
+        },
+        {
             "name": "daniel-de-wit/nova-single-record-resource",
             "version": "v1.2.1",
             "source": {
@@ -412,6 +508,51 @@
                 "source": "https://github.com/defuse/php-encryption/tree/v2.3.1"
             },
             "time": "2021-04-09T23:57:26+00:00"
+        },
+        {
+            "name": "dillingham/nova-items-field",
+            "version": "0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dillingham/nova-items-field.git",
+                "reference": "c93dc293cecee867111cb27ad79b3daad5f77682"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dillingham/nova-items-field/zipball/c93dc293cecee867111cb27ad79b3daad5f77682",
+                "reference": "c93dc293cecee867111cb27ad79b3daad5f77682",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NovaItemsField\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NovaItemsField\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Nova field to handle array columns",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/dillingham/nova-items-field/issues",
+                "source": "https://github.com/dillingham/nova-items-field/tree/0.6"
+            },
+            "time": "2020-09-16T21:22:17+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1352,6 +1493,59 @@
                 }
             ],
             "time": "2021-04-26T11:24:25+00:00"
+        },
+        {
+            "name": "genealabs/nova-map-marker-field",
+            "version": "0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GeneaLabs/nova-map-marker-field.git",
+                "reference": "288b13ec5967b80a72d1864506e25ad661304f7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GeneaLabs/nova-map-marker-field/zipball/288b13ec5967b80a72d1864506e25ad661304f7c",
+                "reference": "288b13ec5967b80a72d1864506e25ad661304f7c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.0",
+                "laravel/nova": "^3.9",
+                "symfony/thanks": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "GeneaLabs\\NovaMapMarkerField\\Providers\\Service"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GeneaLabs\\NovaMapMarkerField\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/GeneaLabs/nova-map-marker-field/issues",
+                "source": "https://github.com/GeneaLabs/nova-map-marker-field/tree/0.3.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/mikebronner",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-03-09T13:30:05+00:00"
         },
         {
             "name": "gijsg/system-resources",
@@ -2396,6 +2590,51 @@
                 "source": "https://github.com/Kristories/nova-inspire/tree/master"
             },
             "time": "2019-06-06T18:20:15+00:00"
+        },
+        {
+            "name": "laraning/nova-time-field",
+            "version": "v1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laraning/nova-time-field.git",
+                "reference": "f12fd7ebf172279f0838b05f965161e75e42f823"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laraning/nova-time-field/zipball/f12fd7ebf172279f0838b05f965161e75e42f823",
+                "reference": "f12fd7ebf172279f0838b05f965161e75e42f823",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laraning\\NovaTimeField\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laraning\\NovaTimeField\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/laraning/nova-time-field/issues",
+                "source": "https://github.com/laraning/nova-time-field/tree/v1.2"
+            },
+            "time": "2020-11-29T17:27:34+00:00"
         },
         {
             "name": "laravel/framework",
@@ -7884,6 +8123,67 @@
                 }
             ],
             "time": "2021-06-06T09:51:56+00:00"
+        },
+        {
+            "name": "symfony/thanks",
+            "version": "v1.2.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/thanks.git",
+                "reference": "e9c4709560296acbd4fe9e12b8d57a925aa7eae8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/thanks/zipball/e9c4709560296acbd4fe9e12b8d57a925aa7eae8",
+                "reference": "e9c4709560296acbd4fe9e12b8d57a925aa7eae8",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0|^2.0",
+                "php": ">=5.5.9"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.2-dev"
+                },
+                "class": "Symfony\\Thanks\\Thanks"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Thanks\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                }
+            ],
+            "description": "Encourages sending ⭐ and 💵 to fellow PHP package maintainers (not limited to Symfony components)!",
+            "support": {
+                "issues": "https://github.com/symfony/thanks/issues",
+                "source": "https://github.com/symfony/thanks/tree/v1.2.10"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-10-14T17:47:37+00:00"
         },
         {
             "name": "symfony/translation",
