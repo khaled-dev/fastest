@@ -66,19 +66,17 @@ class NotificationService
     /**
      * Push message/notification to a given topic.
      *
-     * @param int $offerId
+     * @param string $topicName
      * @param array $notification
      * @param array $data
      * @return array
      */
-    public static function pushToTopic(int $offerId, array $notification, array $data): array
+    public static function pushToTopic(string $topicName, array $notification, array $data): array
     {
-        $firebaseCloudMessaging = App::make(ICloudMessaging::class);
-
-        $topic = "{$offerId}-chat-topic";
+        $firebaseCloudMessaging = App::make(ICloudMessaging::class);;
 
         return $firebaseCloudMessaging
-            ->withTopic($topic)
+            ->withTopic($topicName)
             ->withNotification($notification)
             ->withData($data)
             ->send();

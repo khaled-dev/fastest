@@ -31,6 +31,16 @@ class Offer extends Model
     const CANCELED = 'canceled';
 
     /**
+     * Returns the chat topic of this offer.
+     *
+     * @return string
+     */
+    public function chatTopic(): string
+    {
+        return "chat-{$this->id}-topic";
+    }
+
+    /**
      * Check if the cancellation time has passed.
      *
      * @return bool

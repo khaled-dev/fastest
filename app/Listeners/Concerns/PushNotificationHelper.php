@@ -40,7 +40,6 @@ trait PushNotificationHelper
      */
     private Model $to;
 
-
     /**
      * Holds the topic name.
      *
@@ -139,17 +138,18 @@ trait PushNotificationHelper
      * @param string $type
      * @param Model $resource
      * @param Message|null $message
+     * @param array $extraData
      * @return $this
      */
-    protected function setData(string $type, Model $resource, ?Message $message = null): PushNotificationHelper
+    protected function setData(string $type, Model $resource, ?Message $message = null, array $extraData = []): PushNotificationHelper
     {
-        $extraData = [];
         if (! empty($message)) {
-            $extraData = [
+            $extraData = array_merge([
                 'message'    => $message->body,
                 'senderId'   => $message->sender_id,
                 'senderType' => $this->getType($message->sender_type),
-            ];
+                'topicName'  => $this->topic ?? null,
+            ], $extraData);
         }
 
         $this->data = array_merge([
