@@ -55,7 +55,7 @@ trait PushNotificationHelper
      */
     protected function push(?bool $saveNotificationRecord = false)
     {
-        $sendTo = $this->to;
+        $sendTo = $this->to ?? null;
 
         if ($saveNotificationRecord) {
             NotificationService::saveNotification($sendTo, $this->notification);
@@ -80,9 +80,9 @@ trait PushNotificationHelper
      * Set the sender user model.
      *
      * @param Model $fromUser
-     * @return $this
+     * @return self
      */
-    protected function from(Model $fromUser): PushNotificationHelper
+    protected function from(Model $fromUser): self
     {
         $this->from = $fromUser;
 
@@ -93,9 +93,9 @@ trait PushNotificationHelper
      * Set user model to send to.
      *
      * @param Model $toUser
-     * @return $this
+     * @return self
      */
-    protected function to(Model $toUser): PushNotificationHelper
+    protected function to(Model $toUser): self
     {
         $this->to = $toUser;
 
@@ -106,9 +106,9 @@ trait PushNotificationHelper
      * Set topic name to push to.
      *
      * @param string $topic
-     * @return $this
+     * @return self
      */
-    protected function toTopic(string $topic): PushNotificationHelper
+    protected function toTopic(string $topic): self
     {
         $this->topic = $topic;
 
@@ -119,9 +119,9 @@ trait PushNotificationHelper
      * Set notification to push.
      *
      * @param string $localParentKey
-     * @return $this
+     * @return self
      */
-    protected function setNotification(string $localParentKey): PushNotificationHelper
+    protected function setNotification(string $localParentKey): self
     {
         $this->notification = [
             'title'     => __("{$localParentKey}.title"),
@@ -139,9 +139,9 @@ trait PushNotificationHelper
      * @param Model $resource
      * @param Message|null $message
      * @param array $extraData
-     * @return $this
+     * @return self
      */
-    protected function setData(string $type, Model $resource, ?Message $message = null, array $extraData = []): PushNotificationHelper
+    protected function setData(string $type, Model $resource, ?Message $message = null, array $extraData = []): self
     {
         if (! empty($message)) {
             $extraData = array_merge([
