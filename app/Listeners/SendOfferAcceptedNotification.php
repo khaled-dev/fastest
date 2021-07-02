@@ -23,7 +23,7 @@ class SendOfferAcceptedNotification
         $this->from($order->customer)
             ->to($offer->courier)
             ->setNotification('notifications.offers.accepted')
-            ->setData('offer-accepted', $offer)
+            ->setData('offer-accepted', $offer, null, ['topicName' => $offer->chatTopic()])
             ->push(true);
     }
 }

@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Events\OfferRejected;
 use App\Events\RequestCancellation;
+use App\Events\SendMessage;
+use App\Listeners\SendMessageNotification;
+use App\Listeners\PushMessage;
 use App\Listeners\SendRejectedOfferNotification;
 use App\Listeners\SendRequestCancellationNotification;
 use App\Models\Order;
@@ -51,6 +54,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         OfferCompleted::class => [
             SendCompletedOfferNotification::class,
+        ],
+        SendMessage::class => [
+            SendMessageNotification::class,
+            PushMessage::class,
         ],
     ];
 

@@ -6,7 +6,7 @@ use App\Models\Courier;
 use App\Events\SendMessage;
 use App\Listeners\Concerns\PushNotificationHelper;
 
-class PushMessage
+class SendMessageNotification
 {
     use PushNotificationHelper;
 
@@ -20,17 +20,18 @@ class PushMessage
     {
         $message  = $event->message;
         $offer    = $event->message->offer;
+
         $sendFrom = $offer->order->customer;
+        $sendTo   = $offer->courier;
 
         if (auth()->user() instanceof Courier) {
-            $sendFrom = $offer->courier;
+            list($sendTo, $sendFrom) = array($sendFrom, $sendTo);
         }
 
         $this->from($sendFrom)
-            ->toTopic($offer->chatTopic())
+            ->to($sendTo)
             ->setNotification('notifications.offers.message')
-            ->setData('chat', $offer, $message)
+            ->setData('notification', $offer, $message, ['topicName' => $offer->chatTopic()])
             ->push();
     }
-
 }
