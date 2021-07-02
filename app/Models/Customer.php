@@ -60,6 +60,16 @@ class Customer extends User implements HasMedia
     }
 
     /**
+     * Get all offers
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasManyThrough
+     */
+    public function offers(): \Illuminate\Database\Eloquent\Relations\hasManyThrough
+    {
+        return $this->hasManyThrough(Offer::class, Order::class);
+    }
+
+    /**
      * Set model image Conversions
      *
      * @param Media|null $media

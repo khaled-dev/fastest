@@ -87,7 +87,7 @@ class Offer extends Model
     }
 
     /**
-     * Get other offer.
+     * Get other offers.
      *
      * @param $query
      * @param Offer $offer
@@ -96,6 +96,17 @@ class Offer extends Model
     public function scopeOtherOffers($query, Offer $offer)
     {
         return $query->where('id', '!=', $offer->id);
+    }
+
+    /**
+     * Get accepted offers.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeAccepted($query)
+    {
+        return $query->where('offers.state', self::ACCEPTED);
     }
 
     /**
