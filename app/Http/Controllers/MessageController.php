@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\SendMessage;
-use App\Http\Resources\MessageResource;
-use App\Models\Message;
 use App\Models\Offer;
+use App\Models\Message;
+use App\Events\SendMessage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Resources\TopicResource;
+use App\Http\Resources\MessageResource;
 
 class MessageController extends Controller
 {
@@ -34,7 +35,8 @@ class MessageController extends Controller
         SendMessage::dispatch($message);
 
         return $this->successResponse([
-            'messages' => MessageResource::collection($offer->messages)
+            'topicName' => $offer->chatTopic(),
+            'messages'  => MessageResource::collection($offer->messages)
         ]);
     }
 
@@ -52,7 +54,22 @@ class MessageController extends Controller
     public function list(Offer $offer): Response
     {
         return $this->successResponse([
-            'messages' => MessageResource::collection($offer->messages)
+            'topicName' => $offer->chatTopic(),
+            'messages'  => MessageResource::collection($offer->messages)
+        ]);
+    }
+
+    /**
+     * Lists all message in the offer room.
+     *
+     * @return Response
+     */
+    public function topics(): Response
+    {
+        $acceptedOffers = auth()->user()->offers()->accepted()->get() ?? [];
+
+        return $this->successResponse([
+            'topics' => TopicResource::collection($acceptedOffers),
         ]);
     }
 

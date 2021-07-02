@@ -71,6 +71,7 @@ Route::middleware('auth:couriers,customers')->group(function () {
     Route::post('/offers/{offer}/chat', 'MessageController@send')->name('offers.chat.send');
     Route::get('/offers/{offer}/chat', 'MessageController@list')->name('offers.chat.list');
     Route::get('/order-delivery-times', 'OrderController@deliveryTimeList')->name('orders.deliveryTimeList');
+    Route::get('/topics', 'MessageController@topics')->name('chat.topics');
 });
 
 //Route::get('test', function () {
