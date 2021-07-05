@@ -67,7 +67,7 @@ class JsonResponseBuilder
 
         if ($this->is_success) {
             $response['data'] = $this->data;
-            $response['metadata'] = $this->metadata;
+            $response['meta'] = $this->metadata;
         } else {
             $response['errors'] = $this->error;
         }

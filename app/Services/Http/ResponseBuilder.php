@@ -45,7 +45,7 @@ trait ResponseBuilder
         return response([
             "message" => "The given data was invalid.",
             "errors" => $errors,
-            "metadata" => $metadata
+            "meta" => $metadata
         ], 422);
     }
 
@@ -62,7 +62,7 @@ trait ResponseBuilder
         return response([
             "message" => "success",
             "data" => $data,
-            "metadata" => $metadata,
+            "meta" => $metadata,
         ], $status);
     }
 }

@@ -53,7 +53,7 @@ trait ExceptionHandler
         return response([
             'message' => $message,
             'data' => [],
-            'metadata' => [],
+            'meta' => [],
         ], $status);
     }
 
