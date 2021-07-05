@@ -8,7 +8,7 @@ use App\Events\SendMessage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Resources\TopicResource;
-use App\Http\Resources\MessageResource;
+use App\Http\Resources\MessageCollection;
 
 class MessageController extends Controller
 {
@@ -18,10 +18,10 @@ class MessageController extends Controller
      *
      * @param Request $request
      * @param Offer $offer
-     * @return Response
+     * @return MessageCollection
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function send(Request $request, Offer $offer): Response
+    public function send(Request $request, Offer $offer): MessageCollection
     {
         $this->authorize('send', [Message::class, $offer]);
 
@@ -34,10 +34,7 @@ class MessageController extends Controller
 
         SendMessage::dispatch($message);
 
-        return $this->successResponse([
-            'topicName' => $offer->chatTopic(),
-            'messages'  => MessageResource::collection($offer->messages)
-        ]);
+        return new MessageCollection($offer->messages()->desc()->paginate(10));
     }
 
     /**
@@ -45,10 +42,10 @@ class MessageController extends Controller
      *
      * @param Request $request
      * @param Offer $offer
-     * @return Response
+     * @return MessageCollection
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function uploadImages(Request $request, Offer $offer): Response
+    public function uploadImages(Request $request, Offer $offer): MessageCollection
     {
         $this->authorize('send', [Message::class, $offer]);
 
@@ -62,24 +59,18 @@ class MessageController extends Controller
 
         SendMessage::dispatch($message);
 
-        return $this->successResponse([
-            'topicName' => $offer->chatTopic(),
-            'messages'  => MessageResource::collection($offer->messages)
-        ]);
+        return new MessageCollection($offer->messages()->desc()->paginate(10));
     }
 
     /**
      * Lists all message in the offer room.
      *
      * @param Offer $offer
-     * @return Response
+     * @return MessageCollection
      */
-    public function list(Offer $offer): Response
+    public function list(Offer $offer): MessageCollection
     {
-        return $this->successResponse([
-            'topicName' => $offer->chatTopic(),
-            'messages'  => MessageResource::collection($offer->messages)
-        ]);
+        return new MessageCollection($offer->messages()->desc()->paginate(10));
     }
 
     /**
