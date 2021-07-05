@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\General;
 use Spatie\MediaLibrary\HasMedia;
 use App\Models\Concerns\MediaWork;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Order extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, MediaWork;
+    use HasFactory, InteractsWithMedia, MediaWork, General;
 
     /**
      * The attributes that are mass assignable.
