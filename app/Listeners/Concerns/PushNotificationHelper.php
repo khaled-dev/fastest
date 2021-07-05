@@ -143,6 +143,7 @@ trait PushNotificationHelper
      */
     protected function setData(string $type, Model $resource, ?Message $message = null, array $extraData = []): self
     {
+        // message data
         if (! empty($message)) {
             $extraData = array_merge([
                 'message'    => $message->body,
@@ -150,7 +151,15 @@ trait PushNotificationHelper
                 'senderType' => $this->getType($message->sender_type),
                 'topicName'  => $this->topic ?? null,
             ], $extraData);
+
+            // message images
+            $i = 1;
+            foreach($message->getAllMediaFromCollection('images') as $image) {
+                $extraData["image-{$i}"] = $image;
+                $i++;
+            }
         }
+
 
         $this->data = array_merge([
             'type'         => $type,
