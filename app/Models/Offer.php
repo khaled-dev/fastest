@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\General;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
 
 class Offer extends Model
 {
-    use HasFactory;
+    use HasFactory, General;
 
     /**
      * The attributes that are mass assignable.

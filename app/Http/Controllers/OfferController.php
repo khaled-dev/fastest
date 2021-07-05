@@ -8,15 +8,13 @@ use App\Events\OfferCompleted;
 use App\Events\OfferPlaced;
 use App\Events\OfferRejected;
 use App\Events\RequestCancellation;
+use App\Http\Resources\OfferCollection;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Courier;
-use App\Models\Setting;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use App\Http\Resources\OfferResource;
 use App\Http\Requests\StoreOfferRequest;
-use Illuminate\Support\Carbon;
 
 class OfferController extends Controller
 {
@@ -51,13 +49,11 @@ class OfferController extends Controller
      * List all Offers
      *
      * @param Order $order
-     * @return Response
+     * @return OfferCollection
      */
-    public function index(Order $order): Response
+    public function index(Order $order): OfferCollection
     {
-        return $this->successResponse([
-            'offers' => OfferResource::collection($order->offers()->get())
-        ]);
+        return new OfferCollection($order->offers()->desc()->paginate(10));
     }
 
     /**
@@ -90,8 +86,6 @@ class OfferController extends Controller
 
         OfferAccepted::dispatch($offer);
 
-        // TODO: open chat
-
         return $this->successResponse([
             'offer' => new OfferResource($offer->refresh())
         ]);
@@ -121,8 +115,6 @@ class OfferController extends Controller
         $offer->markAsCanceled();
 
         OfferCanceled::dispatch($offer);
-
-        // TODO: close chat
 
         return $this->successResponse([
             'offer' => new OfferResource($offer->refresh())
@@ -165,8 +157,6 @@ class OfferController extends Controller
         $offer->order->markAsCompleted();
 
         OfferCompleted::dispatch($offer);
-
-        // TODO: close chat
 
         return $this->successResponse([
             'offer' => new OfferResource($offer->refresh())

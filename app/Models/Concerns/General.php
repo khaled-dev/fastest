@@ -14,6 +14,6 @@ trait General
      */
     public function scopeDesc($qeury)
     {
-        return $qeury->orderBy('id', 'DESC');
+        return $qeury->orderByDesc('id');
     }
 }
