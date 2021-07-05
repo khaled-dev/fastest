@@ -54,6 +54,9 @@ class Location extends Resource
 
             Text::make('Name', 'name')->sortable(),
 
+            Text::make('Description', 'description')
+                ->hideFromIndex(),
+
             BelongsTo::make('Customer', 'customer'),
 
             MapMarker::make('Location')

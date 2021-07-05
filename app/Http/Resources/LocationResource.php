@@ -19,6 +19,7 @@ class LocationResource extends JsonResource
             'name' => $this->name,
             'lat' => $this->lat,
             'lng' => $this->lng,
+            'description' => $this->description,
             'customer' =>  new CustomerResource($request->user()),
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,

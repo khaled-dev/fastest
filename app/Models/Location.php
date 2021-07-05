@@ -15,7 +15,7 @@ class Location extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['lat', 'lng', 'name'];
+    protected $fillable = ['lat', 'lng', 'description', 'name'];
 
     /**
      * Returns the customer who owns this location
