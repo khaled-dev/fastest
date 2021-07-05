@@ -40,9 +40,32 @@ class MessageController extends Controller
         ]);
     }
 
-    public function uploadImage()
+    /**
+     * Sends images as messages in the offer room.
+     *
+     * @param Request $request
+     * @param Offer $offer
+     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function uploadImages(Request $request, Offer $offer): Response
     {
+        $this->authorize('send', [Message::class, $offer]);
 
+        $request->validate([
+            'images' => 'required|array',
+            'images.*' => 'required|image',
+        ]);
+
+        $message = $request->user()->messages()->create(['offer_id' => $offer->id]);
+        $message->addMultipleMediaToCollection($request->images, 'images');
+
+        SendMessage::dispatch($message);
+
+        return $this->successResponse([
+            'topicName' => $offer->chatTopic(),
+            'messages'  => MessageResource::collection($offer->messages)
+        ]);
     }
 
     /**

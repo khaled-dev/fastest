@@ -22,6 +22,7 @@ class MessageResource extends JsonResource
                 ? new CourierResource($this->sender)
                 : new CustomerResource($this->sender),
             'body' => $this->body,
+            'images' => $this->getAllMediaFromCollection('images') ?? [],
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];
