@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Notification;
-use App\Services\Logic\NotificationService;
-use Illuminate\Http\Response;
-use App\Http\Resources\NotificationResource;
 use Illuminate\Http\Request;
+use App\Models\Notification;
+use Illuminate\Http\Response;
+use App\Services\Logic\NotificationService;
+use App\Http\Resources\NotificationResource;
+use App\Http\Resources\NotificationCollection;
 
 class NotificationController extends Controller
 {
@@ -15,16 +16,14 @@ class NotificationController extends Controller
     /**
      * List All user notifications.
      *
-     * @return Response
+     * @return NotificationCollection
      */
-    public function index(): Response
+    public function index(): NotificationCollection
     {
         /** @var User $user */
         $user = auth()->user();
 
-        return $this->successResponse([
-            'notifications' => NotificationResource::collection($user->notifications)
-        ]);
+        return new NotificationCollection($user->notifications()->desc()->paginate(10));
     }
 
     /**
@@ -49,9 +48,9 @@ class NotificationController extends Controller
      * Store notification token.
      *
      * @param Request $request
-     * @return Response
+     * @return NotificationCollection
      */
-    public function storeNotificationToken(Request $request): Response
+    public function storeNotificationToken(Request $request): NotificationCollection
     {
         $request->validate(['fb_registration_token' => 'required|string']);
 
@@ -62,8 +61,6 @@ class NotificationController extends Controller
 
         NotificationService::saveRegistrationToken($user, $request->fb_registration_token);
 
-        return $this->successResponse([
-            'notifications' => NotificationResource::collection($user->notifications)
-        ]);
+        return new NotificationCollection($user->notifications()->desc()->paginate(10));
     }
 }
