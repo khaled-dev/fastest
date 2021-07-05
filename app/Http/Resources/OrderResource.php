@@ -32,7 +32,7 @@ class OrderResource extends JsonResource
             'deliveryTime' => $this->delivery_time,
             'minOfferPrice' => $this->min_offer_price,
             'maxOfferPrice' => $this->max_offer_price,
-            'images' => $this->getMedia('images'),
+            'images' => $this->getAllMediaFromCollection('images') ?? [],
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];

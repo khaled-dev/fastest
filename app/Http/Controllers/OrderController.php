@@ -46,8 +46,7 @@ class OrderController extends Controller
      */
     public function updateImages(UpdateOrderImagesRequest $request, Order $order): Response
     {
-        $order->addMediaFromRequest('images')
-            ->toMediaCollection('images');
+        $order->addMultipleMediaToCollection($request->images, 'images');
 
         return $this->successResponse([
             'order' => new OrderResource($order),
