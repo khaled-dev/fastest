@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Store;
+use App\Models\Setting;
 use Illuminate\Http\Response;
 use App\Http\Resources\StoreResource;
 use App\Http\Requests\StoreNearbyRequest;
@@ -76,10 +77,12 @@ class StoreController extends Controller
      */
     private function range($lat, $lng): array
     {
-        // TODO the Five is dynamic
+        $searchRange = Setting::first()->search_range;
+        $searchRange = $searchRange/100;
+
         return [
-            'latRange' => [$lat - (111 * 5), $lat + (111 * 5)],
-            'lngRange' => [$lng - (111 * 5), $lng + (111 * 5)],
+            'latRange' => [$lat - (111 * $searchRange), $lat + (111 * $searchRange)],
+            'lngRange' => [$lng - (111 * $searchRange), $lng + (111 * $searchRange)],
         ];
     }
 }

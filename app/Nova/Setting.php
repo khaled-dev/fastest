@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use Laravel\Nova\Fields\Number;
 use NovaItemsField\Items;;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -61,6 +62,8 @@ class Setting extends Resource implements SingleRecordResourceInterface
                 ->required(),
 
             TimeField::make('Cancellation Time', 'cancellation_time'),
+
+            Number::make('Search Range In Km', 'search_range'),
 
             Items::make('Delivery Time', 'delivery_time')
                 ->inputType('text')
