@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\Order;
+use App\Models\Setting;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreOfferRequest extends FormRequest
 {
@@ -28,10 +30,15 @@ class StoreOfferRequest extends FormRequest
         $order    = $this->order;
         $minPrice = $order->min_offer_price;
         $maxPrice = $order->max_offer_price;
+        $deliveryTimes = Setting::all()->first()->delivery_time;
 
         return [
             'price' => "required|numeric|between:{$minPrice},{$maxPrice}",
-            'delivery_time' => 'required|string|max:255',
+            'delivery_time' => [
+                'required',
+                'string',
+                Rule::in($deliveryTimes ?? [])
+            ]
         ];
     }
 }
