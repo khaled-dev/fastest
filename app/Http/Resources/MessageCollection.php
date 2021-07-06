@@ -19,6 +19,7 @@ class MessageCollection extends ResourceCollection
         return [
             'data' => [
                 'topicName' => empty($message) ? null : $message->offer->chatTopic(),
+                'offer'     => empty($message) ? null : new OfferResource($message->offer),
                 'messages'  => $this->collection,
             ]
         ];
