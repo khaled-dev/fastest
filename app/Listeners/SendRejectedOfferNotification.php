@@ -20,8 +20,8 @@ class SendRejectedOfferNotification
         $offer = $event->offer;
         $order = $event->offer->order;
 
-        $this->from($offer->customer)
-            ->to($order->courier)
+        $this->from($order->customer)
+            ->to($offer->courier)
             ->setNotification('notifications.offers.rejected')
             ->setData('offer-rejected', $offer)
             ->push(true);
