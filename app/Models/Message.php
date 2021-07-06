@@ -43,6 +43,19 @@ class Message extends Model implements HasMedia
         return $this->belongsTo(Offer::class);
     }
 
+
+    /**
+     * Order Desc.
+     *
+     * @param $qeury
+     * @return mixed
+     */
+    public function scopeDesc($qeury)
+    {
+        return $qeury->orderBy('id', 'DESC');
+    }
+
+
     /**
      * Set model image Conversions
      *

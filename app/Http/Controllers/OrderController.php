@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderCollection;
 use App\Models\Store;
 use App\Models\Order;
 use App\Models\Customer;
 use App\Models\Setting;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
 use App\Http\Resources\OrderResource;
 use App\Http\Requests\StoreOrderRequest;
@@ -73,7 +75,7 @@ class OrderController extends Controller
      * Create new order for auth user
      *
      * @param string $state
-     * @return \Illuminate\Http\Response
+     * @return OrderCollection|Response
      */
     public function listByState(string $state)
     {
@@ -85,9 +87,7 @@ class OrderController extends Controller
             ]);
         }
 
-        return $this->successResponse([
-            'orders' => OrderResource::collection(Order::forGivenState($state)->get())
-        ]);
+        return new OrderCollection(Order::forGivenState($state)->desc()->paginate(10));
     }
 
     /**
