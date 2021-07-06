@@ -33,5 +33,9 @@ return [
             'title' => 'Offer Completed',
             'body' => 'Your offer has been completed',
         ],
+        'message' => [
+            'title' => 'Message Received',
+            'body' => 'You have received a message',
+        ],
     ]
 ];
