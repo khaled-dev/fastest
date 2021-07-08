@@ -83,7 +83,7 @@ class Order extends Model implements HasMedia
      */
     public function getMaxOfferPriceAttribute()
     {
-        return $this->offers()->max('price') ?? Setting::all()->first()->max_offer_price;
+        return $this->offers()->max('price') ?? $this->max_offer_price;
     }
 
     /**
