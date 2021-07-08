@@ -128,6 +128,6 @@ class Courier extends Resource
      */
     public function authorizedToDelete(Request $request): bool
     {
-       return false;
+       return true;
     }
 }
