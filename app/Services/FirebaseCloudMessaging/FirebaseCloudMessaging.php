@@ -136,7 +136,7 @@ class FirebaseCloudMessaging implements ICloudMessaging
             );
 
         if (! empty($this->data)) {
-            $message->withData($this->data);
+            $message = $message->withData($this->data);
         }
 
         return $this->messaging->send($message);
