@@ -57,22 +57,6 @@ trait PushNotificationHelper
     {
         $sendTo = $this->to ?? null;
 
-        Log::channel('handwrite')->warning(
-            "Notification: " . json_encode($this->notification) . " \n"
-        );
-
-        Log::channel('handwrite')->warning(
-            "Data: " . json_encode($this->data) . " \n"
-        );
-
-        Log::channel('handwrite')->warning(
-            "ToUser: " . json_encode($this->to ?? null) . "\n"
-        );
-
-        Log::channel('handwrite')->warning(
-            "ToTopic: " . json_encode($this->topic ?? null) . " \n"
-        );
-
         if ($saveNotificationRecord) {
             NotificationService::saveNotification($sendTo, $this->notification);
         }
