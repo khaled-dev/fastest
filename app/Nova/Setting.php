@@ -61,6 +61,8 @@ class Setting extends Resource implements SingleRecordResourceInterface
 
             TimeField::make('Cancellation Time', 'cancellation_time'),
 
+            TimeField::make('Offer Active Time', 'offer_active_time'),
+
             Number::make('Search Range In Km', 'search_range'),
 
             (new Panel('Minimum Price Per Km', [
