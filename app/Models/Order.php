@@ -81,7 +81,7 @@ class Order extends Model implements HasMedia
      *
      * @return mixed
      */
-    public function getMaxOfferPriceAttribute()
+    public function getMaxOfferRealPriceAttribute()
     {
         return $this->offers()->max('price') ?? $this->max_offer_price;
     }

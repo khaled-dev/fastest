@@ -29,7 +29,7 @@ class StoreOfferRequest extends FormRequest
         /** @var Order $order */
         $order    = $this->order;
         $minPrice = $order->min_offer_price;
-        $maxPrice = $order->max_offer_price;
+        $maxPrice = $order->max_offer_real_price;
         $deliveryTimes = Setting::all()->first()->delivery_time;
 
         return [
