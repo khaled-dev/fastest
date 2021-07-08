@@ -2,7 +2,8 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\Number;
+//use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Panel;
 use NovaItemsField\Items;;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -14,6 +15,9 @@ use Laraning\NovaTimeField\TimeField;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use DanielDeWit\NovaSingleRecordResource\Contracts\SingleRecordResourceInterface;
 use DanielDeWit\NovaSingleRecordResource\Traits\SupportSingleRecordNavigationLinks;
+use R64\NovaFields\JSON;
+use R64\NovaFields\Row;
+use R64\NovaFields\Number;
 
 class Setting extends Resource implements SingleRecordResourceInterface
 {
@@ -51,27 +55,37 @@ class Setting extends Resource implements SingleRecordResourceInterface
         return [
             Trix::make('Terms And Conditions', 'terms_and_conditions')->nullable(),
 
-            Currency::make('Minimum Offer Price', 'min_offer_price')
-                ->currency('SAR')
-                ->step(0.50)
-                ->required(),
-
-            Currency::make('Maximum Offer Price', 'max_offer_price')
-                ->currency('SAR')
-                ->step(0.50)
+            Number::make('Maximum Offer Price (This * Minimum)', 'max_offer_price')
+                ->step(0.1)
                 ->required(),
 
             TimeField::make('Cancellation Time', 'cancellation_time'),
 
             Number::make('Search Range In Km', 'search_range'),
 
-            Items::make('Delivery Time', 'delivery_time')
-                ->inputType('text')
-                ->placeholder('00:00')
-                ->rules([
-                     'delivery_time.*' => 'string|date_format:H:i',
-                ])
-                ->draggable(),
+            (new Panel('Minimum Price Per Km', [
+                Row::make('Minimum Price Per Km', [
+                    Number::make('From')
+                        ->fieldClasses('w-full px-6 py-4')
+                        ->hideLabelInForms(),
+                    Number::make('To')
+                        ->fieldClasses('w-full px-6 py-4')
+                        ->hideLabelInForms(),
+                    Number::make('Price')
+                        ->fieldClasses('w-full px-6 py-4')
+                        ->hideLabelInForms(),
+                ], 'min_price_per_km'),
+            ])),
+
+            (new Panel('Delivery Times', [
+                Items::make('Delivery Time', 'delivery_time')
+                    ->inputType('text')
+                    ->placeholder('00:00')
+                    ->rules([
+                        'delivery_time.*' => 'string|date_format:H:i',
+                    ])
+                    ->draggable(),
+            ])),
         ];
     }
 

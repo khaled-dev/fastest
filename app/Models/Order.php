@@ -127,6 +127,16 @@ class Order extends Model implements HasMedia
     }
 
     /**
+     * Get the location of this order.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Location::class);
+    }
+
+    /**
      * Get all opened orders
      *
      * @param $query
