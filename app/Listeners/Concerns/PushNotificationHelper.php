@@ -57,6 +57,22 @@ trait PushNotificationHelper
     {
         $sendTo = $this->to ?? null;
 
+        Log::channel('handwrite')->warning(
+            "Notification: {$$this->notification} \n"
+        );
+
+        Log::channel('handwrite')->warning(
+            "Data: {$$this->data} \n"
+        );
+
+        Log::channel('handwrite')->warning(
+            "ToUser: {$this->to} \n"
+        );
+
+        Log::channel('handwrite')->warning(
+            "ToTopic: {$this->topic} \n"
+        );
+
         if ($saveNotificationRecord) {
             NotificationService::saveNotification($sendTo, $this->notification);
         }
