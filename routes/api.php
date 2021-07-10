@@ -39,7 +39,7 @@ Route::middleware('auth:customers')->group(function () {
     Route::post('/stores/{store}/orders', 'OrderController@store')->name('orders.store');
     Route::post('/orders/{order}/images', 'OrderController@updateImages')->name('orders.update_images');
     Route::get('/orders/state-counts', 'OrderController@ordersStateCounts')->name('orders.orders_state_counts');
-    Route::get('/orders/{state}', 'OrderController@listByState')->name('orders.by_state');
+    Route::get('/orders/{state}/list', 'OrderController@listByState')->name('orders.by_state');
     Route::get('/orders/{order}/cancel', 'OrderController@cancel')->name('orders.cancel');
     Route::get('/orders/{order}/offers', 'OfferController@index')->name('offers.index');
     Route::get('/offers/{offer}', 'OfferController@show')->name('offers.show');
@@ -51,6 +51,7 @@ Route::middleware('auth:customers')->group(function () {
 Route::post('/stores/search', 'StoreController@search')->name('stores.search');
 Route::post('/stores/nearby', 'StoreController@nearby')->name('stores.nearby');
 Route::post('/stores/{store}', 'StoreController@show')->name('stores.show');
+Route::get('/orders/{order}', 'OrderController@show')->name('orders.show');
 
 // Courier
 Route::middleware('auth:couriers')->group(function () {
