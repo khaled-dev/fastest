@@ -113,7 +113,7 @@ class OrderController extends Controller
     {
         $this->authorize('cancel', $order);
 
-        $order->cancel();
+        $order->markAsCanceled();
 
         return $this->successResponse([
             'order' => new OrderResource($order->refresh())
