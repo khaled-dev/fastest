@@ -14,12 +14,10 @@ class MessageCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $message = $this->collection->first();
-
         return [
             'data' => [
-                'topicName' => empty($message) ? null : $message->offer->chatTopic(),
-                'offer'     => empty($message) ? null : new OfferResource($message->offer),
+                'topicName' => $request->offer->chatTopic(),
+                'offer'     => new OfferResource($request->offer),
                 'messages'  => $this->collection,
             ]
         ];
