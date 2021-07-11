@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Courier;
 use App\Models\Store;
 use App\Models\Order;
 use App\Models\Customer;
@@ -75,11 +76,14 @@ class OrderController extends Controller
      */
     public function ordersStateCounts(): Response
     {
+        /** @var Courier $courier */
+        $courier = auth()->user();
+
         return $this->successResponse([
             'ordersStateCount' => new OrderStateCountResource([
-                'opened' => Order::opened()->count(),
-                'underNegotiation' => Order::underNegotiation()->count(),
-                'inProgress' => Order::inProgress()->count(),
+                'opened'           => Order::opened()->count(),
+                'inProgress'       => $courier->offers()->accepted()->count(),
+                'underNegotiation' => $courier->offers()->underNegotiation()->count(),
             ]),
         ]);
     }

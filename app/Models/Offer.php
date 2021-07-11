@@ -111,6 +111,17 @@ class Offer extends Model
     }
 
     /**
+     * Get under negotiation offers.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeUnderNegotiation($query)
+    {
+        return $query->where('offers.state', self::UNDER_NEGOTIATION);
+    }
+
+    /**
      * change offer state to be `accepted`
      *
      * @return $this
