@@ -52,6 +52,8 @@ class OfferPolicy
             return false;
         }
 
+        return true;
+
         return
             ($user instanceof Courier && $user->hasProposed($offer) && $offer->isNotEnded())
             || ($user instanceof Customer && $user->hasOrdered($offer->order) && $offer->isNotEnded());

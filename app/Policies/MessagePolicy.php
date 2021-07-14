@@ -22,6 +22,8 @@ class MessagePolicy
      */
     public function send(User $user, Offer $offer)
     {
+        return $offer->isAccepted();
+
         return $offer->isAccepted() && (
             ($user instanceof Courier && $user->hasProposed($offer))
             || ($user instanceof Customer && $user->hasOrdered($offer->order))
