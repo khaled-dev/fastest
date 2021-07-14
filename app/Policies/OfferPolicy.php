@@ -70,15 +70,14 @@ class OfferPolicy
     }
 
     /**
-     * Determine whether the Customer can complete given offer.
+     * Determine whether the Courier can complete given offer.
      *
-     * @param  \App\Models\Customer $customer
+     * @param  \App\Models\Courier $courier
      * @param  \App\Models\Offer  $offer
      * @return mixed
      */
-    public function complete(Customer $customer, Offer $offer)
+    public function complete(Courier $courier, Offer $offer)
     {
-        return $customer->hasOrdered($offer->order)
-            && $offer->isAccepted();
+        return $courier->hasProposed($offer) && $offer->isAccepted();
     }
 }

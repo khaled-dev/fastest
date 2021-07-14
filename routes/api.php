@@ -44,7 +44,6 @@ Route::middleware('auth:customers')->group(function () {
     Route::get('/offers/{offer}', 'OfferController@show')->name('offers.show');
     Route::put('/offers/{offer}/accept', 'OfferController@accept')->name('offers.accept');
     Route::put('/offers/{offer}/reject', 'OfferController@reject')->name('offers.reject');
-    Route::put('/offers/{offer}/complete', 'OfferController@complete')->name('offers.complete');
 });
 
 Route::post('/stores/search', 'StoreController@search')->name('stores.search');
@@ -61,6 +60,7 @@ Route::middleware('auth:couriers')->group(function () {
     Route::post('/couriers/update-images', 'CourierController@updateImages')->name('couriers.update_images');
     Route::post('/orders/{order}/offers', 'OfferController@store')->name('offers.store');
     Route::get('/orders/state/counts', 'OrderController@ordersStateCounts')->name('orders.orders_state_counts');
+    Route::put('/offers/{offer}/complete', 'OfferController@complete')->name('offers.complete');
 });
 
 // all users
