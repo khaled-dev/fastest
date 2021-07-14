@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Courier;
 use App\Models\Order;
 use App\Models\Store;
 use App\Models\Customer;
@@ -22,6 +23,8 @@ class OrderResource extends JsonResource
         // TODO: fix images url
         /** @var Order $this */
 
+        $acceptedOffer = $this->offers()->accepted()->first();
+
         return [
             'id' => $this->id,
             'store' => new StoreResource(Store::find($this->store_id)),
@@ -33,6 +36,16 @@ class OrderResource extends JsonResource
             'minOfferPrice' => $this->min_offer_price,
             'maxOfferPrice' => $this->max_offer_price,
             'images' => $this->getAllMediaFromCollection('images') ?? [],
+            'acceptedOffer' => $acceptedOffer ? [
+                'id' => $acceptedOffer->id,
+                'courier' => new CourierResource($acceptedOffer->courier),
+                'price' => $acceptedOffer->price,
+                'deliveryTime' => $acceptedOffer->delivery_time,
+                'state' => $acceptedOffer->state,
+                'hasCancellationRequest' => ! empty($acceptedOffer->is_cancel_requested),
+                'createdAt' => $acceptedOffer->created_at,
+                'updatedAt' => $acceptedOffer->updated_at,
+            ] : null,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
         ];
