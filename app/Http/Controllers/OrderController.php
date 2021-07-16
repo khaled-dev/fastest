@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Courier;
 use App\Models\Store;
 use App\Models\Order;
-use App\Models\Customer;
 use App\Models\Setting;
+use App\Models\Courier;
+use App\Models\Customer;
 use Illuminate\Http\Response;
 use App\Http\Resources\OrderResource;
+use App\Services\Logic\DistanceService;
 use App\Http\Resources\OrderCollection;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\StoresListInRangeRequest;
 use App\Http\Resources\OrderStateCountResource;
 use App\Http\Requests\UpdateOrderImagesRequest;
 
@@ -89,13 +91,16 @@ class OrderController extends Controller
     }
 
     /**
-     * Create new order for auth user
+     * List orders for customer by given state
      *
      * @param string $state
      * @return OrderCollection|Response
      */
-    public function listByState(string $state)
+    public function listByStateForCustomer(string $state)
     {
+        /** @var Customer $customer */
+        $customer = auth()->user();
+
         if (! in_array($state, Order::listStates())) {
             return $this->validationErrorResponse([
                 "state" => [
@@ -104,7 +109,38 @@ class OrderController extends Controller
             ]);
         }
 
-        return new OrderCollection(Order::forGivenState($state)->desc()->paginate(10));
+        return new OrderCollection($customer->orders()->forGivenState($state)->desc()->paginate(10));
+    }
+
+    /**
+     * List orders for courier by given state
+     *
+     * @param string $state
+     * @param StoresListInRangeRequest $request
+     * @return OrderCollection|Response
+     */
+    public function listByStateForCourier(string $state, StoresListInRangeRequest $request)
+    {
+        /** @var Courier $courier */
+        $courier = auth()->user();
+
+        if (! in_array($state, Order::listStates())) {
+            return $this->validationErrorResponse([
+                "state" => [
+                    "Invalid State Given."
+                ]
+            ]);
+        }
+
+        if ($state == Order::OPENED) {
+            $range = DistanceService::range($request->lat, $request->lng);
+
+            return new OrderCollection(
+                Order::forGivenState($state)->desc()->storeInGivenRange($range)->paginate(10)
+            );
+        }
+
+        return new OrderCollection($courier->orders()->forGivenState($state)->desc()->paginate(10));
     }
 
     /**
