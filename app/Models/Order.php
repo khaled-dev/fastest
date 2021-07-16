@@ -178,7 +178,21 @@ class Order extends Model implements HasMedia
      */
     public function scopeForGivenState($query, $state)
     {
-        return $query->where('state', $state);
+        return $query->where('orders.state', $state);
+    }
+
+    /**
+     * Get orders where stores in given range
+     *
+     * @param $query
+     * @param array $range
+     * @return mixed
+     */
+    public function scopeStoreInGivenRange($query, array $range)
+    {
+        return $query->whereHas('store', function ($query) use ($range) {
+            $query->inRange($range['latRange'], $range['lngRange']);
+        });
     }
 
     /**

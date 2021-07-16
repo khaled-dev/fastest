@@ -123,6 +123,18 @@ class Courier extends User implements HasMedia
         return $this->hasMany(Offer::class);
     }
 
+
+    /**
+     * Get all orders
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function orders(): \Illuminate\Database\Eloquent\Relations\belongsToMany
+    {
+        return $this->belongsToMany(Order::class, 'offers', 'courier_id', 'order_id')->distinct();
+//        return Order::whereIn('id', $this->offers()->select('order_id')->distinct() ?? []);
+    }
+
     /**
      * Get the territory
      *

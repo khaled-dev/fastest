@@ -50,4 +50,14 @@ class Store extends Model
     {
         return $query->whereBetween('lat', $latRang)->whereBetween('lng', $lngRange);
     }
+
+    /**
+     * Get all store orders
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function orders(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }
