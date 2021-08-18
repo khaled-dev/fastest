@@ -23,7 +23,7 @@ class SendPlacedOfferNotification
         $this->from($offer->courier)
             ->to($order->customer)
             ->setNotification('notifications.offers.placed')
-            ->setData('offer-placed', $offer)
+            ->setData('offer-placed', $order)
             ->push(true);
     }
 }
