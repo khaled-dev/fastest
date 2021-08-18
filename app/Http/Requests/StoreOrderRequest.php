@@ -25,16 +25,9 @@ class StoreOrderRequest extends FormRequest
      */
     public function rules()
     {
-        $deliveryTimes = Setting::all()->first()->delivery_time;
-
         return [
             'location_id' => 'required|exists:locations,id',
             'description' => 'required|string',
-            'delivery_time' => [
-              'required',
-               'string',
-               Rule::in($deliveryTimes ?? [])
-            ]
         ];
     }
 }
