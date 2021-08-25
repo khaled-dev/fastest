@@ -6,6 +6,7 @@ use Chaseconey\ExternalImage\ExternalImage;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -64,6 +65,8 @@ class Order extends Resource
             Text::make('Maximum offer price', 'max_offer_price')->sortable(),
 
             Text::make('State', 'state')->sortable(),
+
+            DateTime::make('Registered At', 'created_at'),
 
             Images::make('Product Images', 'images')
                 ->hideFromIndex(),
