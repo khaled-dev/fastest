@@ -4,6 +4,7 @@ namespace App\Models\Observers;
 
 use App\Models\Order;
 use App\Models\Setting;
+use phpDocumentor\Reflection\Types\Null_;
 
 class OrderObserver
 {
@@ -36,12 +37,16 @@ class OrderObserver
     protected function calculatePrice($distance, $minPricePerKmArray): int
     {
         $price = 0;
-        while ($distance > 0) {
-            foreach ($minPricePerKmArray as $row) {
-                if ($row->from <= $distance && $row->to >= $distance) {
-                    $price += $row->price;
-                    $distance--;
-                }
+        foreach ($minPricePerKmArray as $row) {
+            // last key must be null
+            if ($row->to == null) {
+                $km = $distance;
+                $price += $km * $row->price;
+                $distance -= $km;
+            } else {
+                $km = $row->to - $row->from;
+                $price += $km * $row->price;
+                $distance -= $km;
             }
         }
 
