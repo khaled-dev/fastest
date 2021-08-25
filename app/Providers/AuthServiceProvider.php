@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Location;
 use App\Models\Message;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Courier;
 use App\Models\Notification;
+use App\Policies\LocationPolicy;
 use App\Policies\MessagePolicy;
 use App\Policies\OfferPolicy;
 use App\Policies\OrderPolicy;
@@ -29,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
          Order::class => OrderPolicy::class,
          Notification::class => NotificationPolicy::class,
          Message::class => MessagePolicy::class,
+         Location::class => LocationPolicy::class,
     ];
 
     /**
