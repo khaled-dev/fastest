@@ -45,6 +45,7 @@ Route::middleware('auth:customers')->group(function () {
     Route::get('/offers/{offer}', 'OfferController@show')->name('offers.show');
     Route::put('/offers/{offer}/accept', 'OfferController@accept')->name('offers.accept');
     Route::put('/offers/{offer}/reject', 'OfferController@reject')->name('offers.reject');
+    Route::get('/customers/orders/state/counts', 'OrderController@ordersStateCountsForCustomer')->name('orders.orders_state_counts_for_customer');
 });
 
 Route::post('/stores/search', 'StoreController@search')->name('stores.search');
@@ -61,7 +62,7 @@ Route::middleware('auth:couriers')->group(function () {
     Route::post('/couriers/update-images', 'CourierController@updateImages')->name('couriers.update_images');
     Route::post('/couriers/orders/{state}/list', 'OrderController@listByStateForCourier')->name('couriers.orders.by_state');
     Route::post('/orders/{order}/offers', 'OfferController@store')->name('offers.store');
-    Route::get('/orders/state/counts', 'OrderController@ordersStateCounts')->name('orders.orders_state_counts');
+    Route::get('/couriers/orders/state/counts', 'OrderController@ordersStateCountsForCourier')->name('orders.orders_state_counts_for_courier');
     Route::put('/offers/{offer}/complete', 'OfferController@complete')->name('offers.complete');
 });
 

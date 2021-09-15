@@ -72,11 +72,11 @@ class OrderController extends Controller
     }
 
     /**
-     * Show order's three states
+     * Show order's three states for courier
      *
      * @return Response
      */
-    public function ordersStateCounts(): Response
+    public function ordersStateCountsForCourier(): Response
     {
         /** @var Courier $courier */
         $courier = auth()->user();
@@ -86,6 +86,25 @@ class OrderController extends Controller
                 'opened'           => Order::opened()->count(),
                 'inProgress'       => $courier->offers()->accepted()->count(),
                 'underNegotiation' => $courier->offers()->underNegotiation()->count(),
+            ]),
+        ]);
+    }
+
+    /**
+     * Show order's three states for customer
+     *
+     * @return Response
+     */
+    public function ordersStateCountsForCustomer(): Response
+    {
+        /** @var Customer $customer */
+        $customer = auth()->user();
+
+        return $this->successResponse([
+            'ordersStateCount' => new OrderStateCountResource([
+                'opened'           => Order::opened()->count(),
+                'inProgress'       => $customer->offers()->accepted()->count(),
+                'underNegotiation' => $customer->offers()->underNegotiation()->count(),
             ]),
         ]);
     }
