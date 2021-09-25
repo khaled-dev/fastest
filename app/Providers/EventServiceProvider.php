@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\OfferRejectCancellationRequest;
 use App\Events\OfferRejected;
 use App\Events\RequestCancellation;
 use App\Events\SendMessage;
 use App\Listeners\CreateFirstMessageInChat;
+use App\Listeners\SendCancellationRequestRejectedNotification;
 use App\Listeners\SendMessageNotification;
 use App\Listeners\PushMessage;
 use App\Listeners\SendRejectedOfferNotification;
@@ -50,6 +52,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         OfferCanceled::class => [
             SendCanceledOfferNotification::class,
+        ],
+        OfferRejectCancellationRequest::class => [
+            SendCancellationRequestRejectedNotification::class,
         ],
         RequestCancellation::class => [
             SendRequestCancellationNotification::class,

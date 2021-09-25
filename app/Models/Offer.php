@@ -54,7 +54,7 @@ class Offer extends Model
         $hour   = Carbon::parse($cancellationTime)->hour;
         $hour   = empty($hour) ? 0 : $hour * 60;
 
-        return $this->updated_at->diffInMinutes(now()) > ($hour + $minute);
+        return $this->created_at->diffInMinutes(now()) > ($hour + $minute);
     }
 
     /**
@@ -203,6 +203,19 @@ class Offer extends Model
     public function markAsRejected(): Offer
     {
         $this->state = static::REJECTED;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
+     * reject offer cancellation request.
+     *
+     * @return $this
+     */
+    public function rejectCancellationRequest(): Offer
+    {
+        $this->is_cancel_requested = null;
         $this->save();
 
         return $this;

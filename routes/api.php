@@ -72,6 +72,7 @@ Route::middleware('auth:couriers,customers')->group(function () {
     Route::put('/notifications/{notification}/read', 'NotificationController@read')->name('notifications.read');
     Route::post('/notifications/token', 'NotificationController@storeNotificationToken')->name('notifications.store_token');
     Route::put('/offers/{offer}/cancel', 'OfferController@cancel')->name('offers.cancel');
+    Route::put('/offers/{offer}/cancel/reject', 'OfferController@rejectCancellationRequest')->name('offers.reject_cancellation_request');
     Route::post('/offers/{offer}/chat', 'MessageController@send')->name('offers.chat.send');
     Route::post('/offers/{offer}/chat-images', 'MessageController@uploadImages')->name('offers.chat_images.send');
     Route::get('/offers/{offer}/chat', 'MessageController@list')->name('offers.chat.list');

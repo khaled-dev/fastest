@@ -40,6 +40,26 @@ class OfferPolicy
     }
 
     /**
+     * Determine whether the Customer can reject cancellation request of a given offer.
+     *
+     * @param  User $user
+     * @param  Offer  $offer
+     * @return mixed
+     */
+    public function rejectCancellationRequest(User $user, Offer $offer)
+    {
+        if (! $offer->hasCancellationRequest()) {
+            return false;
+        }
+
+        if ($offer->hasUserRequestedCancellation($user)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Determine whether the Customer can cancel given offer.
      *
      * @param  User $user
