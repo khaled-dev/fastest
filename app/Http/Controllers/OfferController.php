@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\OfferAccepted;
-use App\Events\OfferCanceled;
-use App\Events\OfferCompleted;
-use App\Events\OfferPlaced;
-use App\Events\OfferRejected;
-use App\Events\RequestCancellation;
-use App\Http\Resources\OfferCollection;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Models\Courier;
+use App\Events\OfferPlaced;
 use Illuminate\Http\Response;
+use App\Events\OfferRejected;
+use App\Events\OfferAccepted;
+use App\Events\OfferCanceled;
+use App\Events\OfferCompleted;
+use App\Events\RequestCancellation;
 use App\Http\Resources\OfferResource;
+use App\Http\Resources\OfferCollection;
 use App\Http\Requests\StoreOfferRequest;
+use App\Events\OfferRejectCancellationRequest;
 
 class OfferController extends Controller
 {
@@ -114,7 +115,28 @@ class OfferController extends Controller
 
         $offer->markAsCanceled();
 
+
         OfferCanceled::dispatch($offer);
+
+        return $this->successResponse([
+            'offer' => new OfferResource($offer->refresh())
+        ]);
+    }
+
+    /**
+     * Reject cancellation request for given offer.
+     *
+     * @param Offer $offer
+     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function rejectCancellationRequest(Offer $offer): Response
+    {
+        $this->authorize('rejectCancellationRequest', $offer);
+
+        $offer->rejectCancellationRequest();
+
+        OfferRejectCancellationRequest::dispatch($offer);
 
         return $this->successResponse([
             'offer' => new OfferResource($offer->refresh())
