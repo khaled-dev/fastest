@@ -115,6 +115,7 @@ class OfferController extends Controller
 
         $offer->markAsCanceled();
 
+        $offer->order->markAsCanceled();
 
         OfferCanceled::dispatch($offer);
 
