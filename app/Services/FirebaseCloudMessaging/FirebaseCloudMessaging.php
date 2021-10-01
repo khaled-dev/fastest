@@ -133,7 +133,9 @@ class FirebaseCloudMessaging implements ICloudMessaging
                 Notification::create(
                     $this->notifications['title'], $this->notifications['body'], $this->notifications['image_url']
                 )
-            );
+            )->withApnsConfig([
+                'content_available' => true,
+            ])->withHighestPossiblePriority();
 
         if (! empty($this->data)) {
             $message = $message->withData($this->data);
