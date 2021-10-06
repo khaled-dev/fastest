@@ -6,6 +6,7 @@ namespace App\Services\FirebaseCloudMessaging;
 
 use Kreait\Firebase\Messaging;
 use App\Services\Contracts\ICloudMessaging;
+use Kreait\Firebase\Messaging\ApnsConfig;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use App\Services\Exceptions\InvalidFirebaseRegistrationTokenException;
@@ -133,9 +134,16 @@ class FirebaseCloudMessaging implements ICloudMessaging
                 Notification::create(
                     $this->notifications['title'], $this->notifications['body'], $this->notifications['image_url']
                 )
-            )->withApnsConfig([
-                'content_available' => true,
-            ])->withHighestPossiblePriority();
+            )
+            ->withHighestPossiblePriority()
+            ->withApnsConfig(
+                ApnsConfig::fromArray([
+                    'headers' => [
+                        'apns-priority' => '10',
+                        'content-available' => 1,
+                    ],
+                ])
+            );
 
         if (! empty($this->data)) {
             $message = $message->withData($this->data);
