@@ -140,7 +140,11 @@ class FirebaseCloudMessaging implements ICloudMessaging
                 ApnsConfig::fromArray([
                     'headers' => [
                         'apns-priority' => '10',
-                        'content-available' => 1,
+                    ],
+                    'payload' => [
+                        'aps' => [
+                            'content-available' => '1',
+                        ],
                     ],
                 ])
             );
