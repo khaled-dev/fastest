@@ -143,7 +143,7 @@ class FirebaseCloudMessaging implements ICloudMessaging
                     ],
                     'payload' => [
                         'aps' => [
-                            'content-available' => '1',
+                            'content-available' => 1,
                         ],
                     ],
                 ])
