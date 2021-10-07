@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\OfferRejected;
 use App\Listeners\Concerns\PushNotificationHelper;
+use App\Models\Courier;
 
 class SendRejectedOfferNotification
 {
@@ -18,10 +19,15 @@ class SendRejectedOfferNotification
     public function handle(OfferRejected $event)
     {
         $offer = $event->offer;
-        $order = $event->offer->order;
+        $sendFrom = $offer->order->customer;
+        $sendTo   = $offer->courier;
 
-        $this->from($order->customer)
-            ->to($offer->courier)
+        if (auth()->user() instanceof Courier) {
+            list($sendTo, $sendFrom) = array($sendFrom, $sendTo);
+        }
+
+        $this->from($sendFrom)
+            ->to($sendTo)
             ->setNotification('notifications.offers.rejected')
             ->setData('offer-rejected', $offer)
             ->push(true);
