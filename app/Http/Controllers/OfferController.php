@@ -39,6 +39,8 @@ class OfferController extends Controller
             array_merge($request->all(), ['order_id' => $order->id])
         );
 
+        $order->markAsUnderNegotiation();
+
         OfferPlaced::dispatch($offer);
 
         return $this->successResponse([

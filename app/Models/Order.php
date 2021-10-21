@@ -51,6 +51,19 @@ class Order extends Model implements HasMedia
     }
 
     /**
+     * change order state to be `under_negotiation`
+     *
+     * @return $this
+     */
+    public function markAsUnderNegotiation(): Order
+    {
+        $this->state = static::UNDER_NEGOTIATION;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
      * change order state to be `completed`
      *
      * @return $this
