@@ -195,6 +195,19 @@ class Order extends Model implements HasMedia
     }
 
     /**
+     * Get orders filtered by given state
+     *
+     * @param $query
+     * @param array $states
+     * @return mixed
+     */
+    public function scopeForGivenStates($query, array $states)
+    {
+        return $query->whereIn('orders.state', $states);
+    }
+
+
+    /**
      * Get orders where stores in given range
      *
      * @param $query

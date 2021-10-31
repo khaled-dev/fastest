@@ -83,7 +83,7 @@ class OrderController extends Controller
 
         return $this->successResponse([
             'ordersStateCount' => new OrderStateCountResource([
-                'opened'           => Order::opened()->count(),
+                'opened'           => Order::opened()->count() + Order::underNegotiation()->count(),
                 'inProgress'       => $courier->offers()->accepted()->count(),
                 'underNegotiation' => $courier->offers()->underNegotiation()->count(),
             ]),
@@ -155,7 +155,7 @@ class OrderController extends Controller
             $range = DistanceService::range($request->lat, $request->lng);
 
             return new OrderCollection(
-                Order::forGivenState($state)->desc()->storeInGivenRange($range)->paginate(10)
+                Order::forGivenStates([Order::OPENED, Order::UNDER_NEGOTIATION])->desc()->storeInGivenRange($range)->paginate(10)
             );
         }
 
